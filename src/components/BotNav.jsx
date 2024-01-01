@@ -1,27 +1,11 @@
 import { useEffect, useState } from 'react';
 import styled from 'styled-components';
 
-// const NavContainer = styled.nav`
-//   display: flex;
-//   justify-content: space-around;
-//   align-items: center;
-//   background-color: rgb(200, 200, 200);
-//   height: 35px;
-//   width: 100%;
-//   position: fixed;
-//   bottom: 0;
-//   left: 0;
-//   transition: all 0.5s ease-in-out;
-//   z-index: 50;
-// `;
-
 const NavContainer = styled.nav`
   transition: all 0.5s ease-in-out;
 `;
 
 export default function BotNav() {
-  //   const [activated, setActivated] = useState(false);
-  //   const [tab, setTab] = useState('');
     let prevScroll = window.scrollY;
 
     useEffect(() => {
@@ -39,18 +23,6 @@ export default function BotNav() {
       window.addEventListener('scroll', scrollHandler);
       return () => window.removeEventListener('scroll', scrollHandler);
     });
-
-  //   const handleClick = () => {
-  //     setActivated(!activated);
-  //   };
-
-  //   const handleSearchClick = () => {
-  //     setTab('search');
-  //   };
-
-  //   const handleThemeClick = () => {
-  //     setTab('theme');
-  //   };
 
   return (
     <NavContainer className="botNav fixed bottom-0 left-0 z-20 w-full h-16  bg-white border-t border-gray-200 dark:bg-gray-700 dark:border-gray-600">
@@ -196,9 +168,9 @@ export default function BotNav() {
               >
                 <path
                   stroke="currentColor"
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  stroke-width="2"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth="2"
                   d="M5 1 1 5l4 4"
                 />
               </svg>
@@ -220,9 +192,9 @@ export default function BotNav() {
               >
                 <path
                   stroke="currentColor"
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  stroke-width="2"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth="2"
                   d="m1 9 4-4-4-4"
                 />
               </svg>

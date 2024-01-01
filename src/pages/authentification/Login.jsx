@@ -45,7 +45,7 @@ export default function Login() {
 
   return (
     <section className="bg-gray-50 dark:bg-gray-900">
-      <div className="flex flex-col items-center justify-center px-6 py-8 mx-auto md:h-screen lg:py-0">
+      <div className="flex flex-col items-center justify-center px-6 py-8 mx-auto">
         <Link
           to="/"
           className="flex items-center mb-6 text-2xl font-semibold text-gray-900 dark:text-white"
@@ -64,7 +64,7 @@ export default function Login() {
             >
               <div>
                 <label
-                  for="email"
+                  htmlFor="email"
                   className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
                 >
                   Votre email
@@ -90,17 +90,17 @@ export default function Login() {
               </div>
               <div>
                 <label
-                  for="password"
+                  htmlFor="password"
                   className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
                 >
                   Votre mot de passe
                 </label>
-                <div class="relative mb-6">
-                  <div class="absolute inset-y-0 end-0 flex items-center pr-3.5 ">
+                <div className="relative mb-6">
+                  <div className="absolute inset-y-0 end-0 flex items-center pr-3.5 ">
                     <button type="button" onClick={handleClickPassword}>
                       {showPassword ? (
                         <svg
-                          class="w-4 h-4 text-gray-400 dark:text-gray-400"
+                          className="w-4 h-4 text-gray-400 dark:text-gray-400"
                           aria-hidden="true"
                           xmlns="http://www.w3.org/2000/svg"
                           fill="currentColor"
@@ -112,7 +112,7 @@ export default function Login() {
                         </svg>
                       ) : (
                         <svg
-                          class="w-4 h-4 text-gray-400 dark:text-gray-400"
+                          className="w-4 h-4 text-gray-400 dark:text-gray-400"
                           aria-hidden="true"
                           xmlns="http://www.w3.org/2000/svg"
                           fill="currentColor"
@@ -160,7 +160,7 @@ export default function Login() {
                   </div>
                   <div className="ml-3 text-sm">
                     <label
-                      for="remember"
+                      htmlFor="remember"
                       className="text-gray-500 dark:text-gray-300"
                     >
                       Remember me
@@ -169,14 +169,14 @@ export default function Login() {
                 </div>
                 <a
                   href="#"
-                  className="text-sm font-medium text-primary-600 hover:underline dark:text-primary-500"
+                  className="text-sm font-medium text-blue-600 hover:underline dark:text-blue-500"
                 >
                   Mot de passe oublié ?
                 </a>
               </div>
               <button
                 type="submit"
-                className="w-full text-white bg-primary-600 hover:bg-primary-700 focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800"
+                className="w-full text-white bg-blue-600 hover:bg-blue-700 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
               >
                 Se connecter
               </button>
@@ -184,7 +184,7 @@ export default function Login() {
                 Pas encore de compte ?{' '}
                 <a
                   href="#"
-                  className="font-medium text-primary-600 hover:underline dark:text-primary-500"
+                  className="font-medium text-blue-600 hover:underline dark:text-blue-500"
                 >
                   Inscription
                 </a>

@@ -1,9 +1,10 @@
 import logoBluette from '../assets/logoV2.png';
 import userImage from '../assets/user_image.webp';
 import styled from 'styled-components';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { useEffect, useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
+import { clearAuth } from '../store/authSlice';
 
 const NavContainer = styled.nav`
   transition: all 0.5s ease-in-out;
@@ -15,11 +16,12 @@ const LogoBrand = styled.img`
 `;
 
 export default function Header() {
-  const [isToggled, setIsToggled] = useState(false);
+  const [isToggled, setIsToggled] = useState(localStorage.getItem('theme') === 'light' ? false : true);
   const connected = useSelector((state) => state.auth.token);
   const user = useSelector((state) => state.auth.user);
   let prevScroll = window.scrollY;
-  // console.log('header', prevScroll)
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   useEffect(() => {
      const scrollHandler = (e) => {
@@ -35,33 +37,29 @@ export default function Header() {
 
      window.addEventListener('scroll', scrollHandler);
      return () => window.removeEventListener('scroll', scrollHandler);
+
+     
   });
 
   const handleChange = () => {
-   setIsToggled(!isToggled);
-   console.log('darkmode : ', isToggled);
-
-   // if set via local storage previously
-   if (localStorage.getItem('theme')) {
-      if (localStorage.getItem('theme') === 'light') {
-          document.documentElement.classList.add('dark');
-          localStorage.setItem('theme', 'dark');
-      } else {
-          document.documentElement.classList.remove('dark');
-          localStorage.setItem('theme', 'light');
-      }
-
-  // if NOT set via local storage previously
-  } else {
-      if (document.documentElement.classList.contains('dark')) {
-          document.documentElement.classList.remove('dark');
-          localStorage.setItem('theme', 'light');
-      } else {
-          document.documentElement.classList.add('dark');
-          localStorage.setItem('theme', 'dark');
-      }
+    setIsToggled(!isToggled);
+    console.log('darkmode : ', isToggled);
+    console.log('theme', localStorage.getItem('theme'));
+    
+    const main = document.querySelector('.main');
+    const theme = isToggled ? 'light' : 'dark';
+    main.classList.remove('light', 'dark');
+    main.classList.add(theme);
+    localStorage.setItem('theme', theme);
+    // localStorage.clear();
+    // console.log('storageee', localStorage);
   }
-  }
+
+  const handleClick = () => {
+    dispatch(clearAuth());
+    navigate('/');
+    console.log('deco')
+  };
 
   return (
     <NavContainer className="header bg-white dark:bg-gray-900 fixed w-full z-20 top-0 start-0 border-b border-gray-200 dark:border-gray-600">
@@ -73,10 +71,10 @@ export default function Header() {
           </span>
         </Link>
         <div className="flex items-center md:order-2 space-x-3 md:space-x-5 rtl:space-x-reverse">
-          <label class="relative inline-flex items-center cursor-pointer">
-            <input onChange={handleChange} type="checkbox" value="" class="sr-only peer" />
-            <div class="w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-blue-300 dark:peer-focus:ring-blue-800 rounded-full peer dark:bg-gray-700 peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-blue-600"></div>
-            {/* <span class="ms-3 text-sm font-medium text-gray-900 dark:text-gray-300">
+          <label className="relative inline-flex items-center cursor-pointer">
+            <input onChange={handleChange} type="checkbox" checked={isToggled} value="" className="sr-only peer" />
+            <div className="w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-blue-300 dark:peer-focus:ring-blue-800 rounded-full peer dark:bg-gray-700 peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-blue-600"></div>
+            {/* <span className="ms-3 text-sm font-medium text-gray-900 dark:text-gray-300">
               Toggle me
             </span> */}
           </label>
@@ -97,7 +95,7 @@ export default function Header() {
           ) : (
             <>
               <svg
-                class="w-6 h-6 text-gray-800 dark:text-white"
+                className="w-6 h-6 text-gray-800 dark:text-white"
                 aria-hidden="true"
                 xmlns="http://www.w3.org/2000/svg"
                 fill="none"
@@ -105,9 +103,9 @@ export default function Header() {
               >
                 <path
                   stroke="currentColor"
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  stroke-width="2"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth="2"
                   d="M9 1v16M1 9h16"
                 />
               </svg>
@@ -166,10 +164,11 @@ export default function Header() {
                   Earnings
                 </a>
               </li>
-              <li>
+              <li onClick={handleClick}>
                 <a
                   href="#"
                   className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white"
+                  onClick={handleClick}
                 >
                   Sign out
                 </a>

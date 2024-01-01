@@ -3,14 +3,15 @@ import styled from 'styled-components';
 import localDate from '../utils/formatDate';
 import readingTime from '../utils/getReadingTime';
 
+
 export default function StoryCard({ story }) {
   return (
     // SANS IMAGE
-    <article class="p-6 bg-white rounded-lg border border-gray-200 shadow-md dark:bg-gray-800 dark:border-gray-700">
-      <div class="flex justify-between items-between mb-5 text-gray-500">
-        <span class="bg-primary-100 text-primary-800 text-xs font-medium inline-flex items-center px-2.5 py-0.5 rounded dark:bg-primary-200 dark:text-primary-800">
+    <article className="p-6 flex flex-col justify-between bg-white rounded-lg border border-gray-200 shadow-md dark:bg-gray-800 dark:border-gray-700">
+      <div className="flex justify-between items-between mb-5 text-gray-500">
+        <span className="bg-blue-100 text-blue-800 text-xs font-medium inline-flex items-center px-2.5 py-0.5 rounded dark:bg-blue-200 dark:text-blue-800">
           <svg
-            class="mr-1 w-3 h-3"
+            className="mr-1 w-3 h-3"
             fill="currentColor"
             viewBox="0 0 20 20"
             xmlns="http://www.w3.org/2000/svg"
@@ -19,41 +20,41 @@ export default function StoryCard({ story }) {
           </svg>
           Tutorial
         </span>
-        <span class="text-sm text-gray-500 dark:text-gray-400">{readingTime(story.content.length)}</span>
+        <span className="text-sm text-gray-500 dark:text-gray-400">{readingTime(story.content.length)}</span>
       </div>
-      <h2 class="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">
+      <h2 className="mb-2 text-xl line-clamp-2 font-bold tracking-tight text-gray-900 dark:text-white">
         <a href="#">{story.title}</a>
       </h2>
-      <p class="mb-5 font-light text-gray-500 dark:text-gray-400">
+      <p className="mb-5 text-sm line-clamp-7 font-light text-gray-500 dark:text-gray-400">
         {story.synopsis}
       </p>
-      <div class="flex justify-between items-center">
-        <div class="flex items-center space-x-3">
+      <div className="flex justify-between items-center">
+        <div className="flex items-center space-x-3">
           <img
-            class="w-10 h-10 rounded-full"
+            className="w-10 h-10 rounded-full"
             src="https://flowbite.s3.amazonaws.com/blocks/marketing-ui/avatars/jese-leos.png"
             alt="Jese Leos avatar"
           />
-          <div class="flex flex-col">
-            <span class="font-medium dark:text-white">{story.user.name}</span>
-            <span class="font-light text-sm text-gray-500 dark:text-gray-400">{localDate(story.createdAt)}</span>
+          <div className="flex flex-col">
+            <span className="font-medium line-clamp-1 dark:text-white">{story.user.name}</span>
+            <span className="font-light text-sm text-gray-500 dark:text-gray-400">{localDate(story.createdAt)}</span>
           </div>
         </div>
         <a
           href="#"
-          class="inline-flex items-center font-medium text-primary-600 dark:text-primary-500 hover:underline"
+          className="inline-flex items-center font-medium text-blue-600 dark:text-blue-500 hover:underline"
         >
           Plus
           <svg
-            class="ml-1 w-4 h-4"
+            className="ml-1 w-4 h-4"
             fill="currentColor"
             viewBox="0 0 20 20"
             xmlns="http://www.w3.org/2000/svg"
           >
             <path
-              fill-rule="evenodd"
+              fillRule="evenodd"
               d="M10.293 3.293a1 1 0 011.414 0l6 6a1 1 0 010 1.414l-6 6a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-4.293-4.293a1 1 0 010-1.414z"
-              clip-rule="evenodd"
+              clipRule="evenodd"
             ></path>
           </svg>
         </a>

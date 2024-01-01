@@ -1,5 +1,4 @@
 import { Routes, Route, useNavigate, useLocation } from 'react-router-dom';
-import { NextUIProvider } from '@nextui-org/react';
 import { Toaster } from 'react-hot-toast';
 import 'flowbite';
 
@@ -16,22 +15,26 @@ import Login from './pages/authentification/Login';
 export default function App() {
   const navigate = useNavigate();
   const location = useLocation();
+  const theme = localStorage.getItem('theme');
   const showHeaderAndFooter = location.pathname !== '/login' && location.pathname !== '/signup';
+  const showBotNav = location.pathname === '/' || location.pathname === '/profil/stories';
 
   return (
-    <NextUIProvider navigate={navigate}>
-        <Toaster />
-        {showHeaderAndFooter && <Header />}
-        <Routes>
-            <Route path="/" element={<Home />} />
-            <Route path="/signup" element={<Signup />} />
-            <Route path="/login" element={<Login />} />
-            <Route path="/profil" element={<ProfilList />} />
-            <Route path="/profil/detail" element={<ProfilDetails />} />
-            <Route path="/story/create" element={<StoryCreate />} />
-            <Route path="*" element={<Error />} />
-        </Routes>
-        {showHeaderAndFooter && <Footer />}
-    </NextUIProvider>
+    <>
+    <main className={`main ${theme ?? 'light'} text-foreground bg-background ${showBotNav && 'pb-16'}`}>
+      <Toaster />
+      {showHeaderAndFooter && <Header />}
+      <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="/signup" element={<Signup />} />
+          <Route path="/login" element={<Login />} />
+          <Route path="/profil" element={<ProfilList />} />
+          <Route path="/profil/detail" element={<ProfilDetails />} />
+          <Route path="/story/create" element={<StoryCreate />} />
+          <Route path="*" element={<Error />} />
+      </Routes>
+      {showHeaderAndFooter && <Footer />}
+    </main>
+    </>
   );
 }
