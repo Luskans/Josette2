@@ -19,6 +19,7 @@ export const storiesSlice = createSlice({
 
 export const { setStories } = storiesSlice.actions;
 
+// stories avec authorisation
 // export const fetchStories = () => (dispatch, getState) => {
 //   const state = getState();
 //   if (!state.stories.loaded) {

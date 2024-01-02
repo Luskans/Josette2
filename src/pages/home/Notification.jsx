@@ -1,5 +1,4 @@
 import styled from 'styled-components';
-import {Card, CardBody} from "@nextui-org/react";
 
 const AsideContainer = styled.aside`
    display: flex;

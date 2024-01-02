@@ -11,11 +11,11 @@ export default function BotNav() {
     useEffect(() => {
       const scrollHandler = (e) => {
         const currentScroll = window.scrollY;
-        const mobileNav = document.querySelector('.botNav');
+        const botNav = document.querySelector('.botNav');
 
         (prevScroll > currentScroll)
-          ? mobileNav.classList.add('scrollNav')
-          : mobileNav.classList.remove('scrollNav');
+          ? botNav.classList.add('scrollNav')
+          : botNav.classList.remove('scrollNav');
 
         prevScroll = currentScroll;
       };

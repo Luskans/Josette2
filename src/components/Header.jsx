@@ -26,11 +26,11 @@ export default function Header() {
   useEffect(() => {
      const scrollHandler = (e) => {
         const currentScroll = window.scrollY;
-        const mobileHeader = document.querySelector('.header');
+        const header = document.querySelector('.header');
 
         (prevScroll < currentScroll)
-           ? mobileHeader.classList.add('scrollHeader')
-           : mobileHeader.classList.remove('scrollHeader')
+           ? header.classList.add('scrollHeader')
+           : header.classList.remove('scrollHeader')
 
         prevScroll = currentScroll;
      };
@@ -133,10 +133,10 @@ export default function Header() {
           >
             <div className="px-4 py-3">
               <span className="block text-sm text-gray-900 dark:text-white">
-                Bonnie Green
+                {user && user.name}
               </span>
               <span className="block text-sm  text-gray-500 truncate dark:text-gray-400">
-                name@flowbite.com
+                {user && user.username}
               </span>
             </div>
             <ul className="py-2" aria-labelledby="user-menu-button">
@@ -145,7 +145,7 @@ export default function Header() {
                   href="#"
                   className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white"
                 >
-                  Dashboard
+                  Profil
                 </a>
               </li>
               <li>
@@ -153,7 +153,7 @@ export default function Header() {
                   href="#"
                   className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white"
                 >
-                  Settings
+                  Notifications
                 </a>
               </li>
               <li>
@@ -161,7 +161,23 @@ export default function Header() {
                   href="#"
                   className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white"
                 >
-                  Earnings
+                  Créations
+                </a>
+              </li>
+              <li>
+                <a
+                  href="#"
+                  className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white"
+                >
+                  Suivis
+                </a>
+              </li>
+              <li>
+                <a
+                  href="#"
+                  className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white"
+                >
+                  Paramètres
                 </a>
               </li>
               <li onClick={handleClick}>
@@ -170,7 +186,7 @@ export default function Header() {
                   className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white"
                   onClick={handleClick}
                 >
-                  Sign out
+                  Déconnexion
                 </a>
               </li>
             </ul>

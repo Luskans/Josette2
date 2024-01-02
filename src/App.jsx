@@ -11,6 +11,7 @@ import Error from './pages/Error';
 import ProfilList from './pages/profil/ProfilList';
 import Signup from './pages/authentification/Signup';
 import Login from './pages/authentification/Login';
+import StoryView from './pages/story/StoryView';
 
 export default function App() {
   const navigate = useNavigate();
@@ -21,7 +22,7 @@ export default function App() {
 
   return (
     <>
-    <main className={`main ${theme ?? 'light'} text-foreground bg-background ${showBotNav && 'pb-16'}`}>
+    <main className={`main ${theme ?? 'light'} text-foreground bg-background ${showHeaderAndFooter && 'pt-16'} ${showBotNav && 'pb-16'}`}>
       <Toaster />
       {showHeaderAndFooter && <Header />}
       <Routes>
@@ -31,6 +32,7 @@ export default function App() {
           <Route path="/profil" element={<ProfilList />} />
           <Route path="/profil/detail" element={<ProfilDetails />} />
           <Route path="/story/create" element={<StoryCreate />} />
+          <Route path="/story/:id" element={<StoryView />} />
           <Route path="*" element={<Error />} />
       </Routes>
       {showHeaderAndFooter && <Footer />}

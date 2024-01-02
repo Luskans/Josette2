@@ -1,13 +1,6 @@
 import styled from 'styled-components';
 import logoBluette from '../assets/logoV2.png';
-import {
-  Navbar,
-  NavbarBrand,
-  NavbarContent,
-  NavbarItem,
-  Link,
-  Button,
-} from '@nextui-org/react';
+
 
 // const FooterContainer = styled.footer`
 //   display: flex;

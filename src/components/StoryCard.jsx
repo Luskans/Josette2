@@ -2,6 +2,7 @@ import storyThumbnail from '../assets/story_thumbnail2.webp';
 import styled from 'styled-components';
 import localDate from '../utils/formatDate';
 import readingTime from '../utils/getReadingTime';
+import { Link } from 'react-router-dom';
 
 
 export default function StoryCard({ story }) {
@@ -23,20 +24,24 @@ export default function StoryCard({ story }) {
         <span className="text-sm text-gray-500 dark:text-gray-400">{readingTime(story.content.length)}</span>
       </div>
       <h2 className="mb-2 text-xl line-clamp-2 font-bold tracking-tight text-gray-900 dark:text-white">
-        <a href="#">{story.title}</a>
+        <Link to={`/story/${story.id}`}>{story.title}</Link>
       </h2>
       <p className="mb-5 text-sm line-clamp-7 font-light text-gray-500 dark:text-gray-400">
         {story.synopsis}
       </p>
       <div className="flex justify-between items-center">
         <div className="flex items-center space-x-3">
-          <img
-            className="w-10 h-10 rounded-full"
-            src="https://flowbite.s3.amazonaws.com/blocks/marketing-ui/avatars/jese-leos.png"
-            alt="Jese Leos avatar"
-          />
+          <Link to={`/user/${story.user.id}`}>
+            <img
+              className="w-10 h-10 rounded-full"
+              src="https://flowbite.s3.amazonaws.com/blocks/marketing-ui/avatars/jese-leos.png"
+              alt="Jese Leos avatar"
+            />
+          </Link>
           <div className="flex flex-col">
-            <span className="font-medium line-clamp-1 dark:text-white">{story.user.name}</span>
+            <Link to={`/user/${story.user.id}`}>
+              <span className="font-medium line-clamp-1 dark:text-white">{story.user.name}</span>
+            </Link>
             <span className="font-light text-sm text-gray-500 dark:text-gray-400">{localDate(story.createdAt)}</span>
           </div>
         </div>

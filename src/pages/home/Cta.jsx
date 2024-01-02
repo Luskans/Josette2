@@ -1,6 +1,5 @@
 import ctaImage from '../../assets/cta.webp';
 import styled from 'styled-components';
-import {Card, CardBody, Button, Image} from "@nextui-org/react";
 
 // const AsideContainer = styled.aside`
 //    display: flex;
