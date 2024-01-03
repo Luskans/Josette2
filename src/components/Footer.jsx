@@ -94,8 +94,8 @@ export default function Footer() {
     // FLOWBITE
     <footer className="p-4 bg-blue-700 sm:p-6 dark:bg-blue-100">
       <div className="mx-auto max-w-screen-xl">
-        <div className="md:flex md:justify-between">
-          <div className="grid grid-cols-2 gap-8 sm:gap-6 sm:grid-cols-3 dark:text-gray-600 text-gray-300">
+        <div className="flex justify-between">
+          <div className="flex sm:flex-row gap-5 dark:text-gray-600 text-gray-300">
             <a href="https://flowbite.com" className="hover:underline">
               About
             </a>
@@ -106,7 +106,7 @@ export default function Footer() {
               Privacy
             </a>
           </div>
-          <div className="mb-6 md:mb-0">
+          <div className="">
             <a href="https://flowbite.com" className="flex items-center">
               <img
                 src={logoBluette}

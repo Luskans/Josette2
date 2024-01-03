@@ -21,7 +21,7 @@ import styled from 'styled-components';
 export default function Cta() {
   return (
     // FLOWBITE
-    <section className="bg-blue-700 dark:bg-blue-100 mt-16">
+    <section className="bg-blue-700 dark:bg-blue-100">
         <div className="gap-8 items-center py-8 px-4 mx-auto max-w-screen-xl xl:gap-16 md:grid md:grid-cols-2 sm:py-6 lg:px-6">
             <img className="md:w-full w-2/3 m-auto rounded-2xl" src={ctaImage} alt="cta image of a boy writing" />
             <div className="mt-4 md:mt-0">
