@@ -1,4 +1,4 @@
-import ProfilDetails from './ProfilDetails';
+import ProfilDetails from './ProfilView';
 import ProfilNotifications from './ProfilNotifications';
 import ProfilStories from './ProfilStories';
 import ProfilParameters from './ProfilParameters';

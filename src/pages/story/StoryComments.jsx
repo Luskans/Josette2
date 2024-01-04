@@ -1,6 +1,12 @@
-
+import { initFlowbite } from 'flowbite'
+import { useEffect } from 'react';
 
 export default function StoryComments() {
+
+  useEffect(() => {
+    initFlowbite();
+  }, [])
+
   return (
     <>
       <section className="not-format">

@@ -6,7 +6,7 @@ import BotNav from '../../components/BotNav';
 import Notification from './Notification';
 import Cta from './Cta';
 import Slider from './Slider';
-import StoryCard from '../../components/StoryCard';
+import StoryCardMax from '../story/StoryCardMax';
 
 const MainContainer = styled.main`
   padding: 0 10%;
@@ -66,8 +66,8 @@ export default function Home() {
           <div className="grid gap-4 lg:grid-cols-4 md:grid-cols-3 sm:grid-cols-2">
           {/* <div className="grid gap-8 mb-6 lg:mb-16 md:grid-cols-2"> */}
             {loaded &&
-              storiesList.map((story) => (
-                <StoryCard key={story.id} story={story} />
+              storiesList.map(story => (
+                <StoryCardMax key={story.id} story={story} />
             ))}
           </div>
         </div>

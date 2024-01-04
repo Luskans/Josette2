@@ -1,5 +1,7 @@
 import { useEffect, useState } from 'react';
 import styled from 'styled-components';
+import { initFlowbite } from 'flowbite'
+
 
 const NavContainer = styled.nav`
   transition: all 0.5s ease-in-out;
@@ -23,6 +25,10 @@ export default function BotNav() {
       window.addEventListener('scroll', scrollHandler);
       return () => window.removeEventListener('scroll', scrollHandler);
     });
+
+    useEffect(() => {
+      initFlowbite();
+    }, []);
 
   return (
     <NavContainer className="botNav fixed bottom-0 left-0 z-20 w-full h-16  bg-white border-t border-gray-200 dark:bg-gray-700 dark:border-gray-600">

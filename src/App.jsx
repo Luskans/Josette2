@@ -6,7 +6,7 @@ import Home from './pages/home/Home';
 import Header from './components/Header';
 import Footer from './components/Footer';
 import StoryCreate from './pages/story/StoryCreate';
-import ProfilDetails from './pages/profil/ProfilDetails';
+import ProfilView from './pages/profil/ProfilView';
 import Error from './pages/Error';
 import ProfilList from './pages/profil/ProfilList';
 import Signup from './pages/authentification/Signup';
@@ -18,7 +18,7 @@ export default function App() {
   const location = useLocation();
   const theme = localStorage.getItem('theme');
   const showHeaderAndFooter = location.pathname !== '/login' && location.pathname !== '/signup';
-  const showBotNav = location.pathname === '/' || location.pathname === '/profil/stories';
+  const showBotNav = location.pathname === '/' || location.pathname.startsWith('/profil/view/');
 
   return (
     <>
@@ -30,9 +30,9 @@ export default function App() {
           <Route path="/signup" element={<Signup />} />
           <Route path="/login" element={<Login />} />
           <Route path="/profil" element={<ProfilList />} />
-          <Route path="/profil/detail" element={<ProfilDetails />} />
+          <Route path="/profil/view/:id" element={<ProfilView />} />
           <Route path="/story/create" element={<StoryCreate />} />
-          <Route path="/story/:id" element={<StoryView />} />
+          <Route path="/story/view/:id" element={<StoryView />} />
           <Route path="*" element={<Error />} />
       </Routes>
       {showHeaderAndFooter && <Footer />}

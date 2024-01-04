@@ -1,10 +1,11 @@
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchStory } from '../../store/storySlice';
-import { useParams } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 import { useEffect } from 'react';
 import { resetStory } from '../../store/storySlice';
 import localDate, { fullLocalDate } from '../../utils/formatDate';
 import StoryComments from './StoryComments';
+import StoryBar from './StoryBar';
 
 export default function StoryView() {
   const dispatch = useDispatch();
@@ -18,7 +19,7 @@ export default function StoryView() {
     // Obligé de reset le state car le useEffect ne prend pas en compte l'id en dépendance
     return () => {
         dispatch(resetStory());
-      }
+    }
   }, []);
 
   return (
@@ -95,24 +96,30 @@ export default function StoryView() {
               <article className="mx-auto w-full max-w-2xl format format-sm sm:format-base lg:format-lg format-blue dark:format-invert">
                 <address className="flex items-center mb-6 not-italic">
                   <div className="flex items-center mr-3 text-sm text-gray-900 dark:text-white">
-                    <img
-                      className="mr-4 w-16 h-16 rounded-full"
-                      src="https://flowbite.com/docs/images/people/profile-picture-2.jpg"
-                      alt="Jese Leos"
-                    />
+                    <Link
+                      to={`/profil/view/${story.user.id}`}
+                      rel="author"
+                      className="text-xl font-bold text-gray-900 dark:text-white"
+                    >
+                      <img
+                        className="mr-4 w-16 h-16 rounded-full"
+                        src="https://flowbite.com/docs/images/people/profile-picture-2.jpg"
+                        alt="Jese Leos"
+                      />
+                    </Link>
                     <div className="flex flex-col">
                       <div className="flex items-center gap-3">
-                        <a
-                          href="#"
+                        <Link
+                          to={`/profil/view/${story.user.id}`}
                           rel="author"
                           className="text-xl font-bold text-gray-900 dark:text-white"
                         >
                           {story.user.name}
-                        </a>
+                        </Link>
                         <p>.</p>
                         <a
                           href="#"
-                          className="leading-10 text-gray-500 dark:text-gray-400"
+                          className="leading-10 text-gray-500 hover:text-gray-600 dark:text-gray-400 hover:dark:text-gray-300"
                         >
                           Follow
                         </a>
@@ -130,6 +137,8 @@ export default function StoryView() {
                   </div>
                 </address>
 
+                <StoryBar id={1}/>
+
                 <img
                   src="https://flowbite.s3.amazonaws.com/typography-plugin/typography-image-1.png"
                   alt=""
@@ -140,9 +149,11 @@ export default function StoryView() {
                   {story.title}
                 </h1>
                 
-                <p className="lead text-gray-900 dark:text-gray-100">
+                <p className="lead text-gray-900 dark:text-gray-100 mb-10">
                   {story.content}
                 </p>
+
+                <StoryBar id={2}/>
                 <StoryComments />
               </article>
             </div>
