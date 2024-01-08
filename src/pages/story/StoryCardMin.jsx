@@ -3,6 +3,7 @@ import readingTime from '../../utils/getReadingTime';
 import storyThumbnail from '../../assets/story_thumbnail2.webp';
 import storyImage from '../../assets/story_image.jpg';
 import localDate from '../../utils/formatDate';
+import getColorByTheme from '../../utils/getColorByTheme';
 
 export default function StoryCardMin({ story }) {
 
@@ -142,21 +143,15 @@ export default function StoryCardMin({ story }) {
                 </div>
             </div>
           </div>
-          <h3 className="leading-none line-clamp-2 pl-2 pt-2 text-l font-bold tracking-tight text-gray-900 dark:text-white">
+          <h3 className="leading-none line-clamp-2 mb-2 pl-2 pt-2 text-l font-bold tracking-tight text-gray-900 dark:text-white">
             <a href="#">{story.title}</a>
           </h3>
-          <div className="flex justify-end pt-1 p-2">
-            <span className="bg-blue-100 text-blue-800 text-xs font-medium inline-flex items-center px-2.5 py-0.5 rounded dark:bg-blue-200 dark:text-blue-800">
-              <svg
-                className="mr-1 w-3 h-3"
-                fill="currentColor"
-                viewBox="0 0 20 20"
-                xmlns="http://www.w3.org/2000/svg"
-              >
-                <path d="M2 6a2 2 0 012-2h6a2 2 0 012 2v8a2 2 0 01-2 2H4a2 2 0 01-2-2V6zM14.553 7.106A1 1 0 0014 8v4a1 1 0 00.553.894l2 1A1 1 0 0018 13V7a1 1 0 00-1.447-.894l-2 1z"></path>
-              </svg>
-              Tutorial
-            </span>
+          <div className="flex justify-end gap-2 pt-1 p-2">
+            {story.themes.map(theme => (
+              <span key={theme.name} className={`${getColorByTheme(theme.name)} text-xs font-medium inline-flex items-center px-2.5 py-0.5 rounded`}>
+                {theme.name}
+              </span>
+            ))}
           </div>
         </div>
     </>

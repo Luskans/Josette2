@@ -6,6 +6,7 @@ import { Provider } from 'react-redux';
 import { BrowserRouter } from 'react-router-dom';
 import App from './App';
 import 'flowbite';
+import StoryCreate from './pages/story/StoryCreate';
 
 const theme = localStorage.getItem('theme');
 

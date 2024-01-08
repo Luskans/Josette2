@@ -16,7 +16,9 @@ const LogoBrand = styled.img`
 `;
 
 export default function Header() {
-  const [isToggled, setIsToggled] = useState(localStorage.getItem('theme') === 'light' ? false : true);
+  const [isToggled, setIsToggled] = useState(
+    localStorage.getItem('theme') === 'light' ? false : true
+  );
   const connected = useSelector((state) => state.auth.token);
   const user = useSelector((state) => state.auth.user);
   let prevScroll = window.scrollY;
@@ -24,28 +26,26 @@ export default function Header() {
   const navigate = useNavigate();
 
   useEffect(() => {
-     const scrollHandler = (e) => {
-        const currentScroll = window.scrollY;
-        const header = document.querySelector('.header');
+    const scrollHandler = (e) => {
+      const currentScroll = window.scrollY;
+      const header = document.querySelector('.header');
 
-        (prevScroll < currentScroll)
-           ? header.classList.add('scrollHeader')
-           : header.classList.remove('scrollHeader')
+      prevScroll < currentScroll
+        ? header.classList.add('scrollHeader')
+        : header.classList.remove('scrollHeader');
 
-        prevScroll = currentScroll;
-     };
+      prevScroll = currentScroll;
+    };
 
-     window.addEventListener('scroll', scrollHandler);
-     return () => window.removeEventListener('scroll', scrollHandler);
-
-     
+    window.addEventListener('scroll', scrollHandler);
+    return () => window.removeEventListener('scroll', scrollHandler);
   });
 
   const handleChange = () => {
     setIsToggled(!isToggled);
     console.log('darkmode : ', isToggled);
     console.log('theme', localStorage.getItem('theme'));
-    
+
     const main = document.querySelector('.main');
     const theme = isToggled ? 'light' : 'dark';
     main.classList.remove('light', 'dark');
@@ -53,18 +53,21 @@ export default function Header() {
     localStorage.setItem('theme', theme);
     // localStorage.clear();
     // console.log('storageee', localStorage);
-  }
+  };
 
   const handleClick = () => {
     dispatch(clearAuth());
     navigate('/');
-    console.log('deco')
+    console.log('deco');
   };
 
   return (
     <NavContainer className="header bg-white dark:bg-gray-900 fixed w-full z-20 top-0 start-0 border-b border-gray-200 dark:border-gray-600">
       <div className="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto px-6 py-4">
-        <Link to="/" className="flex items-center space-x-3 rtl:space-x-reverse">
+        <Link
+          to="/"
+          className="flex items-center space-x-3 rtl:space-x-reverse"
+        >
           <img src={logoBluette} className="h-8" alt="Bluette Logo" />
           <span className="self-center text-2xl font-semibold whitespace-nowrap dark:text-white">
             Bluette
@@ -72,7 +75,13 @@ export default function Header() {
         </Link>
         <div className="flex items-center md:order-2 space-x-3 md:space-x-5 rtl:space-x-reverse">
           <label className="relative inline-flex items-center cursor-pointer">
-            <input onChange={handleChange} type="checkbox" checked={isToggled} value="" className="sr-only peer" />
+            <input
+              onChange={handleChange}
+              type="checkbox"
+              checked={isToggled}
+              value=""
+              className="sr-only peer"
+            />
             <div className="w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-blue-300 dark:peer-focus:ring-blue-800 rounded-full peer dark:bg-gray-700 peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-blue-600"></div>
             {/* <span className="ms-3 text-sm font-medium text-gray-900 dark:text-gray-300">
               Toggle me
@@ -80,7 +89,10 @@ export default function Header() {
           </label>
           {!connected ? (
             <>
-              <Link to="/login" className="hover:underline text-gray-600 dark:text-gray-400">
+              <Link
+                to="/login"
+                className="hover:underline text-gray-600 dark:text-gray-400"
+              >
                 Login
               </Link>
               <Link to="/signup">
@@ -94,21 +106,23 @@ export default function Header() {
             </>
           ) : (
             <>
-              <svg
-                className="w-6 h-6 text-gray-800 dark:text-white"
-                aria-hidden="true"
-                xmlns="http://www.w3.org/2000/svg"
-                fill="none"
-                viewBox="0 0 18 18"
-              >
-                <path
-                  stroke="currentColor"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth="2"
-                  d="M9 1v16M1 9h16"
-                />
-              </svg>
+              <Link to="/story/create">
+                <svg
+                  className="w-6 h-6 text-gray-800 dark:text-white"
+                  aria-hidden="true"
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="none"
+                  viewBox="0 0 20 18"
+                >
+                  <path
+                    stroke="currentColor"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth="2"
+                    d="M10 16.5c0-1-8-2.7-9-2V1.8c1-1 9 .707 9 1.706M10 16.5V3.506M10 16.5c0-1 8-2.7 9-2V1.8c-1-1-9 .707-9 1.706"
+                  />
+                </svg>
+              </Link>
               <button
                 type="button"
                 className="flex text-sm bg-gray-800 rounded-full md:me-0 focus:ring-4 focus:ring-gray-300 dark:focus:ring-gray-600"

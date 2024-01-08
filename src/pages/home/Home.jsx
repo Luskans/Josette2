@@ -5,8 +5,8 @@ import { fetchStories } from '../../store/storiesSlice';
 import BotNav from '../../components/BotNav';
 import Notification from './Notification';
 import Cta from './Cta';
-import Slider from './Slider';
 import StoryCardMax from '../story/StoryCardMax';
+import Carousel from './Carousel';
 
 const MainContainer = styled.main`
   padding: 0 10%;
@@ -31,30 +31,8 @@ export default function Home() {
   }, []);
 
   return (
-    // <>
-    //   {connected ? <Slider /> : <Cta />}
-    //   <MainContainer>
-    //     {user && !user.isBanned && <Notification />}
-
-    //     {/* {loaded &&
-    //       storiesList.map((story) => (
-    //         <article key={story.id}>
-    //           <h3>Titre : {story.title}</h3>
-    //           <p>Synopsis : {story.synopsis}</p>
-    //           <p>Auteur : {story.user.name}</p>
-    //         </article>
-    //       ))} */}
-    //     <p>Histoires par date</p>
-    //     {loaded &&
-    //       storiesList.map((story) => (
-    //         <StoryCard key={story.id} story={story} />
-    //       ))}
-    //   </MainContainer>
-    //   {/* <MobileNav /> */}
-    // </>
-
     <>
-      {connected ? <Slider /> : <Cta />}
+      {connected ? <Carousel /> : <Cta />}
       <section className="bg-white dark:bg-gray-900">
         <div className="py-12 px-4 mx-auto max-w-screen-xl lg:px-6">
           <div className="mx-auto max-w-screen-sm text-center lg:mb-16 mb-8">
