@@ -19,6 +19,7 @@ export default function Login() {
   const navigate = useNavigate();
   const token = useSelector((state) => state.auth.token);
   const user = useSelector((state) => state.auth.user);
+  const user2 = useSelector((state) => state.auth2.user);
 
   const apiURL = import.meta.env.VITE_API_URL;
 
@@ -41,6 +42,22 @@ export default function Login() {
           toast.error('Email ou mot de passe incorrect.', { duration: 9000 });
         }
       });
+
+    // CONNEXION UTILISANT JUSTE COOKIES, PROBLEME STOCKAGE COOKIE
+    // axios
+    //   .post(`${apiURL}/login`, data)
+    //   .then((response) => {
+    //     toast.success('Connexion réussie !', { duration: 9000 });
+    //     console.log('login response', response);
+    //     console.log('login user', user2);
+    //     navigate('/');
+    //   })
+    //   .catch((error) => {
+    //     if (error) {
+    //       toast.error('Email ou mot de passe incorrect.', { duration: 9000 });
+    //       console.log(error.message)
+    //     }
+    //   });
   };
 
   return (

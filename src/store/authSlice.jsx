@@ -46,6 +46,25 @@ export const logout = () => dispatch => {
   dispatch(clearAuth());
 };
 
+export const refresh = () => (dispatch, getState) => {
+  const state = getState();
+  if (!state.auth.loaded) {
+    const token = state.auth.token;
+    const log = state.auth.log.username;
+
+    axios
+      .get(`${apiURL}/users?email=${log}`, {
+        headers: {
+          Authorization: `Bearer ${token}`
+        }
+      })
+      .then(response => {
+        dispatch(login(response.data));
+      })
+      .catch(error => console.error('Erreur de chargement', error));
+  }
+};
+
 // export const fetchUserConnected = () => (dispatch, getState) => {
 //   const state = getState();
 //   if (!state.auth.loaded) {

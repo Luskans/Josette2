@@ -5,6 +5,7 @@ import { fetchThemes } from '../../store/themesSlice';
 import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { initFlowbite } from 'flowbite';
+import ImgCrop from '../../components/Crop/ImgCrop';
 
 export default function StoryCreate() {
   const dispatch = useDispatch();
@@ -13,6 +14,8 @@ export default function StoryCreate() {
   const token = localStorage.getItem('token');
   const loaded = useSelector((state) => state.themes.loaded);
   const themesList = useSelector((state) => state.themes.list);
+  const [selectedImage, setSelectedImage] = useState(null);
+  const [cropData, setCropData] = useState(null); // Ici tu stockeras les données du crop
 
   console.log('user storycreate', userId);
   console.log('themes storycreate', themesList);
@@ -57,6 +60,7 @@ export default function StoryCreate() {
   };
 
   const onSubmit = (data) => {
+    console.log('datas', data);
     axios
       .post(`${apiURL}/stories`, data, {
         headers: {
@@ -246,6 +250,15 @@ export default function StoryCreate() {
                   SVG, PNG, JPG or GIF (MAX. 800x400px).
                 </p>
               </div>
+              {/* <ImgCrop
+                image={selectedImage}
+                onImageLoaded={setImage}
+                onCropComplete={(cropData) => setCropData(cropData)}
+              /> */}
+              <div className="sm:col-span-2">
+                <ImgCrop />
+              </div>
+
               <div className="sm:col-span-2">
                 <label
                   htmlFor="content"

@@ -12,13 +12,24 @@ import ProfilList from './pages/profil/ProfilList';
 import Signup from './pages/authentification/Signup';
 import Login from './pages/authentification/Login';
 import StoryView from './pages/story/StoryView';
+import { fetchConnectedUser } from './store/authSlice2';
+import { useDispatch, useSelector } from 'react-redux';
+import { useEffect } from 'react';
 
 export default function App() {
+  const dispatch = useDispatch();
+  const user = useSelector(state => state.auth2.user);
   const navigate = useNavigate();
   const location = useLocation();
   const theme = localStorage.getItem('theme');
   const showHeaderAndFooter = location.pathname !== '/login' && location.pathname !== '/signup';
   const showBotNav = location.pathname === '/' || location.pathname.startsWith('/profil/view/');
+
+  // POUR VOIR LE CONNECTED QU'AVEC COOKIE
+  // useEffect(() => {
+  //   dispatch(fetchConnectedUser());
+  //   console.log('app', user)
+  // }, []);
 
   return (
     <>

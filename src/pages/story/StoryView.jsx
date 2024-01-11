@@ -1,26 +1,52 @@
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchStory } from '../../store/storySlice';
 import { Link, useParams } from 'react-router-dom';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { resetStory } from '../../store/storySlice';
 import localDate, { fullLocalDate } from '../../utils/formatDate';
 import StoryComments from './StoryComments';
 import StoryBar from './StoryBar';
+import defaultUserImage from '../../assets/user_image.webp';
+import axios from 'axios';
 
 export default function StoryView() {
   const dispatch = useDispatch();
   let { id } = useParams();
   const loaded = useSelector((state) => state.story.loaded);
   const story = useSelector((state) => state.story.detail);
+  const connected = JSON.parse(localStorage.getItem('user'));
+
+  const apiURL = import.meta.env.VITE_API_URL;
 
   useEffect(() => {
     dispatch(fetchStory(id));
-
+    console.log('storyview connected', connected.id)
     // Obligé de reset le state car le useEffect ne prend pas en compte l'id en dépendance
     return () => {
         dispatch(resetStory());
     }
   }, []);
+
+  const handleFollow = (storyUserId) => {
+    axios
+      .post(`${apiURL}/follow`, storyUserId)
+      .then((response) => {
+        toast.success('Connexion réussie !', { duration: 9000 });
+        dispatch(login(response.data.token));
+
+        console.log('redux token', token); // pas affiché la premiere fois car redux asynchrone
+        console.log('redux user', user);
+      })
+      .catch((error) => {
+        if (error) {
+          toast.error("Problème pour suivre l'auteur.", { duration: 9000 });
+        }
+      });
+  }
+
+  const handleUnfollow = (storyUserId) => {
+    
+  }
 
   return (
     <>
@@ -38,8 +64,8 @@ export default function StoryView() {
                     >
                       <img
                         className="mr-4 w-16 h-16 rounded-full"
-                        src="https://flowbite.com/docs/images/people/profile-picture-2.jpg"
-                        alt="Jese Leos"
+                        src={(story.user.image) ? story.user.image : defaultUserImage}
+                        alt={`${story.user.name} profil picture`}
                       />
                     </Link>
                     <div className="flex flex-col">
@@ -51,13 +77,25 @@ export default function StoryView() {
                         >
                           {story.user.name}
                         </Link>
-                        <p>.</p>
-                        <a
-                          href="#"
-                          className="leading-10 text-gray-500 hover:text-gray-600 dark:text-gray-400 hover:dark:text-gray-300"
-                        >
-                          Follow
-                        </a>
+                        {(story.user.id === connected.id) &&
+                        <>
+                          <p>.</p>
+                          {(connected.imFollowing)
+                          ? <button
+                              onClick={() => handleFollow(story.user.id)}
+                              className="leading-10 mt-0.5 text-gray-500 hover:text-gray-600 dark:text-gray-400 hover:dark:text-gray-300"
+                            >
+                              Suivre
+                            </button>
+                          : <button
+                              onClick={() => handleUnfollow(story.user.id)}
+                              className="leading-10 mt-0.5 text-blue-500 hover:text-blue-600 dark:text-blue-400 hover:dark:text-blue-300"
+                            >
+                              Suivi
+                            </button>
+                          }
+                        </>
+                        }
                       </div>
                       <p className="text-base text-gray-500 dark:text-gray-400">
                         <time
@@ -72,7 +110,7 @@ export default function StoryView() {
                   </div>
                 </address>
 
-                <StoryBar id={1}/>
+                <StoryBar id={1} story={story} />
 
                 <img
                   src="https://flowbite.s3.amazonaws.com/typography-plugin/typography-image-1.png"
@@ -88,7 +126,7 @@ export default function StoryView() {
                   {story.content}
                 </p>
 
-                <StoryBar id={2}/>
+                <StoryBar id={2} story={story} />
                 <StoryComments />
               </article>
             </div>

@@ -6,7 +6,8 @@ import { Provider } from 'react-redux';
 import { BrowserRouter } from 'react-router-dom';
 import App from './App';
 import 'flowbite';
-import StoryCreate from './pages/story/StoryCreate';
+import ReactCrop from 'react-image-crop';
+import 'react-image-crop/dist/ReactCrop.css';
 
 const theme = localStorage.getItem('theme');
 

@@ -8,6 +8,7 @@ import themesReducer from './themesSlice';
 const store = configureStore({
     reducer: {
         auth: authReducer,
+        auth2: authReducer,
         stories: storiesReducer,
         story: storyReducer,
         user: userReducer,

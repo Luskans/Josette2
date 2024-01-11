@@ -1,7 +1,7 @@
 import { initFlowbite } from 'flowbite'
 import { useEffect } from 'react';
 
-export default function StoryBar({ id }) {
+export default function StoryBar({ id, story }) {
   useEffect(() => {
     initFlowbite();
   }, []);
@@ -16,7 +16,7 @@ export default function StoryBar({ id }) {
               <path d="M7.5 14.5C8.05228 14.5 8.5 14.0523 8.5 13.5C8.5 12.9477 8.05228 12.5 7.5 12.5C6.94772 12.5 6.5 12.9477 6.5 13.5C6.5 14.0523 6.94772 14.5 7.5 14.5Z" fill="currentColor"/>
               <path d="M12.5 14.5C13.0523 14.5 13.5 14.0523 13.5 13.5C13.5 12.9477 13.0523 12.5 12.5 12.5C11.9477 12.5 11.5 12.9477 11.5 13.5C11.5 14.0523 11.9477 14.5 12.5 14.5Z" fill="currentColor"/>
           </svg>
-          <p className="text-sm text-gray-500 dark:text-gray-300">5.2K</p>
+          <p className="text-sm text-gray-500 dark:text-gray-300">{story.like ? story.like.length : 0}</p>
         </button>
         <div
           id={`tooltip-likes${id}`}
@@ -31,7 +31,7 @@ export default function StoryBar({ id }) {
           <svg className="w-5 h-5 text-gray-400 hover:text-gray-500 hover:dark:text-gray-300" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 18">
               <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="1" d="M5 5h9M5 9h5m8-8H2a1 1 0 0 0-1 1v10a1 1 0 0 0 1 1h4l3.5 4 3.5-4h5a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1Z"/>
           </svg>
-          <p className="text-sm text-gray-500 dark:text-gray-300">421</p>
+          <p className="text-sm text-gray-500 dark:text-gray-300">{story.comment ? story.comment.length : 0}</p>
         </button>
         <div
           id={`tooltip-comments${id}`}
@@ -49,7 +49,7 @@ export default function StoryBar({ id }) {
                 <path d="M10 13c4.97 0 9-2.686 9-6s-4.03-6-9-6-9 2.686-9 6 4.03 6 9 6Z"/>
               </g>
           </svg>
-          <p className="text-sm text-gray-500 dark:text-gray-300">124K</p>
+          <p className="text-sm text-gray-500 dark:text-gray-300">{story.viewCount ? story.viewCount : 0}</p>
         </button>
         <div
           id={`tooltip-views${id}`}
