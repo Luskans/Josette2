@@ -1,18 +1,26 @@
 import { configureStore } from "@reduxjs/toolkit";
 import authReducer from './authSlice';
-import storiesReducer from './storiesSlice';
-import storyReducer from './storySlice';
 import userReducer from './userSlice';
-import themesReducer from './themesSlice';
+import storyReducer from './storySlice';
+import profilReducer from './profilSlice';
+import themeReducer from './themeSlice';
+import followReducer from './followSlice';
+import commentReducer from './commentSlice';
+import likeReducer from './likeSlice';
+import favoriteReducer from './favoriteSlice';
 
 const store = configureStore({
     reducer: {
         auth: authReducer,
         auth2: authReducer,
-        stories: storiesReducer,
-        story: storyReducer,
         user: userReducer,
-        themes: themesReducer,
+        story: storyReducer,
+        profil: profilReducer,
+        theme: themeReducer,
+        follow: followReducer,
+        comment: commentReducer,
+        like: likeReducer,
+        favorite: favoriteReducer
     }
 })
 

@@ -1,26 +1,26 @@
 import { useDispatch, useSelector } from 'react-redux';
-import { fetchUser } from '../../store/userSlice';
+import { fetchProfil } from '../../store/profilSlice';
 import BotNav from '../../components/BotNav';
 import StoryCardMin from '../story/StoryCardMin';
 import userImage from '../../assets/user_image.webp';
 import { useEffect } from 'react';
-import { resetUser } from '../../store/userSlice';
+import { resetProfil } from '../../store/profilSlice';
 import { Link, useParams } from 'react-router-dom';
 import { initFlowbite } from 'flowbite';
 
 export default function ProfilView() {
   const dispatch = useDispatch();
   let { id } = useParams();
-  const loaded = useSelector((state) => state.user.loaded);
-  const user = useSelector((state) => state.user.detail);
+  const loaded = useSelector((state) => state.profil.loaded);
+  const profil = useSelector((state) => state.profil.detail);
 
   
   useEffect(() => {
-    dispatch(fetchUser(id));
+    dispatch(fetchProfil(id));
     
     // Obligé de reset le state car le useEffect ne prend pas en compte l'id en dépendance
     return () => {
-      dispatch(resetUser());
+      dispatch(resetProfil());
     };
   }, []);
   
@@ -41,12 +41,12 @@ export default function ProfilView() {
                 <div className="w-full flex justify-between items-center">
                   <div></div>
                   <h2 className="text-3xl md:text-4xl font-extrabold">
-                    {user.name}
+                    {profil.name}
                   </h2>
                   <div>
                     <button
-                      id="addUserButton"
-                      data-tooltip-target="tooltip-addUser"
+                      id="addProfilButton"
+                      data-tooltip-target="tooltip-addProfil"
                       type="button"
                       className="inline-flex flex-col items-center justify-center mt-3"
                     >
@@ -67,7 +67,7 @@ export default function ProfilView() {
                       </svg>
                     </button>
                     <div
-                      id="tooltip-addUser"
+                      id="tooltip-addProfil"
                       role="tooltip"
                       className="absolute z-10 invisible inline-block px-3 py-2 text-sm font-medium text-white transition-opacity duration-300 bg-gray-900 rounded-lg shadow-sm opacity-0 tooltip dark:bg-gray-700"
                     >
@@ -76,14 +76,14 @@ export default function ProfilView() {
                     </div>
                   </div>
                 </div>
-                <blockquote className="text-xl italic font-semibold text-gray-500 dark:text-white">
+                <blockquote className="text-xl italic break-words font-semibold text-gray-500 dark:text-white">
                   <p>
                     "Flowbite is just awesome. It contains tons of predesigned
                     components and pages starting from login screen."
                   </p>
                 </blockquote>
-                <p className="text-gray-500 dark:text-gray-400">
-                  {user.description}
+                <p className="text-gray-500 text-justify leading-loose break-words dark:text-gray-400">
+                  {profil.description}
                   Track work across the enterprise through an open,
                   collaborative platform. Link issues across Jira and ingest
                   data from other software development tools, so your IT support
@@ -146,7 +146,7 @@ export default function ProfilView() {
 
           <section className="pb-16">
             <div className="flex flex-wrap justify-center gap-4 items-center">
-              {user.stories.map((story) => (
+              {profil.stories.map((story) => (
                 <StoryCardMin key={story.id} story={story} />
               ))}
             </div>

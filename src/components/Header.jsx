@@ -4,23 +4,17 @@ import styled from 'styled-components';
 import { useDispatch, useSelector } from 'react-redux';
 import { useEffect, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { clearAuth } from '../store/authSlice';
+import { logout } from '../store/userSlice';
 
 const NavContainer = styled.nav`
   transition: all 0.5s ease-in-out;
-`;
-
-const LogoBrand = styled.img`
-  width: 50px;
-  margin-right: 5px;
 `;
 
 export default function Header() {
   const [isToggled, setIsToggled] = useState(
     localStorage.getItem('theme') === 'light' ? false : true
   );
-  const connected = useSelector((state) => state.auth.token);
-  const user = useSelector((state) => state.auth.user);
+  const user = useSelector((state) => state.user.user);
   let prevScroll = window.scrollY;
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -56,7 +50,8 @@ export default function Header() {
   };
 
   const handleClick = () => {
-    dispatch(clearAuth());
+    // dispatch(clearAuth());
+    dispatch(logout());
     navigate('/');
     console.log('deco');
   };
@@ -87,7 +82,7 @@ export default function Header() {
               Toggle me
             </span> */}
           </label>
-          {!connected ? (
+          {!user ? (
             <>
               <Link
                 to="/login"
@@ -208,78 +203,5 @@ export default function Header() {
         </div>
       </div>
     </NavContainer>
-
-    // NEXTUI
-    // <Navbar shouldHideOnScroll aria-label="Navigation">
-    //    <NavbarBrand  as={Link} href="/">
-    //       <LogoBrand src={logoBluette} alt='Brand logo' />
-    //       <p className="font-bold text-inherit">BLUETTE</p>
-    //    </NavbarBrand>
-    //    <NavbarContent className="hidden sm:flex gap-4" justify="center">
-    //    <NavbarItem>
-    //       <Link color="foreground" href="#">
-    //          Features
-    //       </Link>
-    //    </NavbarItem>
-    //    <NavbarItem isActive>
-    //       <Link href="#" aria-current="page">
-    //          Customers
-    //       </Link>
-    //    </NavbarItem>
-    //    <NavbarItem>
-    //       <Link color="foreground" href="#">
-    //          Integrations
-    //       </Link>
-    //    </NavbarItem>
-    //    </NavbarContent>
-    //    <NavbarContent justify="end">
-    //    <NavbarItem className="hidden lg:flex">
-    //       <Link href="/login">Login</Link>
-    //    </NavbarItem>
-    //    <NavbarItem>
-    //       <Button as={Link} href="/signup" color="primary" variant="flat">
-    //          Sign Up
-    //       </Button>
-    //    </NavbarItem>
-    //    </NavbarContent>
-    // </Navbar>
-
-    //BASIC
-    // <HeaderContainer className="mobileHeader">
-    //    <Link to="/">
-    //       <LogoBrand src={logoBluette} alt="Logo de Bluette" />
-    //    </Link>
-
-    //    <NavContainer>
-    //       {!connected ? (
-    //          <>
-    //             <Link to="/login">
-    //                <Button colorScheme="teal" variant="outline">
-    //                   Connexion
-    //                </Button>
-    //             </Link>
-    //             <Link to="/signin">
-    //                <Button colorScheme="teal" variant="solid">
-    //                   Inscription
-    //                </Button>
-    //             </Link>
-    //          </>
-    //       ) : (
-    //          <>
-    //             <Link to="/story/create">
-    //                <Button colorScheme="teal" variant="outline">
-    //                   <i className="fa-solid fa-plus fa-2xl"></i>
-    //                </Button>
-    //             </Link>
-    //             <Link to="/profil">
-    //                <Button colorScheme="teal" variant="solid">
-    //                   <i className="fa-regular fa-user fa-2xl"></i>
-    //                </Button>
-    //             </Link>
-    //             <p>Bienvenue {(user.name)}</p>
-    //          </>
-    //       )}
-    //    </NavContainer>
-    // </HeaderContainer>
   );
 }

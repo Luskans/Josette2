@@ -143,7 +143,7 @@ export default function StoryCardMin({ story }) {
                 </div>
             </div>
           </div>
-          <h3 className="leading-none line-clamp-2 mb-2 pl-2 pt-2 text-l font-bold tracking-tight text-gray-900 dark:text-white">
+          <h3 className="min-h-[40px] leading-none line-clamp-2 break-words mb-2 pl-2 pt-2 text-l font-bold tracking-tight text-gray-900 dark:text-white">
             <a href="#">{story.title}</a>
           </h3>
           <div className="flex justify-end gap-2 pt-1 p-2">

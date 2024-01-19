@@ -1,38 +1,31 @@
-import styled from 'styled-components';
 import { useDispatch, useSelector } from 'react-redux';
 import { useEffect } from 'react';
-import { fetchStories } from '../../store/storiesSlice';
+import { getStories } from '../../store/storySlice';
 import BotNav from '../../components/BotNav';
 import Notification from './Notification';
 import Cta from './Cta';
 import StoryCardMax from '../story/StoryCardMax';
 import Carousel from './Carousel';
 
-const MainContainer = styled.main`
-  padding: 0 10%;
-`;
-
 export default function Home() {
   const dispatch = useDispatch();
-  const loaded = useSelector((state) => state.stories.loaded);
-  const storiesList = useSelector((state) => state.stories.list);
-  const connected = useSelector((state) => state.auth.token);
-  const user = useSelector((state) => state.auth.user);
+  const loaded = useSelector((state) => state.story.loaded);
+  const storyList = useSelector((state) => state.story.list);
+  const user = useSelector((state) => state.user.user);
 
   useEffect(() => {
-    // connected && dispatch(fetchStories());
-    dispatch(fetchStories());
+    dispatch(getStories());
   }, [dispatch]);
 
   useEffect(() => {
     console.log('test storage on home', localStorage);
     user && console.log('test user on home', user);
-    storiesList && console.log('test stories on home', storiesList);
+    storyList && console.log('test stories on home', storyList);
   }, []);
 
   return (
     <>
-      {connected ? <Carousel /> : <Cta />}
+      {user ? <Carousel /> : <Cta />}
       <section className="bg-white dark:bg-gray-900">
         <div className="py-12 px-4 mx-auto max-w-screen-xl lg:px-6">
           <div className="mx-auto max-w-screen-sm text-center lg:mb-16 mb-8">
@@ -44,7 +37,7 @@ export default function Home() {
           <div className="grid gap-4 lg:grid-cols-4 md:grid-cols-3 sm:grid-cols-2">
           {/* <div className="grid gap-8 mb-6 lg:mb-16 md:grid-cols-2"> */}
             {loaded &&
-              storiesList.map(story => (
+              storyList.map(story => (
                 <StoryCardMax key={story.id} story={story} />
             ))}
           </div>

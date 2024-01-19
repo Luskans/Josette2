@@ -3,8 +3,8 @@ import axios from 'axios';
 
 const apiURL = import.meta.env.VITE_API_URL;
 
-export const themesSlice = createSlice({
-  name: 'themes',
+export const themeSlice = createSlice({
+  name: 'theme',
   initialState: {
     list: [],
     loaded: false
@@ -17,7 +17,7 @@ export const themesSlice = createSlice({
   },
 });
 
-export const { setThemes } = themesSlice.actions;
+export const { setThemes } = themeSlice.actions;
 
 export const fetchThemes = () => (dispatch, getState) => {
   const state = getState();
@@ -39,4 +39,4 @@ export const fetchThemes = () => (dispatch, getState) => {
   }
 };
 
-export default themesSlice.reducer;
+export default themeSlice.reducer;

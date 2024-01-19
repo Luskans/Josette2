@@ -1,7 +1,7 @@
 import { Controller, useForm } from 'react-hook-form';
 import axios from 'axios';
 import toast from 'react-hot-toast';
-import { fetchThemes } from '../../store/themesSlice';
+import { fetchThemes } from '../../store/themeSlice';
 import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { initFlowbite } from 'flowbite';
@@ -12,13 +12,13 @@ export default function StoryCreate() {
   const apiURL = import.meta.env.VITE_API_URL;
   const userId = JSON.parse(localStorage.getItem('user')).id;
   const token = localStorage.getItem('token');
-  const loaded = useSelector((state) => state.themes.loaded);
-  const themesList = useSelector((state) => state.themes.list);
+  const loaded = useSelector((state) => state.theme.loaded);
+  const themeList = useSelector((state) => state.theme.list);
   const [selectedImage, setSelectedImage] = useState(null);
   const [cropData, setCropData] = useState(null); // Ici tu stockeras les données du crop
 
   console.log('user storycreate', userId);
-  console.log('themes storycreate', themesList);
+  console.log('themes storycreate', themeList);
   console.log('token storycreate', token);
 
   const {
@@ -192,7 +192,7 @@ export default function StoryCreate() {
                       className="columns-2 text-sm text-gray-700 dark:text-gray-200"
                       aria-labelledby="themesList"
                     >
-                      {themesList.map((theme) => (
+                      {themeList.map((theme) => (
                         <Controller
                         name="themes"
                         control={control}

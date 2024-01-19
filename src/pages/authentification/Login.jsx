@@ -4,7 +4,8 @@ import styled from 'styled-components';
 import axios from 'axios';
 import { Link, useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import { login } from '../../store/authSlice';
+// import { login } from '../../store/authSlice';
+import { login } from '../../store/userSlice';
 import logoBluette from '../../assets/logoV2.png';
 import toast from 'react-hot-toast';
 
@@ -17,9 +18,11 @@ export default function Login() {
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const token = useSelector((state) => state.auth.token);
-  const user = useSelector((state) => state.auth.user);
-  const user2 = useSelector((state) => state.auth2.user);
+  const token = useSelector((state) => state.user.token);
+  const user = useSelector((state) => state.user.user);
+  // const token = useSelector((state) => state.auth.token);
+  // const user = useSelector((state) => state.auth.user);
+  // const user2 = useSelector((state) => state.auth2.user);
 
   const apiURL = import.meta.env.VITE_API_URL;
 
