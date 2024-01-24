@@ -85,7 +85,7 @@ export default function StoryComments({ comment }) {
             </ul>
           </div>
         </footer>
-        <p className="text-gray-800 break-words text-justify dark:text-gray-100">
+        <p className="text-sm text-gray-800 break-words text-justify dark:text-gray-100">
           {comment.content}
         </p>
       </article>

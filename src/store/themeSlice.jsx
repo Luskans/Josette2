@@ -21,18 +21,11 @@ export const { setThemes } = themeSlice.actions;
 
 export const fetchThemes = () => (dispatch, getState) => {
   const state = getState();
-  if (!state.themes.loaded) {
-    const token = localStorage.getItem('token');
-    // const token = state.auth.token;
-
+  if (!state.theme.loaded) {
     axios
-      .get(`${apiURL}/themes`, {
-        headers: {
-          'Authorization': `Bearer ${token}`
-        }
-      })
+      .get(`${apiURL}/themes`)
       .then(response => {
-        console.log('response', response.data);
+        // console.log('response', response.data);
         dispatch(setThemes(response.data));
       })
       .catch(error => console.error('Erreur de chargement', error));

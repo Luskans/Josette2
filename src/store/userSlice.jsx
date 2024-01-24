@@ -9,7 +9,7 @@ export const userSlice = createSlice({
   initialState: {
     token: localStorage.getItem('token'), // Précharge le token à partir du local storage s'il existe
     loaded: false,
-    user: JSON.parse(localStorage.getItem('user')) || null
+    detail: JSON.parse(localStorage.getItem('user')) || null
   },
   reducers: {
     setToken: (state, action) => {
@@ -18,7 +18,7 @@ export const userSlice = createSlice({
     },
     setUser: (state, action) => {
       localStorage.setItem('user', JSON.stringify(action.payload));
-      state.user = action.payload;
+      state.detail = action.payload;
       state.loaded = true;
     },
     resetUser: (state) => {
@@ -26,26 +26,26 @@ export const userSlice = createSlice({
       localStorage.removeItem('user');
       state.token = null;
       state.loaded = false;
-      state.user = null;
+      state.detail = null;
     },
     addFollow: (state, action) => {
       if (!state.user.imFollowing.includes(action.payload)) {
         const updatedUser = {
-          ...state.user,
+          ...state.detail,
           imFollowing: [...state.user.imFollowing, action.payload]
         };
         localStorage.setItem('user', JSON.stringify(updatedUser));
-        state.user = updatedUser;
+        state.detail = updatedUser;
       }
     },
     removeFollow: (state, action) => {
       const updatedUser = {
-        ...state.user,
-        imFollowing: state.user.imFollowing.filter(id => id !== action.payload)
+        ...state.detail,
+        imFollowing: state.detail.imFollowing.filter(id => id !== action.payload)
       };
       
       localStorage.setItem('user', JSON.stringify(updatedUser));
-      state.user = updatedUser;
+      state.detail = updatedUser;
     },
   },
 })
@@ -66,9 +66,9 @@ export const logout = () => dispatch => {
 
 export const follow = (profilId) => (dispatch, getState) => {
   const state = getState();
-  if (state.token && state.user) {
+  if (state.token && state.detail) {
     const data = {
-      follower: state.user.id,
+      follower: state.detail.id,
       followed: profilId
     }
     axios
@@ -78,9 +78,9 @@ export const follow = (profilId) => (dispatch, getState) => {
         }
       })
       .then((response) => {
-        if (!state.user.imFollowing.find(profil => profil.id === profilId)) {
-          const newImFollowing = [...user.imFollowing, response.data.follow];
-          const newUser = { ...user, imFollowing: newImFollowing };
+        if (!state.detail.imFollowing.find(profil => profil.id === profilId)) {
+          const newImFollowing = [...detail.imFollowing, response.data.follow];
+          const newUser = { ...detail, imFollowing: newImFollowing };
           dispatch(setUser(newUser));
           localStorage.setItem('user', JSON.stringify(newUser));
         }
@@ -93,7 +93,7 @@ export const follow = (profilId) => (dispatch, getState) => {
 
 export const unfollow = (profilId) => (dispatch, getState) => {
   const state = getState();
-  if (state.token && state.user) {
+  if (state.token && state.detail) {
     axios
       .delete(`${apiURL}/follows/${profilId}`, {
         headers: {
@@ -101,8 +101,8 @@ export const unfollow = (profilId) => (dispatch, getState) => {
         }
       })
       .then((response) => {
-        const newImFollowing = user.imFollowing.filter(profile => profile.id !== userIdToUnfollow);
-        const newUser = { ...user, imFollowing: newImFollowing };
+        const newImFollowing = detail.imFollowing.filter(profile => profile.id !== userIdToUnfollow);
+        const newUser = { ...detail, imFollowing: newImFollowing };
         dispatch(setUser(newUser)); // met à jour le state avec le nouvel utilisateur suivant
         localStorage.setItem('user', JSON.stringify(newUser)); // met à jour le localStorage
       })

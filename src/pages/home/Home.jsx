@@ -1,6 +1,6 @@
 import { useDispatch, useSelector } from 'react-redux';
-import { useEffect } from 'react';
-import { getStories } from '../../store/storySlice';
+import { useEffect, useState } from 'react';
+import { getStories, getStoriesByDateAsc, getStoriesByDateDesc } from '../../store/storySlice';
 import BotNav from '../../components/BotNav';
 import Notification from './Notification';
 import Cta from './Cta';
@@ -11,17 +11,39 @@ export default function Home() {
   const dispatch = useDispatch();
   const loaded = useSelector((state) => state.story.loaded);
   const storyList = useSelector((state) => state.story.list);
-  const user = useSelector((state) => state.user.user);
+  const user = useSelector((state) => state.user.detail);
+  const [totalPage, setTotalPage] = useState();
+  const [currentPage, setCurrentPage] = useState();
+  const [search, setSearch] = useState();
 
   useEffect(() => {
-    dispatch(getStories());
-  }, [dispatch]);
+    // dispatch(getStories());
+    dispatch(getStoriesByDateAsc());
+  }, []);
 
   useEffect(() => {
     console.log('test storage on home', localStorage);
     user && console.log('test user on home', user);
     storyList && console.log('test stories on home', storyList);
   }, []);
+
+  const handlePrevious = () => {
+    if (currentPage > 1) {
+      setCurrentPage(currentPage - 1);
+      dispatch(getStoriesByPage(currentPage - 1)); // Remplace par le bon thunk
+    }
+  };
+
+  const handleNext = () => {
+    if (currentPage < totalPage) {
+      setCurrentPage(currentPage + 1);
+      dispatch(getStoriesByPage(currentPage + 1)); // Remplace par le bon thunk
+    }
+  };
+
+  const handleSearch = (search) => {
+    setSearch(search);
+  };
 
   return (
     <>
@@ -43,7 +65,7 @@ export default function Home() {
           </div>
         </div>
       </section>
-      <BotNav />
+      <BotNav totalPage={totalPage} currentPage={currentPage}  search={search} handlePrevious={handlePrevious} handleNext={handleNext} handleSearch={handleSearch} />
     </>
   );
 }

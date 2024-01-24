@@ -15,10 +15,11 @@ import StoryView from './pages/story/StoryView';
 import { fetchConnectedUser } from './store/authSlice2';
 import { useDispatch, useSelector } from 'react-redux';
 import { useEffect } from 'react';
+import { fetchThemes } from './store/themeSlice';
 
 export default function App() {
   const dispatch = useDispatch();
-  const user = useSelector(state => state.auth2.user);
+  // const user = useSelector(state => state.auth2.user);
   const navigate = useNavigate();
   const location = useLocation();
   const theme = localStorage.getItem('theme');
@@ -30,6 +31,10 @@ export default function App() {
   //   dispatch(fetchConnectedUser());
   //   console.log('app', user)
   // }, []);
+
+  useEffect(() => {
+    dispatch(fetchThemes());
+  }, []);
 
   return (
     <>

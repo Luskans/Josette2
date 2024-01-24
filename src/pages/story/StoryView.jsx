@@ -23,7 +23,7 @@ export default function StoryView() {
   const commentsAnchor = useRef(null);
 
   const token = useSelector((state) => state.user.token);
-  const user = useSelector((state) => state.user.user);
+  const user = useSelector((state) => state.user.detail);
   const story = useSelector((state) => state.story.detail);
   const loaded = useSelector((state) => state.story.loaded);
 
@@ -31,10 +31,10 @@ export default function StoryView() {
 
   useEffect(() => {
     dispatch(getStory(id));
-    dispatch(getComments());
-    dispatch(getFollow());
-    dispatch(getLike());
-    dispatch(getFavorite());
+    // dispatch(getComments());
+    // dispatch(getFollow());
+    // dispatch(getLike());
+    // dispatch(getFavorite());
     console.log('storyview connected', user.id);
     console.log('user avant dispatch', user);
     // Obligé de reset le state car le useEffect ne prend pas en compte l'id en dépendance

@@ -3,7 +3,7 @@ import { useEffect } from 'react';
 import { useSelector } from 'react-redux';
 
 export default function StoryBar({ id, story, onCommentIconClick }) {
-  const user = useSelector((state) => state.user.user);
+  const user = useSelector((state) => state.user.detail);
 
   useEffect(() => {
     initFlowbite();

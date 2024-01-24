@@ -19,7 +19,7 @@ export default function Login() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const token = useSelector((state) => state.user.token);
-  const user = useSelector((state) => state.user.user);
+  const user = useSelector((state) => state.user.detail);
   // const token = useSelector((state) => state.auth.token);
   // const user = useSelector((state) => state.auth.user);
   // const user2 = useSelector((state) => state.auth2.user);

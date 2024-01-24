@@ -1,14 +1,16 @@
 import { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import { initFlowbite } from 'flowbite'
+import { useSelector } from 'react-redux';
 
 
 const NavContainer = styled.nav`
   transition: all 0.5s ease-in-out;
 `;
 
-export default function BotNav() {
+export default function BotNav({ totalPage, currentPage, search, handlePrevious, handleNext, handleSearch }) {
     let prevScroll = window.scrollY;
+    const themes = useSelector((state) => state.theme.list);
 
     useEffect(() => {
       const scrollHandler = (e) => {
@@ -22,6 +24,7 @@ export default function BotNav() {
         prevScroll = currentScroll;
       };
 
+      console.log('themes en botnav', themes)
       window.addEventListener('scroll', scrollHandler);
       return () => window.removeEventListener('scroll', scrollHandler);
     });
@@ -65,35 +68,39 @@ export default function BotNav() {
           id="searchOptionsDropdown"
           className="z-10 hidden bg-white divide-y divide-gray-100 rounded-lg shadow w-44 dark:bg-gray-700 dark:divide-gray-600"
         >
-          <ul
-            className="py-2 text-sm text-gray-700 dark:text-gray-200"
-            aria-labelledby="moreOptionsDropdownButton"
-          >
-            <li>
-              <a
-                href="#"
-                className="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
-              >
-                Show participants
-              </a>
-            </li>
-            <li>
-              <a
-                href="#"
-                className="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
-              >
-                Adjust volume
-              </a>
-            </li>
-            <li>
-              <a
-                href="#"
-                className="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
-              >
-                Show information
-              </a>
-            </li>
-          </ul>
+          <form onSubmit={() => {handleSearch(`title[]=${data.value}`)}}>
+            <div className="flex">
+              <div className="relative w-full">
+                <input
+                  type="search"
+                  id="search-dropdown"
+                  className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                  placeholder="Par titre..."
+                  required=""
+                />
+                <button
+                  type="submit"
+                  className="absolute top-0 end-0 p-2.5 h-full text-sm font-medium text-white bg-blue-700 rounded-e-lg border border-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+                >
+                  <svg
+                    className="w-4 h-4"
+                    aria-hidden="true"
+                    xmlns="http://www.w3.org/2000/svg"
+                    fill="none"
+                    viewBox="0 0 20 20"
+                  >
+                    <path
+                      stroke="currentColor"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth={2}
+                      d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z"
+                    />
+                  </svg>
+                </button>
+              </div>
+            </div>
+          </form>
         </div>
 
         {/* BOUTON 2 */}
@@ -131,12 +138,23 @@ export default function BotNav() {
             className="py-2 text-sm text-gray-700 dark:text-gray-200"
             aria-labelledby="moreOptionsDropdownButton"
           >
+            {themes.forEach(theme => {
+              <li key={theme}>
+                <a
+                  href="#"
+                  className="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
+                  onClick={() => {handleSearch(`themeName=${theme.name}`)}}
+                >
+                  {theme.name}
+                </a>
+              </li>
+            })}
             <li>
               <a
                 href="#"
                 className="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
               >
-                Show participants
+                Par thèmes
               </a>
             </li>
             <li>
@@ -144,15 +162,7 @@ export default function BotNav() {
                 href="#"
                 className="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
               >
-                Adjust volume
-              </a>
-            </li>
-            <li>
-              <a
-                href="#"
-                className="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
-              >
-                Show information
+                Par favoris
               </a>
             </li>
           </ul>
@@ -164,6 +174,7 @@ export default function BotNav() {
             <button
               type="button"
               className="inline-flex items-center justify-center h-8 px-1 w-6 bg-gray-100 rounded-s-lg dark:bg-gray-600 hover:bg-gray-200 dark:hover:bg-gray-800 focus:outline-none focus:ring-2 focus:ring-gray-200 dark:focus:ring-gray-800"
+              onClick={handlePrevious}
             >
               <svg
                 className="w-2 h-2 rtl:rotate-180"
@@ -183,11 +194,12 @@ export default function BotNav() {
               <span className="sr-only">Previous page</span>
             </button>
             <span className="flex-shrink-0 mx-1 text-sm font-medium space-x-0.5 rtl:space-x-reverse">
-              1 of 345
+              {currentPage} of {totalPage}
             </span>
             <button
               type="button"
               className="inline-flex items-center justify-center h-8 px-1 w-6 bg-gray-100 rounded-e-lg dark:bg-gray-600 hover:bg-gray-200 dark:hover:bg-gray-800 focus:outline-none focus:ring-2 focus:ring-gray-200 dark:focus:ring-gray-800"
+              onClick={handleNext}
             >
               <svg
                 className="w-2 h-2 rtl:rotate-180"
@@ -248,24 +260,36 @@ export default function BotNav() {
               <a
                 href="#"
                 className="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
+                onClick={() => {handleSearch("order['createdAt']=asc")}}
               >
-                Show participants
+                Par date asc
               </a>
             </li>
             <li>
               <a
                 href="#"
                 className="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
+                onClick={() => {handleSearch("order['createdAt']=desc")}}
               >
-                Adjust volume
+                Par date desc
               </a>
             </li>
             <li>
               <a
                 href="#"
                 className="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
+                onClick={() => {handleSearch("byReadingTime=true&order=ASC")}}
               >
-                Show information
+                Par temps lecture asc
+              </a>
+            </li>
+            <li>
+              <a
+                href="#"
+                className="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
+                onClick={() => {handleSearch("byReadingTime=true&order=DESC")}}
+              >
+                Par temps lecture desc
               </a>
             </li>
           </ul>
@@ -310,24 +334,36 @@ export default function BotNav() {
               <a
                 href="#"
                 className="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
+                onClick={() => {handleSearch("byLikes=true&order=ASC")}}
               >
-                Show participants
+                Par likes asc
               </a>
             </li>
             <li>
               <a
                 href="#"
                 className="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
+                onClick={() => {handleSearch("byLikes=true&order=DESC")}}
               >
-                Adjust volume
+                Par likes desc
               </a>
             </li>
             <li>
               <a
                 href="#"
                 className="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
+                onClick={() => {handleSearch("order['viewCount']=asc")}}
               >
-                Show information
+                Par vues asc
+              </a>
+            </li>
+            <li>
+              <a
+                href="#"
+                className="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
+                onClick={() => {handleSearch("order['viewCount']=desc")}}
+              >
+                Par vues desc
               </a>
             </li>
           </ul>
