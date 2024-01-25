@@ -1,16 +1,20 @@
 import { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import { initFlowbite } from 'flowbite'
-import { useSelector } from 'react-redux';
-
+import { useDispatch, useSelector } from 'react-redux';
+import { getStories, setCurrentPage, setSearch } from '../store/storySlice';
 
 const NavContainer = styled.nav`
   transition: all 0.5s ease-in-out;
 `;
 
-export default function BotNav({ totalPage, currentPage, search, handlePrevious, handleNext, handleSearch }) {
+export default function BotNav() {
     let prevScroll = window.scrollY;
-    const themes = useSelector((state) => state.theme.list);
+    const dispatch = useDispatch();
+    const themeList = useSelector((state) => state.theme.list);
+    const totalPage = useSelector((state) => state.story.totalPage);
+    const currentPage = useSelector((state) => state.story.currentPage);
+    const search = useSelector((state) => state.story.search);
 
     useEffect(() => {
       const scrollHandler = (e) => {
@@ -24,7 +28,6 @@ export default function BotNav({ totalPage, currentPage, search, handlePrevious,
         prevScroll = currentScroll;
       };
 
-      console.log('themes en botnav', themes)
       window.addEventListener('scroll', scrollHandler);
       return () => window.removeEventListener('scroll', scrollHandler);
     });
@@ -32,6 +35,26 @@ export default function BotNav({ totalPage, currentPage, search, handlePrevious,
     useEffect(() => {
       initFlowbite();
     }, []);
+
+    const handleSearch = (parameters) => {
+      dispatch(setCurrentPage(1));
+      dispatch(setSearch(parameters));
+      dispatch(getStories(parameters, 1));
+    };
+
+    const handlePrevious = (search, currentPage) => {
+      if (currentPage > 1) {
+        dispatch(getStories(search, currentPage - 1));
+        dispatch(setCurrentPage(currentPage - 1))
+      }
+    };
+  
+    const handleNext = (search, currentPage, totalPage) => {
+      if (currentPage < totalPage) {
+        dispatch(getStories(search, currentPage + 1));
+        dispatch(setCurrentPage(currentPage + 1))
+      }
+    };
 
   return (
     <NavContainer className="botNav fixed bottom-0 left-0 z-20 w-full h-16  bg-white border-t border-gray-200 dark:bg-gray-700 dark:border-gray-600">
@@ -68,15 +91,20 @@ export default function BotNav({ totalPage, currentPage, search, handlePrevious,
           id="searchOptionsDropdown"
           className="z-10 hidden bg-white divide-y divide-gray-100 rounded-lg shadow w-44 dark:bg-gray-700 dark:divide-gray-600"
         >
-          <form onSubmit={() => {handleSearch(`title[]=${data.value}`)}}>
+          <form onSubmit={(e) => {
+            e.preventDefault();
+            const formData = new FormData(e.target)
+            const title = formData.get('title')
+            handleSearch(`title[]=${title}`)
+          }}>
             <div className="flex">
               <div className="relative w-full">
                 <input
                   type="search"
+                  name="title"
                   id="search-dropdown"
                   className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                   placeholder="Par titre..."
-                  required=""
                 />
                 <button
                   type="submit"
@@ -138,33 +166,17 @@ export default function BotNav({ totalPage, currentPage, search, handlePrevious,
             className="py-2 text-sm text-gray-700 dark:text-gray-200"
             aria-labelledby="moreOptionsDropdownButton"
           >
-            {themes.forEach(theme => {
-              <li key={theme}>
-                <a
-                  href="#"
-                  className="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
+            {themeList.map((theme) => (
+              <li key={theme.name}>
+                <button
+                  type="button"
+                  className="w-full px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
                   onClick={() => {handleSearch(`themeName=${theme.name}`)}}
                 >
                   {theme.name}
-                </a>
+                </button>
               </li>
-            })}
-            <li>
-              <a
-                href="#"
-                className="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
-              >
-                Par thèmes
-              </a>
-            </li>
-            <li>
-              <a
-                href="#"
-                className="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
-              >
-                Par favoris
-              </a>
-            </li>
+            ))}
           </ul>
         </div>
 
@@ -174,7 +186,10 @@ export default function BotNav({ totalPage, currentPage, search, handlePrevious,
             <button
               type="button"
               className="inline-flex items-center justify-center h-8 px-1 w-6 bg-gray-100 rounded-s-lg dark:bg-gray-600 hover:bg-gray-200 dark:hover:bg-gray-800 focus:outline-none focus:ring-2 focus:ring-gray-200 dark:focus:ring-gray-800"
-              onClick={handlePrevious}
+              onClick={(e) => {
+                e.preventDefault;
+                handlePrevious(search, currentPage)
+              }}
             >
               <svg
                 className="w-2 h-2 rtl:rotate-180"
@@ -199,7 +214,10 @@ export default function BotNav({ totalPage, currentPage, search, handlePrevious,
             <button
               type="button"
               className="inline-flex items-center justify-center h-8 px-1 w-6 bg-gray-100 rounded-e-lg dark:bg-gray-600 hover:bg-gray-200 dark:hover:bg-gray-800 focus:outline-none focus:ring-2 focus:ring-gray-200 dark:focus:ring-gray-800"
-              onClick={handleNext}
+              onClick={(e) => {
+                e.preventDefault;
+                handleNext(search, currentPage, totalPage)
+              }}
             >
               <svg
                 className="w-2 h-2 rtl:rotate-180"
@@ -257,40 +275,40 @@ export default function BotNav({ totalPage, currentPage, search, handlePrevious,
             aria-labelledby="moreOptionsDropdownButton"
           >
             <li>
-              <a
-                href="#"
-                className="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
-                onClick={() => {handleSearch("order['createdAt']=asc")}}
+              <button
+                type="button"
+                className="w-full px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
+                onClick={() => {handleSearch("order[createdAt]=asc")}}
               >
                 Par date asc
-              </a>
+              </button>
             </li>
             <li>
-              <a
-                href="#"
-                className="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
-                onClick={() => {handleSearch("order['createdAt']=desc")}}
+              <button
+                type="button"
+                className="w-full px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
+                onClick={() => {handleSearch("order[createdAt]=desc")}}
               >
                 Par date desc
-              </a>
+              </button>
             </li>
             <li>
-              <a
-                href="#"
-                className="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
+              <button
+                type="button"
+                className="w-full px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
                 onClick={() => {handleSearch("byReadingTime=true&order=ASC")}}
               >
                 Par temps lecture asc
-              </a>
+              </button>
             </li>
             <li>
-              <a
-                href="#"
-                className="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
+              <button
+                type="button"
+                className="w-full px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
                 onClick={() => {handleSearch("byReadingTime=true&order=DESC")}}
               >
                 Par temps lecture desc
-              </a>
+              </button>
             </li>
           </ul>
         </div>
@@ -331,67 +349,44 @@ export default function BotNav({ totalPage, currentPage, search, handlePrevious,
             aria-labelledby="moreOptionsDropdownButton"
           >
             <li>
-              <a
-                href="#"
-                className="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
+              <button
+                type="button"
+                className="w-full px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
                 onClick={() => {handleSearch("byLikes=true&order=ASC")}}
               >
                 Par likes asc
-              </a>
+              </button>
             </li>
             <li>
-              <a
-                href="#"
-                className="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
+              <button
+                type="button"
+                className="w-full px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
                 onClick={() => {handleSearch("byLikes=true&order=DESC")}}
               >
                 Par likes desc
-              </a>
+              </button>
             </li>
             <li>
-              <a
-                href="#"
-                className="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
-                onClick={() => {handleSearch("order['viewCount']=asc")}}
+              <button
+                type="button"
+                className="w-full px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
+                onClick={() => {handleSearch("order[viewCount]=asc")}}
               >
                 Par vues asc
-              </a>
+              </button>
             </li>
             <li>
-              <a
-                href="#"
-                className="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
-                onClick={() => {handleSearch("order['viewCount']=desc")}}
+              <button
+                type="button"
+                className="w-full px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
+                onClick={() => {handleSearch("order[viewCount]=desc")}}
               >
                 Par vues desc
-              </a>
+              </button>
             </li>
           </ul>
         </div>
       </div>
     </NavContainer>
-
-    // BASIC
-    // <>
-    //    {activated && <SubMobileNav type={tab} />}
-    //    <NavContainer className="mobileNav">
-    //       <i
-    //          className="fa-solid fa-magnifying-glass"
-    //          onClick={() => {
-    //             handleClick();
-    //             handleSearchClick();
-    //          }}
-    //       ></i>
-    //       <p
-    //          onClick={() => {
-    //             handleClick();
-    //             handleThemeClick();
-    //          }}
-    //       >Thèmes</p>
-    //       <p>Date</p>
-    //       <p>Vues</p>
-    //       <p>Note</p>
-    //    </NavContainer>
-    // </>
   );
 }

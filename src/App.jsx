@@ -36,6 +36,9 @@ export default function App() {
     dispatch(fetchThemes());
   }, []);
 
+  useEffect(() => {
+  }, [location]);
+
   return (
     <>
     <main className={`main ${theme ?? 'light'} text-foreground bg-background ${showHeaderAndFooter && 'pt-16'} ${showBotNav && 'pb-16'}`}>
@@ -48,7 +51,7 @@ export default function App() {
           <Route path="/profil" element={<ProfilList />} />
           <Route path="/profil/view/:id" element={<ProfilView />} />
           <Route path="/story/create" element={<StoryCreate />} />
-          <Route path="/story/view/:id" element={<StoryView />} />
+          <Route path="/story/view/:id" element={<StoryView key={window.location.pathname} />} />
           <Route path="*" element={<Error />} />
       </Routes>
       {showHeaderAndFooter && <Footer />}

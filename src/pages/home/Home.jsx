@@ -1,6 +1,6 @@
 import { useDispatch, useSelector } from 'react-redux';
 import { useEffect, useState } from 'react';
-import { getStories, getStoriesByDateAsc, getStoriesByDateDesc } from '../../store/storySlice';
+import { getStories, resetLoaded } from '../../store/storySlice';
 import BotNav from '../../components/BotNav';
 import Notification from './Notification';
 import Cta from './Cta';
@@ -12,38 +12,46 @@ export default function Home() {
   const loaded = useSelector((state) => state.story.loaded);
   const storyList = useSelector((state) => state.story.list);
   const user = useSelector((state) => state.user.detail);
-  const [totalPage, setTotalPage] = useState();
-  const [currentPage, setCurrentPage] = useState();
-  const [search, setSearch] = useState();
+  const search = useSelector((state) => state.story.search);
 
   useEffect(() => {
-    // dispatch(getStories());
-    dispatch(getStoriesByDateAsc());
+    dispatch(getStories("order[createdAt]=asc", 1));
   }, []);
 
   useEffect(() => {
-    console.log('test storage on home', localStorage);
-    user && console.log('test user on home', user);
-    storyList && console.log('test stories on home', storyList);
+    // console.log('test storage on home', localStorage);
+    // user && console.log('test user on home', user);
+    // storyList && console.log('test stories on home', storyList);
+    return () => {
+      dispatch(resetLoaded());
+    };
   }, []);
 
-  const handlePrevious = () => {
-    if (currentPage > 1) {
-      setCurrentPage(currentPage - 1);
-      dispatch(getStoriesByPage(currentPage - 1)); // Remplace par le bon thunk
+  const title = () => {
+    if (search === 'order[createdAt]=asc') {
+        return "date croissante";
+    } else if (search === 'order[createdAt]=desc') {
+        return "date décroissante";
+    } else if (search === 'byReadingTime=true&order=ASC') {
+        return "temps de lecture croissant";
+    } else if (search === 'byReadingTime=true&order=DESC') {
+        return "temps de lecture décroissant";
+    } else if (search === 'byLikes=true&order=ASC') {
+        return "nombre de bravos croissant";
+    } else if (search === 'byLikes=true&order=DESC') {
+        return "nombre de bravos décroissant";
+    } else if (search === 'order[viewCount]=asc') {
+        return "nombre de vues croissant";
+    } else if (search === 'order[viewCount]=desc') {
+        return "nombre de vues décroissant";
+    } else if (search.startsWith('themeName=')) {
+        return `thème ${search.split('=')[1]}`;
+    } else if (search.startsWith('title[]=')) {
+        return `titre qui contient "${search.split('=')[1]}"`;
+    } else {
+        return "date croissante";
     }
-  };
-
-  const handleNext = () => {
-    if (currentPage < totalPage) {
-      setCurrentPage(currentPage + 1);
-      dispatch(getStoriesByPage(currentPage + 1)); // Remplace par le bon thunk
-    }
-  };
-
-  const handleSearch = (search) => {
-    setSearch(search);
-  };
+}
 
   return (
     <>
@@ -52,12 +60,10 @@ export default function Home() {
         <div className="py-12 px-4 mx-auto max-w-screen-xl lg:px-6">
           <div className="mx-auto max-w-screen-sm text-center lg:mb-16 mb-8">
             <h2 className="mb-4 text-3xl lg:text-4xl tracking-tight font-extrabold text-gray-900 dark:text-white">
-              Histoires par date
+              Histoires par {title()}
             </h2>
           </div>
-          {/* <div className="grid gap-8 lg:grid-cols-2"> */}
           <div className="grid gap-4 lg:grid-cols-4 md:grid-cols-3 sm:grid-cols-2">
-          {/* <div className="grid gap-8 mb-6 lg:mb-16 md:grid-cols-2"> */}
             {loaded &&
               storyList.map(story => (
                 <StoryCardMax key={story.id} story={story} />
@@ -65,7 +71,7 @@ export default function Home() {
           </div>
         </div>
       </section>
-      <BotNav totalPage={totalPage} currentPage={currentPage}  search={search} handlePrevious={handlePrevious} handleNext={handleNext} handleSearch={handleSearch} />
+      <BotNav />
     </>
   );
 }

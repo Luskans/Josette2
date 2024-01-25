@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { Link, useParams } from 'react-router-dom';
+import { Link, useLocation, useParams } from 'react-router-dom';
 import { useEffect, useRef, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
@@ -7,7 +7,7 @@ import { fullLocalDate } from '../../utils/formatDate';
 import defaultUserImage from '../../assets/user_image.webp';
 
 import { addFollow } from '../../store/userSlice';
-import { getStory, resetStory } from '../../store/storySlice';
+import { getStory, resetLoaded, resetStory } from '../../store/storySlice';
 import { getFollow } from '../../store/followSlice';
 import { getComments } from '../../store/commentSlice';
 import { getLike } from '../../store/likeSlice';
@@ -29,44 +29,56 @@ export default function StoryView() {
 
   const apiURL = import.meta.env.VITE_API_URL;
 
+  console.log('test1')
   useEffect(() => {
+    console.log('test2')
+    // dispatch(resetStory());
     dispatch(getStory(id));
+    console.log('test3')
     // dispatch(getComments());
     // dispatch(getFollow());
     // dispatch(getLike());
     // dispatch(getFavorite());
-    console.log('storyview connected', user.id);
-    console.log('user avant dispatch', user);
+    // user && console.log('storyview connected', user.id);
+    // user && console.log('user avant dispatch', user);
+    // story && console.log('story dans storyview', story);
     // Obligé de reset le state car le useEffect ne prend pas en compte l'id en dépendance
     return () => {
       dispatch(resetStory());
+      // dispatch(resetLoaded());
     };
-  }, [user]);
+  }, []);
 
-  const handleFollow = (storyUserId) => {
-    const data = {
-      follower: user.id,
-      followed: storyUserId,
-    };
-    axios
-      .post(`${apiURL}/follows`, data, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      })
-      .then((response) => {
-        // console.log('follow action', response)
-        dispatch(addFollow(storyUserId));
-      })
-      .then(() => {
-        console.log('user apres dispatch', user);
-      })
-      .catch((error) => {
-        error && console.log('follow action erreur');
-      });
-  };
+  useEffect(() => {
+    user && console.log('storyview connected', user.id);
+    user && console.log('user avant dispatch', user);
+    story && console.log('story dans storyview', story);
+  });
 
-  const handleUnfollow = (storyUserId) => {};
+  // const handleFollow = (storyUserId) => {
+  //   const data = {
+  //     follower: user.id,
+  //     followed: storyUserId,
+  //   };
+  //   axios
+  //     .post(`${apiURL}/follows`, data, {
+  //       headers: {
+  //         Authorization: `Bearer ${token}`,
+  //       },
+  //     })
+  //     .then((response) => {
+  //       // console.log('follow action', response)
+  //       dispatch(addFollow(storyUserId));
+  //     })
+  //     .then(() => {
+  //       console.log('user apres dispatch', user);
+  //     })
+  //     .catch((error) => {
+  //       error && console.log('follow action erreur');
+  //     });
+  // };
+
+  // const handleUnfollow = (storyUserId) => {};
 
   const scrollToComments = () => {
     commentsAnchor.current.scrollIntoView({ behavior: 'smooth' });

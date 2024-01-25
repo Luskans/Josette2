@@ -76,7 +76,7 @@ export default function StoryCardMax({ story }) {
             </svg>
           </div>
           <div className="flex gap-2.5">
-            <p className="text-xs text-gray-500 dark:text-gray-300">{story.viewCount ? story.viewCount.length : 0}</p>
+            <p className="text-xs text-gray-500 dark:text-gray-300">{story.viewCount ? story.viewCount : 0}</p>
             <svg
               className="w-4 h-4 text-gray-400 hover:text-gray-500 hover:dark:text-gray-300"
               aria-hidden="true"

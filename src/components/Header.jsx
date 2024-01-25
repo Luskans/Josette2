@@ -14,7 +14,7 @@ export default function Header() {
   const [isToggled, setIsToggled] = useState(
     localStorage.getItem('theme') === 'light' ? false : true
   );
-  const user = useSelector((state) => state.user.user);
+  const user = useSelector((state) => state.user.detail);
   let prevScroll = window.scrollY;
   const dispatch = useDispatch();
   const navigate = useNavigate();
