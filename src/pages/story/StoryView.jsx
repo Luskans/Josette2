@@ -1,4 +1,6 @@
 import axios from 'axios';
+import { useForm } from 'react-hook-form';
+
 import { Link, useLocation, useParams } from 'react-router-dom';
 import { useEffect, useRef, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
@@ -16,6 +18,7 @@ import { getFavorite } from '../../store/favoriteSlice';
 import StoryBar from './StoryBar';
 import StoryComments from './StoryComments';
 import StoryBarOff from './StoryBarOff';
+import toast from 'react-hot-toast';
 
 export default function StoryView() {
   const dispatch = useDispatch();
@@ -26,67 +29,55 @@ export default function StoryView() {
   const user = useSelector((state) => state.user.detail);
   const story = useSelector((state) => state.story.detail);
   const loaded = useSelector((state) => state.story.loaded);
+  const [refresh, setRefresh] = useState(false);
+
+  const {
+    handleSubmit,
+    register,
+    formState: { errors },
+  } = useForm();
 
   const apiURL = import.meta.env.VITE_API_URL;
 
-  console.log('test1')
   useEffect(() => {
-    console.log('test2')
-    // dispatch(resetStory());
     dispatch(getStory(id));
-    console.log('test3')
-    // dispatch(getComments());
-    // dispatch(getFollow());
-    // dispatch(getLike());
-    // dispatch(getFavorite());
-    // user && console.log('storyview connected', user.id);
-    // user && console.log('user avant dispatch', user);
-    // story && console.log('story dans storyview', story);
-    // Obligé de reset le state car le useEffect ne prend pas en compte l'id en dépendance
+   
     return () => {
-      dispatch(resetStory());
-      // dispatch(resetLoaded());
+      dispatch(resetLoaded());
     };
-  }, []);
+  }, [refresh]);
 
-  useEffect(() => {
-    user && console.log('storyview connected', user.id);
-    user && console.log('user avant dispatch', user);
-    story && console.log('story dans storyview', story);
-  });
-
-  // const handleFollow = (storyUserId) => {
-  //   const data = {
-  //     follower: user.id,
-  //     followed: storyUserId,
-  //   };
-  //   axios
-  //     .post(`${apiURL}/follows`, data, {
-  //       headers: {
-  //         Authorization: `Bearer ${token}`,
-  //       },
-  //     })
-  //     .then((response) => {
-  //       // console.log('follow action', response)
-  //       dispatch(addFollow(storyUserId));
-  //     })
-  //     .then(() => {
-  //       console.log('user apres dispatch', user);
-  //     })
-  //     .catch((error) => {
-  //       error && console.log('follow action erreur');
-  //     });
-  // };
-
-  // const handleUnfollow = (storyUserId) => {};
+  console.log('story sur story view', story)
 
   const scrollToComments = () => {
     commentsAnchor.current.scrollIntoView({ behavior: 'smooth' });
   }
 
+  const refreshComponent = () => {
+    setRefresh(!refresh);
+  }
+
+  const onNewSubmit = (data) => {
+    console.log('datas', data);
+    axios
+      .post(`${apiURL}/comments`, data, {
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${token}`
+        },
+      })
+      .then((response) => {
+        toast.success('Commentaire publié !', { duration: 9000 });
+        refreshComponent();
+      })
+      .catch((error) => {
+        toast.error("Une erreur est survenue.", { duration: 9000 });
+      });
+  };
+
   return (
     <>
-      {loaded && (
+      {loaded && story && (
         <>
           <main className="pt-8 pb-16 lg:pt-16 lg:pb-24 bg-white dark:bg-gray-900 antialiased">
             <div className="flex justify-between px-4 mx-auto max-w-screen-xl ">
@@ -181,20 +172,64 @@ export default function StoryView() {
                       Commentaires ({story.comments.length})
                     </h2>
                   </div>
-                  <form className="mb-6">
+                  <form onSubmit={handleSubmit(onNewSubmit)} className="mb-6">
                     <div className="py-2 px-4 mb-4 bg-white rounded-lg rounded-t-lg border border-gray-200 dark:bg-gray-800 dark:border-gray-700">
                       <label htmlFor="comment" className="sr-only">
-                        Écrivez vôtre commentaire ici ...
+                        Écrivez votre commentaire ici ...
                       </label>
                       <textarea
-                        id="comment"
+                        id="content"
+                        name="content"
                         rows={6}
                         className="px-0 w-full text-sm text-gray-900 border-0 focus:ring-0 dark:text-white dark:placeholder-gray-400 dark:bg-gray-800"
-                        placeholder="Write a comment..."
+                        placeholder="Écrivez votre commentaire..."
                         required=""
                         defaultValue={''}
+                        {...register('content', {
+                          required: {
+                            value: true,
+                            message: 'Un commentaire est requis.',
+                          },
+                          minLength: {
+                            value: 4,
+                            message: 'Le commentaire doit contenir au moins 4 caractères.',
+                          },
+                          maxLength: {
+                            value: 512,
+                            message:
+                              'Le commentaire doit contenir au maximum 512 caractères.',
+                          },
+                          pattern: {
+                            value: /^(?=[A-Za-z0-9 ]*[A-Za-z]){4}[A-Za-z0-9 ]*$/,
+                            message:
+                              'Le commentaire ne doit contenir que des lettres (4 min. 512 max.) et des chiffres.',
+                          },
+                        })}
                       />
+                      {errors.content ? (
+                        <p className="mb-2 text-sm font-medium text-red-600 dark:text-red-400">
+                          {errors.content.message}
+                        </p>
+                      ) : (
+                        <p className="mt-1 text-xs text-gray-400 dark:text-gray-400">
+                          4 à 512 caractères.
+                        </p>
+                      )}
                     </div>
+                    <input
+                      type="hidden"
+                      name="userId"
+                      id="userId"
+                      value={user.id}
+                      {...register('userId')}
+                    />
+                    <input
+                      type="hidden"
+                      name="storyId"
+                      id="storyId"
+                      value={story.id}
+                      {...register('storyId')}
+                    />
                     <button
                       type="submit"
                       className="inline-flex items-center py-2.5 px-4 text-xs font-medium text-center text-white bg-blue-700 rounded-lg focus:ring-4 focus:ring-blue-200 dark:focus:ring-blue-900 hover:bg-blue-800"
@@ -203,7 +238,7 @@ export default function StoryView() {
                     </button>
                   </form>
                   {story.comments.map(comment => (
-                    <StoryComments key={comment.id} comment={comment} />
+                    <StoryComments key={comment.id} comment={comment} refresh={refreshComponent} />
                   ))}
                 </section>
               </div>

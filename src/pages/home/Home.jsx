@@ -13,15 +13,14 @@ export default function Home() {
   const storyList = useSelector((state) => state.story.list);
   const user = useSelector((state) => state.user.detail);
   const search = useSelector((state) => state.story.search);
+  const story = useSelector((state) => state.story.detail);
+
+  console.log('user sur home', user)
+  console.log('story view sur home', story)
 
   useEffect(() => {
     dispatch(getStories("order[createdAt]=asc", 1));
-  }, []);
 
-  useEffect(() => {
-    // console.log('test storage on home', localStorage);
-    // user && console.log('test user on home', user);
-    // storyList && console.log('test stories on home', storyList);
     return () => {
       dispatch(resetLoaded());
     };

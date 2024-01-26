@@ -1,9 +1,40 @@
+import axios from 'axios';
 import { initFlowbite } from 'flowbite'
-import { useEffect } from 'react';
-import { useSelector } from 'react-redux';
+import { useEffect, useState } from 'react';
+import toast from 'react-hot-toast';
+import { useDispatch, useSelector } from 'react-redux';
 
 export default function StoryBar({ id, story, onCommentIconClick }) {
+  const dispatch = useDispatch();
   const user = useSelector((state) => state.user.detail);
+  const token = useSelector((state) => state.user.token);
+  const [storyLiked, setStoryLiked] = useState(false);
+
+  const apiURL = import.meta.env.VITE_API_URL;
+
+
+  const checkLike = (userId, storyId) => {
+    // story.likes.forEach(like => {
+    //   if (like.user.id === user.id) {
+    //     setStoryLiked = true;
+    //   }
+    // })
+    axios
+      .post(`${apiURL}/likes?user.id[]=${userId}&story.id[]=${storyId}`, {
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${token}`
+        },
+      })
+      .then((response) => {
+        console.log('likes response', response)
+        // toast.success('Commentaire publié !', { duration: 9000 });
+        // refreshComponent();
+      })
+      .catch((error) => {
+        toast.error("Une erreur est survenue.", { duration: 9000 });
+      });
+  }
 
   useEffect(() => {
     initFlowbite();
@@ -57,7 +88,7 @@ export default function StoryBar({ id, story, onCommentIconClick }) {
           <div className="tooltip-arrow" data-popper-arrow></div>
         </div>
 
-        <button className='flex gap-1.5' data-tooltip-target={`tooltip-views${id}`}>
+        <button onClick={() => checkLike(user.id, story.id)} className='flex gap-1.5' data-tooltip-target={`tooltip-views${id}`}>
           <svg className="w-5 h-5 text-gray-400 hover:text-gray-500 hover:dark:text-gray-300" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 14">
               <g stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="1">
                 <path d="M10 10a3 3 0 1 0 0-6 3 3 0 0 0 0 6Z"/>
