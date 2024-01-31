@@ -1,22 +1,18 @@
 import axios from 'axios';
 import { useForm } from 'react-hook-form';
 
-import { Link, useLocation, useParams } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 import { useEffect, useRef, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
 import { fullLocalDate } from '../../utils/formatDate';
 import defaultUserImage from '../../assets/user_image.webp';
 
-import { addFollow } from '../../store/userSlice';
 import { getStory, resetLoaded, resetStory } from '../../store/storySlice';
-import { getFollow } from '../../store/followSlice';
-import { getComments } from '../../store/commentSlice';
-import { getLike } from '../../store/likeSlice';
-import { getFavorite } from '../../store/favoriteSlice';
+import { getComments, setCurrentPage } from '../../store/commentSlice';
 
 import StoryBar from './StoryBar';
-import StoryComments from './StoryComments';
+import StoryComment from './StoryComment';
 import StoryBarOff from './StoryBarOff';
 import toast from 'react-hot-toast';
 
@@ -28,8 +24,12 @@ export default function StoryView() {
   const token = useSelector((state) => state.user.token);
   const user = useSelector((state) => state.user.detail);
   const story = useSelector((state) => state.story.detail);
-  const loaded = useSelector((state) => state.story.loaded);
-  const [refresh, setRefresh] = useState(false);
+  const storyLoaded = useSelector((state) => state.story.loaded);
+  const comments = useSelector((state) => state.comment.list);
+  const commentsLoaded = useSelector((state) => state.comment.loaded);
+  const totalPage = useSelector(state => state.comment.totalPage);
+  const currentPage = useSelector(state => state.comment.currentPage);
+  const totalComment = useSelector(state => state.comment.totalComment);
 
   const {
     handleSubmit,
@@ -41,43 +41,51 @@ export default function StoryView() {
 
   useEffect(() => {
     dispatch(getStory(id));
-   
+    dispatch(getComments(id, 1));
+
     return () => {
       dispatch(resetLoaded());
     };
-  }, [refresh]);
-
-  console.log('story sur story view', story)
+  }, []);
 
   const scrollToComments = () => {
     commentsAnchor.current.scrollIntoView({ behavior: 'smooth' });
-  }
-
-  const refreshComponent = () => {
-    setRefresh(!refresh);
-  }
+  };
 
   const onNewSubmit = (data) => {
     console.log('datas', data);
     axios
       .post(`${apiURL}/comments`, data, {
         headers: {
-          'Content-Type': 'application/json',
-          'Authorization': `Bearer ${token}`
+          'Content-Type': 'application/ld+json',
+          Authorization: `Bearer ${token}`,
         },
       })
       .then((response) => {
         toast.success('Commentaire publié !', { duration: 9000 });
-        refreshComponent();
       })
       .catch((error) => {
-        toast.error("Une erreur est survenue.", { duration: 9000 });
+        toast.error('Une erreur est survenue.', { duration: 9000 });
       });
+  };
+
+  const handlePrevious = (storyId, currentPage) => {
+    if (currentPage > 1) {
+      dispatch(getComments(storyId, currentPage - 1));
+      dispatch(setCurrentPage(currentPage - 1))
+    }
+  };
+
+  const handleNext = (storyId, currentPage, totalPage) => {
+    if (currentPage < totalPage) {
+      dispatch(getComments(storyId, currentPage + 1));
+      dispatch(setCurrentPage(currentPage + 1))
+    }
   };
 
   return (
     <>
-      {loaded && story && (
+      {storyLoaded && story && (
         <>
           <main className="pt-8 pb-16 lg:pt-16 lg:pb-24 bg-white dark:bg-gray-900 antialiased">
             <div className="flex justify-between px-4 mx-auto max-w-screen-xl ">
@@ -106,7 +114,7 @@ export default function StoryView() {
                         >
                           {story.user.name}
                         </Link>
-                        {(user && (story.user.id !== user.id)) && (
+                        {user && story.user.id !== user.id && (
                           <>
                             <p>.</p>
                             {user.imFollowing ? (
@@ -142,10 +150,19 @@ export default function StoryView() {
                   </div>
                 </section>
 
-                {user
-                ? <StoryBar id={1} story={story} onCommentIconClick={scrollToComments} />
-                : <StoryBarOff id={1} story={story} onCommentIconClick={scrollToComments} />
-                }
+                {user ? (
+                  <StoryBar
+                    id={1}
+                    story={story}
+                    onCommentIconClick={scrollToComments}
+                  />
+                ) : (
+                  <StoryBarOff
+                    id={1}
+                    story={story}
+                    onCommentIconClick={scrollToComments}
+                  />
+                )}
 
                 <img
                   src="https://flowbite.s3.amazonaws.com/typography-plugin/typography-image-1.png"
@@ -161,15 +178,16 @@ export default function StoryView() {
                   {story.content}
                 </p>
 
-                {user
-                ? <StoryBar id={2} story={story} />
-                : <StoryBarOff id={2} story={story} />
-                }
+                {user ? (
+                  <StoryBar id={2} story={story} />
+                ) : (
+                  <StoryBarOff id={2} story={story} />
+                )}
 
                 <section className="not-format" ref={commentsAnchor}>
                   <div className="flex justify-between items-center mb-6">
                     <h2 className="text-lg lg:text-2xl font-bold text-gray-900 dark:text-white">
-                      Commentaires ({story.comments.length})
+                      Commentaires ({totalComment})
                     </h2>
                   </div>
                   <form onSubmit={handleSubmit(onNewSubmit)} className="mb-6">
@@ -192,7 +210,8 @@ export default function StoryView() {
                           },
                           minLength: {
                             value: 4,
-                            message: 'Le commentaire doit contenir au moins 4 caractères.',
+                            message:
+                              'Le commentaire doit contenir au moins 4 caractères.',
                           },
                           maxLength: {
                             value: 512,
@@ -200,7 +219,8 @@ export default function StoryView() {
                               'Le commentaire doit contenir au maximum 512 caractères.',
                           },
                           pattern: {
-                            value: /^(?=[A-Za-z0-9 ]*[A-Za-z]){4}[A-Za-z0-9 ]*$/,
+                            value:
+                              /^(?=[A-Za-z0-9 ]*[A-Za-z]){4}[A-Za-z0-9 ]*$/,
                             message:
                               'Le commentaire ne doit contenir que des lettres (4 min. 512 max.) et des chiffres.',
                           },
@@ -237,9 +257,69 @@ export default function StoryView() {
                       Publier
                     </button>
                   </form>
-                  {story.comments.map(comment => (
-                    <StoryComments key={comment.id} comment={comment} refresh={refreshComponent} />
+
+                  {comments.map(comment => (
+                    <StoryComment key={comment.id} comment={comment} />
                   ))}
+                  {/* <StoryComments /> */}
+
+                  <div className="flex items-center justify-center col-span-2">
+                    <div className="flex items-center justify-between w-full text-gray-600 dark:text-gray-400 bg-gray-100 rounded-lg dark:bg-gray-600 max-w-[128px] mx-2">
+                      <button
+                        type="button"
+                        className="inline-flex items-center justify-center h-8 px-1 w-6 bg-gray-100 rounded-s-lg dark:bg-gray-600 hover:bg-gray-200 dark:hover:bg-gray-800 focus:outline-none focus:ring-2 focus:ring-gray-200 dark:focus:ring-gray-800"
+                        onClick={(e) => {
+                          e.preventDefault;
+                          handlePrevious(id, currentPage);
+                        }}
+                      >
+                        <svg
+                          className="w-2 h-2 rtl:rotate-180"
+                          aria-hidden="true"
+                          xmlns="http://www.w3.org/2000/svg"
+                          fill="none"
+                          viewBox="0 0 6 10"
+                        >
+                          <path
+                            stroke="currentColor"
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                            strokeWidth="2"
+                            d="M5 1 1 5l4 4"
+                          />
+                        </svg>
+                        <span className="sr-only">Previous page</span>
+                      </button>
+                      <span className="flex-shrink-0 mx-1 text-sm font-medium space-x-0.5 rtl:space-x-reverse">
+                        {currentPage} of {totalPage}
+                      </span>
+                      <button
+                        type="button"
+                        className="inline-flex items-center justify-center h-8 px-1 w-6 bg-gray-100 rounded-e-lg dark:bg-gray-600 hover:bg-gray-200 dark:hover:bg-gray-800 focus:outline-none focus:ring-2 focus:ring-gray-200 dark:focus:ring-gray-800"
+                        onClick={(e) => {
+                          e.preventDefault;
+                          handleNext(id, currentPage, totalPage);
+                        }}
+                      >
+                        <svg
+                          className="w-2 h-2 rtl:rotate-180"
+                          aria-hidden="true"
+                          xmlns="http://www.w3.org/2000/svg"
+                          fill="none"
+                          viewBox="0 0 6 10"
+                        >
+                          <path
+                            stroke="currentColor"
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                            strokeWidth="2"
+                            d="m1 9 4-4-4-4"
+                          />
+                        </svg>
+                        <span className="sr-only">Next page</span>
+                      </button>
+                    </div>
+                  </div>
                 </section>
               </div>
             </div>

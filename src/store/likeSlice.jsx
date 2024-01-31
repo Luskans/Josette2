@@ -2,11 +2,13 @@ import { createSlice } from '@reduxjs/toolkit';
 import axios from 'axios';
 
 const apiURL = import.meta.env.VITE_API_URL;
+const token = localStorage.getItem('token');
 
 export const likeSlice = createSlice({
   name: 'like',
   initialState: {
     list: [],
+    detail: [],
     loaded: false
   },
   reducers: {
@@ -14,29 +16,64 @@ export const likeSlice = createSlice({
       state.list = action.payload;
       state.loaded = true;
     },
+    setLike: (state, action) => {
+      state.detail = action.payload;
+      state.loaded = true;
+    },
   },
 });
 
-export const { setLikes } = likeSlice.actions;
+export const { setLikes, setLike } = likeSlice.actions;
 
-export const getLike = () => (dispatch, getState) => {
-  const state = getState();
-  if (!state.like.loaded) {
-    const token = localStorage.getItem('token');
-    // const token = state.auth.token;
+export const getLike = (userId, storyId) => (dispatch, getState) => {
+  axios
+    .get(`${apiURL}/likes?user.id[]=${userId}&story.id[]=${storyId}`, {
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${token}`
+      },
+    })
+    .then((response) => {
+      console.log('likes response', response)
+      dispatch(setLike(response.data))
+    })
+    .catch((error) => {
+      // toast.error("Une erreur est survenue.", { duration: 9000 });
+    });
+};
 
-    axios
-      .get(`${apiURL}/likes`, {
-        headers: {
-          'Authorization': `Bearer ${token}`
-        }
-      })
-      .then(response => {
-        // console.log('response', response.data);
-        dispatch(setLikes(response.data));
-      })
-      .catch(error => console.error('Erreur de chargement', error));
-  }
+export const postLike = (data) => (dispatch, getState) => {
+  axios
+    .post(`${apiURL}/likes`, data, {
+      headers: {
+        'Content-Type': 'application/ld+json',
+        'Authorization': `Bearer ${token}`
+      },
+    })
+    .then((response) => {
+      console.log('likes response', response)
+      dispatch(setLike(response.data))
+    })
+    .catch((error) => {
+      // toast.error("Une erreur est survenue.", { duration: 9000 });
+    });
+};
+
+export const deleteLike = (likeId) => (dispatch, getState) => {
+  axios
+    .delete(`${apiURL}/likes/${likeId}`, {
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${token}`
+      },
+    })
+    .then((response) => {
+      console.log('likes response', response)
+      dispatch(setLike([]))
+    })
+    .catch((error) => {
+      // toast.error("Une erreur est survenue.", { duration: 9000 });
+    });
 };
 
 export default likeSlice.reducer;

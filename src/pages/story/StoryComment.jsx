@@ -2,14 +2,16 @@ import { initFlowbite } from 'flowbite'
 import { useEffect, useState } from 'react';
 import localDate, { fullLocalDate } from '../../utils/formatDate';
 import defaultUserImage from '../../assets/user_image.webp';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import axios from 'axios';
 import toast from 'react-hot-toast';
 import { useForm } from 'react-hook-form';
 
-export default function StoryComments({ comment, refresh }) {
-  const user = useSelector((state) => state.user.detail);
-  const token = useSelector((state) => state.user.token);
+export default function StoryComments({ comment }) {
+  const dispatch = useDispatch();
+
+  const user = useSelector(state => state.user.detail);
+  const token = useSelector(state => state.user.token);
   const [formUpdate, setFormUpdate] = useState(false);
 
   const apiURL = import.meta.env.VITE_API_URL;
@@ -22,7 +24,7 @@ export default function StoryComments({ comment, refresh }) {
 
   useEffect(() => {
     initFlowbite();
-  }, [])
+  })
 
   const onUpdateSubmit = (data) => {
     console.log('datas', data);
@@ -65,8 +67,8 @@ export default function StoryComments({ comment, refresh }) {
 
   return (
     <>
-      <article className="p-6 text-base bg-white rounded-lg dark:bg-gray-900 border-t border-gray-200 dark:border-gray-700">
-        <footer className="flex justify-between items-center mb-2">
+      <article key={comment.id} className="p-6 text-base bg-white rounded-lg dark:bg-gray-900 border-t border-gray-200 dark:border-gray-700">
+        <header className="flex justify-between items-center mb-2">
           <div className="flex items-center">
             <p className="inline-flex items-center mr-3 font-semibold text-md text-gray-900 dark:text-white">
               <img
@@ -146,7 +148,8 @@ export default function StoryComments({ comment, refresh }) {
               }
             </ul>
           </div>
-        </footer>
+        </header>
+
         {formUpdate ? (
           <form onSubmit={handleSubmit(onUpdateSubmit)}>
             <div className="py-2 px-4 mb-4 bg-white rounded-lg rounded-t-lg border border-gray-200 dark:bg-gray-800 dark:border-gray-700">
