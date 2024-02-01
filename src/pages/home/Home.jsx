@@ -24,7 +24,7 @@ export default function Home() {
     return () => {
       dispatch(resetLoaded());
     };
-  }, []);
+  }, [story]);
 
   const title = () => {
     if (search === 'order[createdAt]=asc') {

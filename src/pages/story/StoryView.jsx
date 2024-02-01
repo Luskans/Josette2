@@ -1,4 +1,5 @@
-import axios from 'axios';
+// import axios from 'axios';
+import axiosBase, { axiosSecu } from '../../utils/axios';
 import { useForm } from 'react-hook-form';
 
 import { Link, useParams } from 'react-router-dom';
@@ -15,13 +16,14 @@ import StoryBar from './StoryBar';
 import StoryComment from './StoryComment';
 import StoryBarOff from './StoryBarOff';
 import toast from 'react-hot-toast';
+import { deleteFollow, getFollow, postFollow } from '../../store/followSlice';
 
 export default function StoryView() {
   const dispatch = useDispatch();
   let { id } = useParams();
   const commentsAnchor = useRef(null);
 
-  const token = useSelector((state) => state.user.token);
+  // const token = useSelector((state) => state.user.token);
   const user = useSelector((state) => state.user.detail);
   const story = useSelector((state) => state.story.detail);
   const storyLoaded = useSelector((state) => state.story.loaded);
@@ -30,6 +32,8 @@ export default function StoryView() {
   const totalPage = useSelector(state => state.comment.totalPage);
   const currentPage = useSelector(state => state.comment.currentPage);
   const totalComment = useSelector(state => state.comment.totalComment);
+  const follow = useSelector((state) => state.follow.detail);
+  const [authorFollowed, setAuthorFollowed] = useState(false);
 
   const {
     handleSubmit,
@@ -37,28 +41,36 @@ export default function StoryView() {
     formState: { errors },
   } = useForm();
 
-  const apiURL = import.meta.env.VITE_API_URL;
+  // const apiURL = import.meta.env.VITE_API_URL;
 
   useEffect(() => {
-    dispatch(getStory(id));
-    dispatch(getComments(id, 1));
+    async function fetchData() {
+      await dispatch(getStory(id));
+      if (user && user.id && story && story.user && story.user.id) {
+        dispatch(getFollow(user.id, story.user.id));
+      }
+      dispatch(getComments(id, 1));
+    }
+    fetchData();
 
+    console.log('follow on storyview', follow);
     return () => {
       dispatch(resetLoaded());
     };
-  }, []);
+  }, [authorFollowed]);
 
   const scrollToComments = () => {
     commentsAnchor.current.scrollIntoView({ behavior: 'smooth' });
   };
 
-  const onNewSubmit = (data) => {
+  const onNewCommentSubmit = (data) => {
     console.log('datas', data);
-    axios
-      .post(`${apiURL}/comments`, data, {
+    axiosSecu
+      // .post(`${apiURL}/comments`, data, {
+      .post(`comments`, data, {
         headers: {
           'Content-Type': 'application/ld+json',
-          Authorization: `Bearer ${token}`,
+          // Authorization: `Bearer ${token}`,
         },
       })
       .then((response) => {
@@ -81,6 +93,21 @@ export default function StoryView() {
       dispatch(getComments(storyId, currentPage + 1));
       dispatch(setCurrentPage(currentPage + 1))
     }
+  };
+
+  const addFollow = (followerId, followedId) => {
+    const data = {
+      followerId: followerId,
+      followedId: followedId,
+    };
+    dispatch(postFollow(data));
+    setAuthorFollowed(!authorFollowed);
+  };
+
+  const removeFollow = (followId) => {
+    console.log('follow id', follow);
+    dispatch(deleteFollow(followId));
+    setAuthorFollowed(!authorFollowed);
   };
 
   return (
@@ -117,19 +144,19 @@ export default function StoryView() {
                         {user && story.user.id !== user.id && (
                           <>
                             <p>.</p>
-                            {user.imFollowing ? (
+                            {follow.length != 0 ? (
                               <button
-                                onClick={() => handleFollow(story.user.id)}
-                                className="leading-10 mt-0.5 text-gray-500 hover:text-gray-600 dark:text-gray-400 hover:dark:text-gray-300"
-                              >
-                                Suivre
-                              </button>
-                            ) : (
-                              <button
-                                onClick={() => handleUnfollow(story.user.id)}
+                                onClick={() => removeFollow(follow[0].id)}
                                 className="leading-10 mt-0.5 text-blue-500 hover:text-blue-600 dark:text-blue-400 hover:dark:text-blue-300"
                               >
                                 Suivi
+                              </button>
+                            ) : (
+                              <button
+                                onClick={() => addFollow(user.id, story.user.id)}
+                                className="leading-10 mt-0.5 text-gray-500 hover:text-gray-600 dark:text-gray-400 hover:dark:text-gray-300"
+                              >
+                                Suivre
                               </button>
                             )}
                           </>
@@ -190,7 +217,7 @@ export default function StoryView() {
                       Commentaires ({totalComment})
                     </h2>
                   </div>
-                  <form onSubmit={handleSubmit(onNewSubmit)} className="mb-6">
+                  <form onSubmit={handleSubmit(onNewCommentSubmit)} className="mb-6">
                     <div className="py-2 px-4 mb-4 bg-white rounded-lg rounded-t-lg border border-gray-200 dark:bg-gray-800 dark:border-gray-700">
                       <label htmlFor="comment" className="sr-only">
                         Écrivez votre commentaire ici ...
@@ -261,7 +288,6 @@ export default function StoryView() {
                   {comments.map(comment => (
                     <StoryComment key={comment.id} comment={comment} />
                   ))}
-                  {/* <StoryComments /> */}
 
                   <div className="flex items-center justify-center col-span-2">
                     <div className="flex items-center justify-between w-full text-gray-600 dark:text-gray-400 bg-gray-100 rounded-lg dark:bg-gray-600 max-w-[128px] mx-2">

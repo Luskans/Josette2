@@ -1,7 +1,7 @@
 import { useForm } from 'react-hook-form';
 import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
-import axios from 'axios';
+import axiosBase, { axiosSecu } from '../../utils/axios';
 import { Link, useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 // import { login } from '../../store/authSlice';
@@ -18,26 +18,28 @@ export default function Login() {
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const token = useSelector((state) => state.user.token);
-  const user = useSelector((state) => state.user.detail);
+  // const token = useSelector((state) => state.user.token);
+  // const user = useSelector((state) => state.user.detail);
+
   // const token = useSelector((state) => state.auth.token);
   // const user = useSelector((state) => state.auth.user);
   // const user2 = useSelector((state) => state.auth2.user);
 
-  const apiURL = import.meta.env.VITE_API_URL;
+  // const apiURL = import.meta.env.VITE_API_URL;
 
   const [showPassword, setShowPassword] = useState(false);
   const handleClickPassword = () => setShowPassword(!showPassword);
 
   const onSubmit = (data) => {
-    axios
-      .post(`${apiURL}/login`, data)
+    axiosBase
+      // .post(`${apiURL}/login`, data)
+      .post(`/login`, data)
       .then((response) => {
         toast.success('Connexion réussie !', { duration: 9000 });
         dispatch(login(response.data.token));
 
-        console.log('redux token', token); // pas affiché la premiere fois car redux asynchrone
-        console.log('redux user', user);
+        // console.log('redux token', token); // pas affiché la premiere fois car redux asynchrone
+        // console.log('redux user', user);
         navigate('/');
       })
       .catch((error) => {

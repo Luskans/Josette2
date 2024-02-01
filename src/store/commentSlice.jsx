@@ -1,7 +1,8 @@
 import { createSlice } from '@reduxjs/toolkit';
-import axios from 'axios';
+// import axios from 'axios';
+import axiosBase, { axiosSecu } from '../utils/axios';
 
-const apiURL = import.meta.env.VITE_API_URL;
+// const apiURL = import.meta.env.VITE_API_URL;
 
 export const commentSlice = createSlice({
   name: 'comment',
@@ -36,8 +37,9 @@ export const { setComments, resetLoaded, setCurrentPage, setTotalPage, setTotalC
 
 export const getComments = (storyId, page) => (dispatch, getState) => {
   const state = getState();
-  axios
-    .get(`${apiURL}/comments/?story.id=${storyId}&page=${page}`, {
+  axiosBase
+    // .get(`${apiURL}/comments/?story.id=${storyId}&page=${page}`, {
+    .get(`/comments/?story.id=${storyId}&page=${page}`, {
       headers: {'Accept': 'application/ld+json'}
     })
     .then(response => {

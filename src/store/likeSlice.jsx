@@ -1,8 +1,9 @@
 import { createSlice } from '@reduxjs/toolkit';
-import axios from 'axios';
+// import axios from 'axios';
+import axiosBase, { axiosSecu } from '../utils/axios';
 
-const apiURL = import.meta.env.VITE_API_URL;
-const token = localStorage.getItem('token');
+// const apiURL = import.meta.env.VITE_API_URL;
+// const token = localStorage.getItem('token');
 
 export const likeSlice = createSlice({
   name: 'like',
@@ -26,15 +27,16 @@ export const likeSlice = createSlice({
 export const { setLikes, setLike } = likeSlice.actions;
 
 export const getLike = (userId, storyId) => (dispatch, getState) => {
-  axios
-    .get(`${apiURL}/likes?user.id[]=${userId}&story.id[]=${storyId}`, {
+  axiosSecu
+    // .get(`${apiURL}/likes?user.id[]=${userId}&story.id[]=${storyId}`, {
+    .get(`/likes?user.id[]=${userId}&story.id[]=${storyId}`, {
       headers: {
         'Content-Type': 'application/json',
-        'Authorization': `Bearer ${token}`
+        // 'Authorization': `Bearer ${token}`
       },
     })
     .then((response) => {
-      console.log('likes response', response)
+      // console.log('likes response', response)
       dispatch(setLike(response.data))
     })
     .catch((error) => {
@@ -43,11 +45,12 @@ export const getLike = (userId, storyId) => (dispatch, getState) => {
 };
 
 export const postLike = (data) => (dispatch, getState) => {
-  axios
-    .post(`${apiURL}/likes`, data, {
+  axiosSecu
+    // .post(`${apiURL}/likes`, data, {
+    .post(`/likes`, data, {
       headers: {
         'Content-Type': 'application/ld+json',
-        'Authorization': `Bearer ${token}`
+        // 'Authorization': `Bearer ${token}`
       },
     })
     .then((response) => {
@@ -60,11 +63,12 @@ export const postLike = (data) => (dispatch, getState) => {
 };
 
 export const deleteLike = (likeId) => (dispatch, getState) => {
-  axios
-    .delete(`${apiURL}/likes/${likeId}`, {
+  axiosSecu
+    // .delete(`${apiURL}/likes/${likeId}`, {
+    .delete(`/likes/${likeId}`, {
       headers: {
         'Content-Type': 'application/json',
-        'Authorization': `Bearer ${token}`
+        // 'Authorization': `Bearer ${token}`
       },
     })
     .then((response) => {

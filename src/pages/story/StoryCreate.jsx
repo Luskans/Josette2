@@ -1,5 +1,6 @@
 import { Controller, useForm } from 'react-hook-form';
-import axios from 'axios';
+// import axios from 'axios';
+import axiosBase, { axiosSecu } from '../../utils/axios';
 import toast from 'react-hot-toast';
 import { fetchThemes } from '../../store/themeSlice';
 import { useEffect, useState } from 'react';
@@ -9,9 +10,9 @@ import ImgCrop from '../../components/Crop/ImgCrop';
 
 export default function StoryCreate() {
   const dispatch = useDispatch();
-  const apiURL = import.meta.env.VITE_API_URL;
+  // const apiURL = import.meta.env.VITE_API_URL;
   const userId = JSON.parse(localStorage.getItem('user')).id;
-  const token = localStorage.getItem('token');
+  // const token = localStorage.getItem('token');
   const loaded = useSelector((state) => state.theme.loaded);
   const themeList = useSelector((state) => state.theme.list);
   const [selectedImage, setSelectedImage] = useState(null);
@@ -61,24 +62,25 @@ export default function StoryCreate() {
 
   const onSubmit = (data) => {
     console.log('datas', data);
-    axios
-      .post(`${apiURL}/stories`, data, {
-        headers: {
-          'Content-Type': 'application/json',
-          'Authorization': `Bearer ${token}`
-        },
-      })
-      .then((response) => {
-        toast.success('Nouvelle histoire publiée !', { duration: 9000 });
-        navigate('/');
-      })
-      .catch((error) => {
-        if (error.response.data.detail === 'Title already used.') {
-          toast.error("Nom d'histoire déjà utilisé.", { duration: 9000 });
-        } else {
-          toast.error('Une erreur est survenue.', { duration: 9000 });
-        }
-      });
+    axiosSecu
+    // .post(`${apiURL}/stories`, data, {
+    .post(`/stories`, data, {
+      headers: {
+        'Content-Type': 'application/merge-patch+json',
+        // 'Authorization': `Bearer ${token}`
+      },
+    })
+    .then((response) => {
+      toast.success('Nouvelle histoire publiée !', { duration: 9000 });
+      Navigate('/');
+    })
+    .catch((error) => {
+      if (error.response.data.detail === 'Title already used.') {
+        toast.error("Nom d'histoire déjà utilisé.", { duration: 9000 });
+      } else {
+        toast.error('Une erreur est survenue.', { duration: 9000 });
+      }
+    });
   };
 
   return (

@@ -1,12 +1,15 @@
 import { createSlice } from '@reduxjs/toolkit';
-import axios from 'axios';
+// import axios from 'axios';
+import axiosBase, { axiosSecu } from '../utils/axios';
 
-const apiURL = import.meta.env.VITE_API_URL;
+// const apiURL = import.meta.env.VITE_API_URL;
+// const token = localStorage.getItem('token');
 
 export const followSlice = createSlice({
   name: 'follow',
   initialState: {
     list: [],
+    detail: [],
     loaded: false
   },
   reducers: {
@@ -14,69 +17,104 @@ export const followSlice = createSlice({
       state.list = action.payload;
       state.loaded = true;
     },
+    setFollow: (state, action) => {
+      state.detail = action.payload;
+      state.loaded = true;
+    },
   },
 });
 
-export const { setFollows } = followSlice.actions;
+export const { setFollows, setFollow } = followSlice.actions;
 
-export const getFollow = () => (dispatch, getState) => {
-  const state = getState();
-  if (!state.follow.loaded) {
-    const token = localStorage.getItem('token');
-    // const token = state.auth.token;
-
-    axios
-      .get(`${apiURL}/follows`, {
-        headers: {
-          'Authorization': `Bearer ${token}`
-        }
-      })
-      .then(response => {
-        // console.log('response', response.data);
-        dispatch(setFollows(response.data));
-      })
-      .catch(error => console.error('Erreur de chargement', error));
-  }
+export const getFollow = (followerId, followedId) => (dispatch, getState) => {
+  axiosSecu
+    // .get(`${apiURL}/follows?follower.id[]=${followerId}&followed.id[]=${followedId}`, {
+    .get(`/follows?follower.id[]=${followerId}&followed.id[]=${followedId}`, {
+      headers: {
+        'Content-Type': 'application/json',
+        // 'Authorization': `Bearer ${token}`
+      },
+    })
+    .then((response) => {
+      // console.log('likes response', response)
+      dispatch(setFollow(response.data))
+    })
+    .catch((error) => {
+      // toast.error("Une erreur est survenue.", { duration: 9000 });
+    });
 };
 
-export const getImFollowing = () => (dispatch, getState) => {
-  const state = getState();
-  if (!state.themes.loaded) {
-    const token = localStorage.getItem('token');
-    // const token = state.auth.token;
-
-    axios
-      .get(`${apiURL}/themes`, {
-        headers: {
-          'Authorization': `Bearer ${token}`
-        }
-      })
-      .then(response => {
-        console.log('response', response.data);
-        dispatch(setThemes(response.data));
-      })
-      .catch(error => console.error('Erreur de chargement', error));
-  }
+export const postFollow = (data) => (dispatch, getState) => {
+  axiosSecu
+    // .post(`${apiURL}/follows`, data, {
+    .post(`/follows`, data, {
+      headers: {
+        'Content-Type': 'application/ld+json',
+        // 'Authorization': `Bearer ${token}`
+      },
+    })
+    .then((response) => {
+      console.log('follows response', response)
+      dispatch(setFollow(response.data))
+    })
+    .catch((error) => {
+      // toast.error("Une erreur est survenue.", { duration: 9000 });
+    });
 };
 
-export const getWhoFollowMe = () => (dispatch, getState) => {
-  const state = getState();
-  if (!state.themes.loaded) {
-    const token = localStorage.getItem('token');
-    // const token = state.auth.token;
-
-    axios
-      .get(`${apiURL}/themes`, {
-        headers: {
-          'Authorization': `Bearer ${token}`
-        }
-      })
-      .then(response => {
-        console.log('response', response.data);
-        dispatch(setThemes(response.data));
-      })
-      .catch(error => console.error('Erreur de chargement', error));
-  }
+export const deleteFollow = (followId) => (dispatch, getState) => {
+  axiosSecu
+    // .delete(`${apiURL}/follows/${followId}`, {
+    .delete(`/follows/${followId}`, {
+      headers: {
+        'Content-Type': 'application/json',
+        // 'Authorization': `Bearer ${token}`
+      },
+    })
+    .then((response) => {
+      console.log('follows response', response)
+      dispatch(setFollow([]))
+    })
+    .catch((error) => {
+      // toast.error("Une erreur est survenue.", { duration: 9000 });
+    });
 };
+
+// export const getImFollowing = () => (dispatch, getState) => {
+//   const state = getState();
+//   if (!state.themes.loaded) {
+//     // const token = localStorage.getItem('token');
+//     // const token = state.auth.token;
+
+//     axiosBase
+//       // .get(`${apiURL}/themes`, {
+//       .get(`/themes`)
+//       .then(response => {
+//         console.log('response', response.data);
+//         dispatch(setThemes(response.data));
+//       })
+//       .catch(error => console.error('Erreur de chargement', error));
+//   }
+// };
+
+// export const getWhoFollowMe = () => (dispatch, getState) => {
+//   const state = getState();
+//   if (!state.themes.loaded) {
+//     // const token = localStorage.getItem('token');
+//     // const token = state.auth.token;
+
+//     axiosBase
+//       .get(`${apiURL}/themes`, {
+//         headers: {
+//           'Authorization': `Bearer ${token}`
+//         }
+//       })
+//       .then(response => {
+//         console.log('response', response.data);
+//         dispatch(setThemes(response.data));
+//       })
+//       .catch(error => console.error('Erreur de chargement', error));
+//   }
+// };
 
 export default followSlice.reducer;

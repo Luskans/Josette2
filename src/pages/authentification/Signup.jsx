@@ -1,6 +1,7 @@
 import { useForm } from 'react-hook-form';
 import React, { useState } from 'react';
-import axios from 'axios';
+// import axios from 'axios';
+import axiosBase, { axiosSecu } from '../../utils/axios';
 import styled from 'styled-components';
 import logoBluette from '../../assets/logoV2.png';
 import toast from 'react-hot-toast';
@@ -14,7 +15,7 @@ export default function Signup() {
     formState: { errors, isSubmitting },
   } = useForm();
 
-  const apiURL = import.meta.env.VITE_API_URL;
+  // const apiURL = import.meta.env.VITE_API_URL;
 
   const [showPassword, setShowPassword] = useState(false);
   const handleClickPassword = () => setShowPassword(!showPassword);
@@ -23,8 +24,9 @@ export default function Signup() {
   const handleClickPasswordBis = () => setShowPasswordBis(!showPasswordBis);
 
   const onSubmit = (data) => {
-    axios
-      .post(`${apiURL}/signup`, data, {
+    axiosBase
+      // .post(`${apiURL}/signup`, data, {
+      .post(`/signup`, data, {
         headers: {
           'Content-Type': 'application/json',
         },

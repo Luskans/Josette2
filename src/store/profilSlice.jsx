@@ -1,7 +1,8 @@
 import { createSlice } from '@reduxjs/toolkit';
-import axios from 'axios';
+// import axios from 'axios';
+import axiosBase, { axiosSecu } from '../utils/axios';
 
-const apiURL = import.meta.env.VITE_API_URL;
+// const apiURL = import.meta.env.VITE_API_URL;
 
 export const profilSlice = createSlice({
   name: 'profil',
@@ -26,8 +27,9 @@ export const { setProfil, resetProfil } = profilSlice.actions;
 export const fetchProfil = (id) => (dispatch, getState) => {
   const state = getState();
   if (!state.profil.loaded) {
-    axios
-      .get(`${apiURL}/users/${id}`)
+    axiosBase
+      // .get(`${apiURL}/users/${id}`)
+      .get(`/users/${id}`)
       .then(response => {
         console.log('response', response.data);
         dispatch(setProfil(response.data));

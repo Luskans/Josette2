@@ -45,7 +45,7 @@ export default function App() {
       <Toaster />
       {showHeaderAndFooter && <Header />}
       <Routes>
-          <Route path="/" element={<Home />} />
+          <Route path="/" element={<Home key={window.location.pathname} />} />
           <Route path="/signup" element={<Signup />} />
           <Route path="/login" element={<Login />} />
           <Route path="/profil" element={<ProfilList />} />
