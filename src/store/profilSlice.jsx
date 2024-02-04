@@ -24,18 +24,15 @@ export const profilSlice = createSlice({
 
 export const { setProfil, resetProfil } = profilSlice.actions;
 
-export const fetchProfil = (id) => (dispatch, getState) => {
-  const state = getState();
-  if (!state.profil.loaded) {
-    axiosBase
-      // .get(`${apiURL}/users/${id}`)
-      .get(`/users/${id}`)
-      .then(response => {
-        console.log('response', response.data);
-        dispatch(setProfil(response.data));
-      })
-      .catch(error => console.error('Erreur de chargement', error));
-  }
+export const getProfil = (id) => (dispatch, getState) => {
+  axiosBase
+    // .get(`${apiURL}/users/${id}`)
+    .get(`/users/${id}`)
+    .then(response => {
+      console.log('response', response.data);
+      dispatch(setProfil(response.data));
+    })
+    .catch(error => console.error('Erreur de chargement', error));
 };
 
 export default profilSlice.reducer;

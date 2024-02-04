@@ -1,6 +1,6 @@
 import { useDispatch, useSelector } from 'react-redux';
 import { useEffect, useState } from 'react';
-import { getStories, resetLoaded } from '../../store/storySlice';
+import { getStories, resetLoaded, resetStories } from '../../store/storySlice';
 import BotNav from '../../components/BotNav';
 import Notification from './Notification';
 import Cta from './Cta';
@@ -13,18 +13,16 @@ export default function Home() {
   const storyList = useSelector((state) => state.story.list);
   const user = useSelector((state) => state.user.detail);
   const search = useSelector((state) => state.story.search);
-  const story = useSelector((state) => state.story.detail);
 
   console.log('user sur home', user)
-  console.log('story view sur home', story)
 
   useEffect(() => {
     dispatch(getStories("order[createdAt]=asc", 1));
 
     return () => {
-      dispatch(resetLoaded());
+      dispatch(resetStories());
     };
-  }, [story]);
+  }, []);
 
   const title = () => {
     if (search === 'order[createdAt]=asc') {
@@ -50,7 +48,7 @@ export default function Home() {
     } else {
         return "date croissante";
     }
-}
+  }
 
   return (
     <>
@@ -70,7 +68,7 @@ export default function Home() {
           </div>
         </div>
       </section>
-      <BotNav />
+      <BotNav page={'home'} />
     </>
   );
 }

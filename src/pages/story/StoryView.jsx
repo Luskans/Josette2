@@ -10,13 +10,13 @@ import { fullLocalDate } from '../../utils/formatDate';
 import defaultUserImage from '../../assets/user_image.webp';
 
 import { getStory, resetLoaded, resetStory } from '../../store/storySlice';
-import { getComments, setCurrentPage } from '../../store/commentSlice';
+import { getComments, resetComments, setCurrentPage } from '../../store/commentSlice';
 
 import StoryBar from './StoryBar';
 import StoryComment from './StoryComment';
 import StoryBarOff from './StoryBarOff';
 import toast from 'react-hot-toast';
-import { deleteFollow, getFollow, postFollow } from '../../store/followSlice';
+import { deleteFollow, getFollow, postFollow, resetFollow } from '../../store/followSlice';
 
 export default function StoryView() {
   const dispatch = useDispatch();
@@ -44,20 +44,35 @@ export default function StoryView() {
   // const apiURL = import.meta.env.VITE_API_URL;
 
   useEffect(() => {
-    async function fetchData() {
-      await dispatch(getStory(id));
-      if (user && user.id && story && story.user && story.user.id) {
-        dispatch(getFollow(user.id, story.user.id));
-      }
-      dispatch(getComments(id, 1));
+    dispatch(getStory(id));
+  }, [id]);
+  
+  useEffect(() => {
+    if (story.user && story.user.id) {
+      dispatch(getFollow(user.id, story.user.id));
+      dispatch(getComments(id, 1))
     }
-    fetchData();
+  }, [user.id, authorFollowed]);
 
-    console.log('follow on storyview', follow);
-    return () => {
-      dispatch(resetLoaded());
-    };
-  }, [authorFollowed]);
+  // useEffect(() => {
+  //   async function fetchData() {
+  //     await dispatch(getStory(id));
+  //     await dispatch(getFollow(user.id, story.user.id));
+  //     await dispatch(getComments(id, 1));
+
+  //     // if (user && user.id && story && story.user && story.user.id) {
+  //     //   dispatch(getFollow(user.id, story.user.id));
+  //     // }
+  //   }
+  //   fetchData();
+
+  //   console.log('follow on storyview', follow);
+  //   return () => {
+  //     dispatch(resetStory());
+  //     dispatch(resetFollow());
+  //     dispatch(resetComments());
+  //   };
+  // }, [authorFollowed]);
 
   const scrollToComments = () => {
     commentsAnchor.current.scrollIntoView({ behavior: 'smooth' });
@@ -144,7 +159,7 @@ export default function StoryView() {
                         {user && story.user.id !== user.id && (
                           <>
                             <p>.</p>
-                            {follow.length != 0 ? (
+                            {(follow.length != 0) ? (
                               <button
                                 onClick={() => removeFollow(follow[0].id)}
                                 className="leading-10 mt-0.5 text-blue-500 hover:text-blue-600 dark:text-blue-400 hover:dark:text-blue-300"
@@ -163,15 +178,9 @@ export default function StoryView() {
                         )}
                       </div>
                       <p className="text-base text-gray-500 dark:text-gray-400">
-                        <time
-                          pubdate=""
-                          dateTime="2022-02-08"
-                          title="February 8th, 2022"
-                        >
-                          {story.updatedAt
-                            ? fullLocalDate(story.updatedAt)
-                            : fullLocalDate(story.createdAt)}
-                        </time>
+                        {story.updatedAt
+                          ? fullLocalDate(story.updatedAt)
+                          : fullLocalDate(story.createdAt)}
                       </p>
                     </div>
                   </div>
@@ -197,7 +206,7 @@ export default function StoryView() {
                   className="mb-12 lg:mb-14 w-full"
                 />
 
-                <h1 className="mb-4 text-3xl font-extrabold leading-tight break-words text-gray-900 lg:mb-6 lg:text-4xl dark:text-white">
+                <h1 className="mb-6 text-3xl font-extrabold leading-tight break-words text-gray-900 lg:mb-10 lg:text-4xl dark:text-white">
                   {story.title}
                 </h1>
 

@@ -33,6 +33,10 @@ export const storySlice = createSlice({
       state.list = action.payload;
       state.loaded = true;
     },
+    resetStories: (state, action) => {
+      state.list = [];
+      state.loaded = false;
+    },
     setCurrentPage: (state, action) => {
       state.currentPage = action.payload;
     },
@@ -45,30 +49,27 @@ export const storySlice = createSlice({
   },
 });
 
-export const { setStory, resetStory, resetLoaded, setStories, setCurrentPage, setTotalPage, setSearch } = storySlice.actions;
+export const { setStory, resetStory, resetLoaded, setStories, resetStories, setCurrentPage, setTotalPage, setSearch } = storySlice.actions;
 
 export const getStory = (id) => (dispatch, getState) => {
-  const state = getState();
-  if (!state.story.loaded) {
-    axiosBase
-      // .get(`${apiURL}/stories/${id}`)
-      .get(`/stories/${id}`)
-      .then(response => {
-        // console.log('response', response.data);
-        dispatch(setStory(response.data));
+  axiosBase
+    // .get(`${apiURL}/stories/${id}`)
+    .get(`/stories/${id}`)
+    .then(response => {
+      // console.log('response', response.data);
+      dispatch(setStory(response.data));
 
-        // Incrémenter viewCount après avoir récupéré la story
-        const viewCount = response.data.viewCount + 1;
-        const data = {
-          viewCount: viewCount
-        }
-        // return axios.patch(`${apiURL}/stories/${id}`, data, {
-        return axiosBase.patch(`/stories/${id}`, data, {
-          headers: {'Content-Type': 'application/merge-patch+json'}
-        });
-      })
-      .catch(error => console.error('Erreur de chargement', error));
-  }
+      // Incrémenter viewCount après avoir récupéré la story
+      const viewCount = response.data.viewCount + 1;
+      const data = {
+        viewCount: viewCount
+      }
+      // return axios.patch(`${apiURL}/stories/${id}`, data, {
+      return axiosBase.patch(`/stories/${id}`, data, {
+        headers: {'Content-Type': 'application/merge-patch+json'}
+      });
+    })
+    .catch(error => console.error('Erreur de chargement', error));
 };
 
 // export const postStory = (data) => {

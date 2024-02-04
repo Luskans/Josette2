@@ -21,10 +21,14 @@ export const followSlice = createSlice({
       state.detail = action.payload;
       state.loaded = true;
     },
+    resetFollow: (state, action) => {
+      state.detail = [];
+      state.loaded = false;
+    },
   },
 });
 
-export const { setFollows, setFollow } = followSlice.actions;
+export const { setFollows, setFollow, resetFollow } = followSlice.actions;
 
 export const getFollow = (followerId, followedId) => (dispatch, getState) => {
   axiosSecu
@@ -36,7 +40,7 @@ export const getFollow = (followerId, followedId) => (dispatch, getState) => {
       },
     })
     .then((response) => {
-      // console.log('likes response', response)
+      console.log('follow response', response)
       dispatch(setFollow(response.data))
     })
     .catch((error) => {

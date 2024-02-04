@@ -8,13 +8,14 @@ const NavContainer = styled.nav`
   transition: all 0.5s ease-in-out;
 `;
 
-export default function BotNav() {
+export default function BotNav({ page }) {
     let prevScroll = window.scrollY;
     const dispatch = useDispatch();
     const themeList = useSelector((state) => state.theme.list);
     const totalPage = useSelector((state) => state.story.totalPage);
     const currentPage = useSelector((state) => state.story.currentPage);
     const search = useSelector((state) => state.story.search);
+    const profil = useSelector((state) => state.profil.detail);
 
     useEffect(() => {
       const scrollHandler = (e) => {
@@ -95,7 +96,10 @@ export default function BotNav() {
             e.preventDefault();
             const formData = new FormData(e.target)
             const title = formData.get('title')
-            handleSearch(`title[]=${title}`)
+            {page === 'home'
+            ? handleSearch(`title[]=${title}`)
+            : handleSearch(`user.id[]=${profil.id}&title[]=${title}`)
+            }
           }}>
             <div className="flex">
               <div className="relative w-full">
@@ -170,8 +174,12 @@ export default function BotNav() {
               <li key={theme.name}>
                 <button
                   type="button"
-                  className="w-full px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
-                  onClick={() => {handleSearch(`themeName=${theme.name}`)}}
+                  className="w-full flex px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
+                  onClick={() => {
+                    (page === 'home')
+                    ? handleSearch(`themeName=${theme.name}`)
+                    : handleSearch(`user.id[]=${profil.id}&themeName=${theme.name}`)
+                  }}
                 >
                   {theme.name}
                 </button>
@@ -277,37 +285,113 @@ export default function BotNav() {
             <li>
               <button
                 type="button"
-                className="w-full px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
-                onClick={() => {handleSearch("order[createdAt]=asc")}}
+                className="w-full flex px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
+                onClick={() => {
+                  (page === 'home')
+                  ? handleSearch("order[createdAt]=asc")
+                  : handleSearch(`user.id[]=${profil.id}&order[createdAt]=asc`)
+                }}
               >
-                Par date asc
+                Date
+                <svg
+                  className="w-5 h-5 text-gray-800 dark:text-white"
+                  aria-hidden="true"
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    stroke="currentColor"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M12 6v13m0-13 4 4m-4-4-4 4"
+                  />
+                </svg>
               </button>
             </li>
             <li>
               <button
                 type="button"
-                className="w-full px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
-                onClick={() => {handleSearch("order[createdAt]=desc")}}
+                className="w-full flex px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
+                onClick={() => {
+                  (page === 'home')
+                  ? handleSearch("order[createdAt]=desc")
+                  : handleSearch(`user.id[]=${profil.id}&order[createdAt]=desc`)
+                }}
               >
-                Par date desc
+                Date
+                <svg
+                  className="w-5 h-5 text-gray-800 dark:text-white"
+                  aria-hidden="true"
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    stroke="currentColor"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M12 19V5m0 14-4-4m4 4 4-4"
+                  />
+                </svg>
               </button>
             </li>
             <li>
               <button
                 type="button"
-                className="w-full px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
-                onClick={() => {handleSearch("byReadingTime=true&order=ASC")}}
+                className="w-full flex px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
+                onClick={() => {
+                  (page === 'home')
+                  ? handleSearch("byReadingTime=true&order=ASC")
+                  : handleSearch(`user.id[]=${profil.id}&byReadingTime=true&order=ASC`)
+                }}
               >
-                Par temps lecture asc
+                Temps lecture
+                <svg
+                  className="w-5 h-5 text-gray-800 dark:text-white"
+                  aria-hidden="true"
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    stroke="currentColor"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M12 6v13m0-13 4 4m-4-4-4 4"
+                  />
+                </svg>
               </button>
             </li>
             <li>
               <button
                 type="button"
-                className="w-full px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
-                onClick={() => {handleSearch("byReadingTime=true&order=DESC")}}
+                className="w-full flex px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
+                onClick={() => {
+                  (page === 'home')
+                  ? handleSearch("byReadingTime=true&order=DESC")
+                  : handleSearch(`user.id[]=${profil.id}&byReadingTime=true&order=DESC`)
+                }}
               >
-                Par temps lecture desc
+                Temps lecture
+                <svg
+                  className="w-5 h-5 text-gray-800 dark:text-white"
+                  aria-hidden="true"
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    stroke="currentColor"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M12 19V5m0 14-4-4m4 4 4-4"
+                  />
+                </svg>
               </button>
             </li>
           </ul>
@@ -322,22 +406,22 @@ export default function BotNav() {
           className="inline-flex flex-col items-center justify-center px-5 hover:bg-gray-50 dark:hover:bg-gray-800 group"
         >
           <svg
-            className="w-5 h-5 mb-1 text-gray-500 dark:text-gray-400 group-hover:text-blue-600 dark:group-hover:text-blue-500"
+            className="w-6 h-6 mb-1 text-gray-500 dark:text-gray-400 group-hover:text-blue-600 dark:group-hover:text-blue-500"
             aria-hidden="true"
             xmlns="http://www.w3.org/2000/svg"
             fill="currentColor"
-            viewBox="0 0 18 18"
+            viewBox="0 0 24 24"
           >
-            <path d="M3 7H1a1 1 0 0 0-1 1v8a2 2 0 0 0 4 0V8a1 1 0 0 0-1-1Zm12.954 0H12l1.558-4.5a1.778 1.778 0 0 0-3.331-1.06A24.859 24.859 0 0 1 6 6.8v9.586h.114C8.223 16.969 11.015 18 13.6 18c1.4 0 1.592-.526 1.88-1.317l2.354-7A2 2 0 0 0 15.954 7Z" />
+            <path d="M22 11.5a.5.5 0 0 0-1 0 1.4 1.4 0 0 1-1.4 1 1.5 1.5 0 0 1-1.4-1 .5.5 0 0 0-1 0 1.5 1.5 0 0 1-2.7 0v-2h2.2a2.6 2.6 0 0 0 2.7-2.7 2.7 2.7 0 0 0-2.7-2.6h-.5l-.1-.3a2.6 2.6 0 0 0-3.8-1.4l-.3.1-.3-.1a2.6 2.6 0 0 0-2.8 0c-.4.4-.8.8-1 1.4V4h-.6a2.7 2.7 0 0 0-2.7 2.6 2.6 2.6 0 0 0 2.7 2.7h2.3v2a1.3 1.3 0 0 1-1.3 1 1.6 1.6 0 0 1-1.5-1 .5.5 0 0 0-1 0 1.5 1.5 0 0 1-1.4 1 1.4 1.4 0 0 1-1.4-1 .5.5 0 0 0-.5-.4.5.5 0 0 0-.5.6v.4a10 10 0 1 0 20 0v-.5ZM8.3 15.7a1 1 0 1 1 2.1 0 1 1 0 0 1-2 0Zm1.6 3.7a2.1 2.1 0 0 1 4.2 0H10Zm4.7-2.7a1 1 0 1 1 0-2 1 1 0 0 1 0 2Z" />
           </svg>
-          <span className="sr-only">Like</span>
+          <span className="sr-only">Bravo</span>
         </button>
         <div
           id="tooltip-like"
           role="tooltip"
           className="absolute z-10 invisible inline-block px-3 py-2 text-sm font-medium text-white transition-opacity duration-300 bg-gray-900 rounded-lg shadow-sm opacity-0 tooltip dark:bg-gray-700"
         >
-          Like
+          Bravo
           <div className="tooltip-arrow" data-popper-arrow></div>
         </div>
         <div
@@ -351,37 +435,113 @@ export default function BotNav() {
             <li>
               <button
                 type="button"
-                className="w-full px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
-                onClick={() => {handleSearch("byLikes=true&order=ASC")}}
+                className="w-full flex px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
+                onClick={() => {
+                  (page === 'home')
+                  ? handleSearch("byLikes=true&order=ASC")
+                  : handleSearch(`user.id[]=${profil.id}&byLikes=true&order=ASC`)
+                }}
               >
-                Par likes asc
+                Bravo
+                <svg
+                  className="w-5 h-5 text-gray-800 dark:text-white"
+                  aria-hidden="true"
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    stroke="currentColor"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M12 6v13m0-13 4 4m-4-4-4 4"
+                  />
+                </svg>
               </button>
             </li>
             <li>
               <button
                 type="button"
-                className="w-full px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
-                onClick={() => {handleSearch("byLikes=true&order=DESC")}}
+                className="w-full flex px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
+                onClick={() => {
+                  (page === 'home')
+                  ? handleSearch("byLikes=true&order=DESC")
+                  : handleSearch(`user.id[]=${profil.id}&byLikes=true&order=DESC`)
+                }}
               >
-                Par likes desc
+                Bravo
+                <svg
+                  className="w-5 h-5 text-gray-800 dark:text-white"
+                  aria-hidden="true"
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    stroke="currentColor"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M12 19V5m0 14-4-4m4 4 4-4"
+                  />
+                </svg>
               </button>
             </li>
             <li>
               <button
                 type="button"
-                className="w-full px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
-                onClick={() => {handleSearch("order[viewCount]=asc")}}
+                className="w-full flex px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
+                onClick={() => {
+                  (page === 'home')
+                  ? handleSearch("order[viewCount]=asc")
+                  : handleSearch(`user.id[]=${profil.id}&order[viewCount]=asc`)
+                }}
               >
-                Par vues asc
+                Vue
+                <svg
+                className="w-5 h-5 text-gray-800 dark:text-white"
+                aria-hidden="true"
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  stroke="currentColor"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={2}
+                  d="M12 6v13m0-13 4 4m-4-4-4 4"
+                />
+              </svg>
               </button>
             </li>
             <li>
               <button
                 type="button"
-                className="w-full px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
-                onClick={() => {handleSearch("order[viewCount]=desc")}}
+                className="w-full flex px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
+                onClick={() => {
+                  (page === 'home')
+                  ? handleSearch("order[viewCount]=desc")
+                  : handleSearch(`user.id[]=${profil.id}&order[viewCount]=desc`)
+                }}
               >
-                Par vues desc
+                Vue
+                <svg
+                  className="w-5 h-5 text-gray-800 dark:text-white"
+                  aria-hidden="true"
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    stroke="currentColor"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M12 19V5m0 14-4-4m4 4 4-4"
+                  />
+                </svg>
               </button>
             </li>
           </ul>

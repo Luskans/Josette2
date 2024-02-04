@@ -56,7 +56,7 @@ export const getFavorite = (userId, storyId) => (dispatch, getState) => {
       },
     })
     .then((response) => {
-      console.log('favorites response', response)
+      // console.log('favorites response', response)
       dispatch(setFavorite(response.data))
     })
     .catch((error) => {
@@ -74,7 +74,7 @@ export const postFavorite = (data) => (dispatch, getState) => {
       },
     })
     .then((response) => {
-      console.log('favorites response', response)
+      // console.log('favorites response', response)
       dispatch(setFavorite(response.data))
     })
     .catch((error) => {
@@ -92,7 +92,7 @@ export const deleteFavorite = (favoriteId) => (dispatch, getState) => {
       },
     })
     .then((response) => {
-      console.log('favorites response', response)
+      // console.log('favorites response', response)
       dispatch(setFavorite([]))
     })
     .catch((error) => {
