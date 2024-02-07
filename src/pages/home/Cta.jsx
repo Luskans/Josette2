@@ -1,29 +1,10 @@
 import ctaImage from '../../assets/cta.webp';
-import styled from 'styled-components';
-
-// const AsideContainer = styled.aside`
-//    display: flex;
-//    flex-direction: column;
-//    justify-content: center;
-//    align-items: center;
-//    gap: 10px;
-//    border: 2px solid teal;
-//    border-radius: 10px;
-//    padding: 10px 20px;
-//    margin: 10px;
-// `
-
-// const AsideContainer = styled.aside`
-//   //  background-color: blue;
-//    padding: 20px 11%;
-// `
 
 export default function Cta() {
   return (
-    // FLOWBITE
     <section className="bg-blue-700 dark:bg-blue-100">
-        <div className="gap-8 items-center py-8 px-4 mx-auto max-w-screen-xl xl:gap-16 md:grid md:grid-cols-2 sm:py-6 lg:px-6">
-            <img className="md:w-full w-2/3 m-auto rounded-2xl" src={ctaImage} alt="cta image of a boy writing" />
+        <div className="flex flex-col sm:flex-row gap-8 items-center py-8 px-4 mx-auto max-w-3xl xl:gap-16 sm:py-6 lg:px-6">
+            <img className=" w-3/5 rounded-2xl" src={ctaImage} alt="cta image of a boy writing" />
             <div className="mt-4 md:mt-0">
                 <h2 className="mb-4 text-4xl tracking-tight font-extrabold dark:text-gray-900 text-white">Des petites histoires, sans prétentions.</h2>
                 <p className="mb-6 font-light dark:text-gray-700 md:text-lg text-gray-300">Laisse libre cours à ton imagination en partageant tes textes ou en suivant ceux de la communauté.</p>
@@ -34,27 +15,5 @@ export default function Cta() {
             </div>
         </div>
     </section>
-
-    // NEXTUI
-    // <AsideContainer className='bg-blue-800 dark:bg-blue-100 pt-5'>
-    //   <div className='flex justify-center gap-8'>
-    //     <div className='flex flex-col justify-center gap-8 w-3/5'>
-    //       <h3 className='text-white dark:text-gray-800 text-6xl'>Des petites histoires, sans prétentions.</h3>
-    //       <p className='text-white dark:text-gray-800'>Laisse libre cours à ton imagination en partageant tes textes ou en suivant ceux de la communauté.</p>
-    //       <Button className='w-32'>Nous rejoindre</Button>
-    //     </div>
-    //     <Image src={ctaImage} alt='A boy writting' className='w-2/5' />
-    //   </div>
-    // </AsideContainer>
-
-    // BASIC
-    // <AsideContainer>
-    //   <p>Tu as des petites histoires que tu aimerais partager ?</p>
-    //   <p>Tu veux t'entrainer à écrire et recevoir des retours ?</p>
-    //   <p>Tu veux suivre tes auteurs préférés de la communauté ?</p>
-    //   <p>Alors n'hésite plus et rejoins dès maintenant Bluette !</p>
-    //   <a><button>Rejoindre</button></a>
-    //   <p>Bluette, des petites histoires, sans prétention.</p>
-    // </AsideContainer>
   )
 }

@@ -1,5 +1,15 @@
+/* Police reposante pour p */
 @import url('https://fonts.googleapis.com/css2?family=Comfortaa:wght@700&display=swap');
-
+/* Police funky, retro et colorée */
+@import url('https://fonts.googleapis.com/css2?family=Honk&display=swap');
+/* Un peu calygraphiée */
+@import url('https://fonts.googleapis.com/css2?family=Lobster&display=swap');
+/* Style scary, fantomatique */
+@import url('https://fonts.googleapis.com/css2?family=Cute+Font&display=swap');
+/* Classe */
+@import url('https://fonts.googleapis.com/css2?family=Nanum+Myeongjo&display=swap');
+/* Tranchant */
+@import url('https://fonts.googleapis.com/css2?family=Cinzel&display=swap');
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -24,4 +34,16 @@
 
 .scrollHeader {
     transform: translateY(-100%);
+}
+
+p {
+    /* font-family: 'Comfortaa', sans-serif; */
+}
+
+h1, h2, h3 {
+    /* font-family: 'Honk', system-ui; */
+    /* font-family: 'Lobster', sans-serif; */
+    /* font-family: 'Cute Font', sans-serif; */
+    /* font-family: 'Nanum Myeongjo', serif; */
+    font-family: 'Cinzel', serif;
 }

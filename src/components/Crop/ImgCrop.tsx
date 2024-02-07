@@ -269,7 +269,7 @@ export default function ImgCrop() {
             </a>
           </div>
         </>
-      )};
+      )}
     </>
   );
 }

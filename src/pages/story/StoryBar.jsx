@@ -1,20 +1,20 @@
 import { initFlowbite } from 'flowbite';
 import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { deleteLike, getLike, postLike } from '../../store/likeSlice';
+import { deleteLike, getLike, postLike } from '@/store/likeSlice';
 import {
   deleteFavorite,
   getFavorite,
   postFavorite,
-} from '../../store/favoriteSlice';
-import { deleteStory } from '../../store/storySlice';
+} from '@/store/favoriteSlice';
+import { deleteStory } from '@/store/storySlice';
 import { useNavigate } from 'react-router-dom';
 
-export default function StoryBar({ id, story, onCommentIconClick }) {
+export default function StoryBar({ id, onCommentIconClick }) {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const user = useSelector((state) => state.user.detail);
-  // const token = useSelector((state) => state.user.token);
+  const story = useSelector((state) => state.story.detail);
   const totalComment = useSelector((state) => state.comment.totalComment);
   const like = useSelector((state) => state.like.detail);
   const favorite = useSelector((state) => state.favorite.detail);
@@ -25,8 +25,6 @@ export default function StoryBar({ id, story, onCommentIconClick }) {
     dispatch(getLike(user.id, story.id));
     dispatch(getFavorite(user.id, story.id));
 
-    // console.log('like on bar', like);
-    // console.log('favorite on bar', favorite);
   }, [storyLiked, storyFavorite]);
 
   useEffect(() => {

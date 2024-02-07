@@ -77,8 +77,8 @@ export default function Login() {
         </Link>
         <div className="w-full bg-white rounded-lg shadow dark:border md:mt-0 sm:max-w-md xl:p-0 dark:bg-gray-800 dark:border-gray-700">
           <div className="p-6 space-y-4 md:space-y-6 sm:p-8">
-            <h1 className="text-xl font-bold leading-tight tracking-tight text-gray-900 md:text-2xl dark:text-white">
-              Connectez vous à votre compte
+            <h1 className="text-lg font-bold leading-tight tracking-tight text-gray-900 md:text-2xl dark:text-white">
+              Se connecter
             </h1>
             <form
               className="space-y-4 md:space-y-6"
@@ -204,12 +204,11 @@ export default function Login() {
               </button>
               <p className="text-sm font-light text-gray-500 dark:text-gray-400">
                 Pas encore de compte ?{' '}
-                <a
-                  href="#"
+                <Link to="/signup"
                   className="font-medium text-blue-600 hover:underline dark:text-blue-500"
                 >
                   Inscription
-                </a>
+                </Link>
               </p>
             </form>
           </div>

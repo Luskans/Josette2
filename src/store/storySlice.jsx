@@ -13,8 +13,9 @@ export const storySlice = createSlice({
     detail: '',
     list: [],
     loaded: false,
+    updated: false,
     currentPage: 1,
-    totalPage: '',
+    totalPage: 1,
     search: 'order[createdAt]=asc',
   },
   reducers: {
@@ -25,17 +26,22 @@ export const storySlice = createSlice({
     resetStory: (state) => {
       state.detail = '';
       state.loaded = false;
-    },
-    resetLoaded: (state) => {
-      state.loaded = false;
+      state.updated = false;
     },
     setStories: (state, action) => {
       state.list = action.payload;
       state.loaded = true;
     },
-    resetStories: (state, action) => {
+    resetStories: (state) => {
       state.list = [];
       state.loaded = false;
+      state.updated = false;
+      state.currentPage = 1;
+      state.totalPage = 1;
+      state.search = 'order[createdAt]=asc';
+    },
+    updateStory: (state) => {
+      state.updated = !state.updated;
     },
     setCurrentPage: (state, action) => {
       state.currentPage = action.payload;
@@ -49,7 +55,7 @@ export const storySlice = createSlice({
   },
 });
 
-export const { setStory, resetStory, resetLoaded, setStories, resetStories, setCurrentPage, setTotalPage, setSearch } = storySlice.actions;
+export const { setStory, resetStory, setStories, resetStories, updateStory, setCurrentPage, setTotalPage, setSearch } = storySlice.actions;
 
 export const getStory = (id) => (dispatch, getState) => {
   axiosBase
@@ -104,7 +110,7 @@ export const deleteStory = (storyId) => (dispatch, getState) => {
     })
     .then(response => {
       toast.success('Histoire supprimée !', { duration: 9000 });
-      dispatch(resetStory());
+      // dispatch(resetStory());
     })
     .catch((error) => {
       toast.error("Une erreur est survenue.", { duration: 9000 });

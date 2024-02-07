@@ -40,7 +40,7 @@ export const getFollow = (followerId, followedId) => (dispatch, getState) => {
       },
     })
     .then((response) => {
-      console.log('follow response', response)
+      // console.log('follow response', response)
       dispatch(setFollow(response.data))
     })
     .catch((error) => {
@@ -58,7 +58,7 @@ export const postFollow = (data) => (dispatch, getState) => {
       },
     })
     .then((response) => {
-      console.log('follows response', response)
+      // console.log('follows response', response)
       dispatch(setFollow(response.data))
     })
     .catch((error) => {
@@ -76,7 +76,7 @@ export const deleteFollow = (followId) => (dispatch, getState) => {
       },
     })
     .then((response) => {
-      console.log('follows response', response)
+      // console.log('follows response', response)
       dispatch(setFollow([]))
     })
     .catch((error) => {

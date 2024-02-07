@@ -1,6 +1,6 @@
 import { useDispatch, useSelector } from 'react-redux';
 import { useEffect, useState } from 'react';
-import { getStories, resetLoaded, resetStories } from '../../store/storySlice';
+import { getStories, resetStories } from '../../store/storySlice';
 import BotNav from '../../components/BotNav';
 import Notification from './Notification';
 import Cta from './Cta';

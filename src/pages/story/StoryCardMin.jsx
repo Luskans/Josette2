@@ -11,15 +11,13 @@ export default function StoryCardMin({ story }) {
     <>
         <div className="w-60 flex flex-col bg-white rounded-lg border border-gray-200 shadow-md dark:bg-gray-800 dark:border-gray-700">
           <div className="flex">
-            <a href="#">
-              <Link to={`/story/view/${story.id}`}>
+            <Link to={`/story/view/${story.id}`}>
               <img
                 className="w-[120px] h-[120px] min-w-[100px] rounded-tl-lg rounded-br-lg"
                 src={story.image ? story.image.imagePath : storyImage}
                 alt={story.image ? story.image.name : "Story's cover"}
               />
-              </Link>
-            </a>
+            </Link>
             <div className="flex flex-col gap-2 p-2">
               <div
                 className="flex gap-2.5"
@@ -145,7 +143,7 @@ export default function StoryCardMin({ story }) {
                 </div>
             </div>
           </div>
-          <h3 className="min-h-[40px] leading-none line-clamp-2 break-words mb-2 pl-2 pt-2 text-l font-bold tracking-tight text-gray-900 dark:text-white">
+          <h3 className="min-h-[40px] leading-none line-clamp-2 break-words mb-2 pl-2 pt-2 text-sm font-bold tracking-tight text-gray-900 dark:text-white">
             <Link to={`/story/view/${story.id}`}>{story.title}</Link>
           </h3>
           <div className="flex justify-end gap-2 pt-1 p-2">

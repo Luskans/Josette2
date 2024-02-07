@@ -1,27 +1,27 @@
 import { initFlowbite } from 'flowbite';
 import { useEffect, useState } from 'react';
-import localDate, { fullLocalDate } from '../../utils/formatDate';
+import localDate from '../../utils/formatDate';
 import defaultUserImage from '../../assets/user_image.webp';
 import { useDispatch, useSelector } from 'react-redux';
-// import axios from 'axios';
-import axiosBase, { axiosSecu } from '../../utils/axios';
+import { axiosSecu } from '../../utils/axios';
 import toast from 'react-hot-toast';
 import { useForm } from 'react-hook-form';
+import { updateComments } from '../../store/commentSlice';
 
 export default function StoryComment({ comment }) {
   const dispatch = useDispatch();
-
   const user = useSelector((state) => state.user.detail);
-  // const token = useSelector((state) => state.user.token);
+  const updatedComment = useSelector((state) => state.comment.updated);
   const [formUpdate, setFormUpdate] = useState(false);
-
-  // const apiURL = import.meta.env.VITE_API_URL;
-
   const {
     handleSubmit,
     register,
     formState: { errors },
   } = useForm();
+
+  useEffect(() => {
+  
+  }, [updatedComment])
 
   useEffect(() => {
     initFlowbite();
@@ -30,16 +30,14 @@ export default function StoryComment({ comment }) {
   const onUpdateSubmit = (data) => {
     console.log('datas', data);
     axiosSecu
-      // .patch(`${apiURL}/comments/${comment.id}`, data, {
       .patch(`/comments/${comment.id}`, data, {
         headers: {
           'Content-Type': 'application/merge-patch+json',
-          // Authorization: `Bearer ${token}`,
         },
       })
       .then((response) => {
         toast.success('Commentaire modifié !', { duration: 9000 });
-        refresh();
+        dispatch(updateComments());
       })
       .catch((error) => {
         toast.error('Une erreur est survenue.', { duration: 9000 });
@@ -48,16 +46,14 @@ export default function StoryComment({ comment }) {
 
   const handleDelete = () => {
     axiosSecu
-      // .delete(`${apiURL}/comments/${comment.id}`, {
       .delete(`/comments/${comment.id}`, {
         headers: {
           'Content-Type': 'application/json',
-          // Authorization: `Bearer ${token}`,
         },
       })
       .then((response) => {
         toast.success('Commentaire supprimé !', { duration: 9000 });
-        // refresh();
+        dispatch(updateComments());
       })
       .catch((error) => {
         toast.error('Une erreur est survenue.', { duration: 9000 });
@@ -84,7 +80,7 @@ export default function StoryComment({ comment }) {
             </span>
           </div>
           <div className="flex flex-col leading-1.5 p-4 border-gray-200 bg-gray-100 rounded-e-xl rounded-es-xl dark:bg-gray-700">
-            {formUpdate ? (
+            {user && formUpdate ? (
               <form onSubmit={handleSubmit(onUpdateSubmit)}>
                 <div className="py-2 px-4 mb-4 bg-white rounded-lg rounded-t-lg border border-gray-200 dark:bg-gray-800 dark:border-gray-700">
                   <textarea 
@@ -127,7 +123,6 @@ export default function StoryComment({ comment }) {
                   type="hidden"
                   name="updatedAt"
                   id="updatedAt"
-                  // value={new Date().toISOString().replace('T', ' ').substring(0, 19)}
                   value={new Date().toISOString()}
                   {...register('updatedAt')}
                 />
@@ -154,69 +149,73 @@ export default function StoryComment({ comment }) {
             )}
           </div>
         </div>
-        <button
-          id={`dropdownComment${comment.id}Button`}
-          data-dropdown-toggle={`dropdownComment${comment.id}`}
-          data-dropdown-placement="bottom-start"
-          className="inline-flex self-center items-center p-2 mt-5 text-sm font-medium text-center text-gray-900 bg-white rounded-lg hover:bg-gray-100 focus:ring-4 focus:outline-none dark:text-white focus:ring-gray-50 dark:bg-gray-900 dark:hover:bg-gray-800 dark:focus:ring-gray-600"
-          type="button"
-        >
-          <svg
-            className="w-4 h-4 text-gray-500 dark:text-gray-400"
-            aria-hidden="true"
-            xmlns="http://www.w3.org/2000/svg"
-            fill="currentColor"
-            viewBox="0 0 4 15"
+        {user &&
+        <>
+          <button
+            id={`dropdownComment${comment.id}Button`}
+            data-dropdown-toggle={`dropdownComment${comment.id}`}
+            data-dropdown-placement="bottom-start"
+            className="inline-flex self-center items-center p-2 mt-5 text-sm font-medium text-center text-gray-900 bg-white rounded-lg hover:bg-gray-100 focus:ring-4 focus:outline-none dark:text-white focus:ring-gray-50 dark:bg-gray-900 dark:hover:bg-gray-800 dark:focus:ring-gray-600"
+            type="button"
           >
-            <path d="M3.5 1.5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0Zm0 6.041a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0Zm0 5.959a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0Z" />
-          </svg>
-        </button>
-        <div
-          id={`dropdownComment${comment.id}`}
-          className="z-10 hidden bg-white divide-y divide-gray-100 rounded-lg shadow w-40 dark:bg-gray-700 dark:divide-gray-600"
-        >
-          <ul
-            className="py-2 text-sm text-gray-700 dark:text-gray-200"
-            aria-labelledby="dropdownMenuIconButton"
+            <svg
+              className="w-4 h-4 text-gray-500 dark:text-gray-400"
+              aria-hidden="true"
+              xmlns="http://www.w3.org/2000/svg"
+              fill="currentColor"
+              viewBox="0 0 4 15"
+            >
+              <path d="M3.5 1.5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0Zm0 6.041a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0Zm0 5.959a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0Z" />
+            </svg>
+          </button>
+          <div
+            id={`dropdownComment${comment.id}`}
+            className="z-10 hidden bg-white divide-y divide-gray-100 rounded-lg shadow w-40 dark:bg-gray-700 dark:divide-gray-600"
           >
-            {(user.id === comment.user.id) ? (
-              <>
+            <ul
+              className="py-2 text-sm text-gray-700 dark:text-gray-200"
+              aria-labelledby="dropdownMenuIconButton"
+            >
+              {(user.id === comment.user.id) ? (
+                <>
+                  <li>
+                    <button
+                      type="button"
+                      className="w-full py-2 px-4 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
+                      onClick={() => setFormUpdate(!formUpdate)}
+                    >
+                      Modifier
+                    </button>
+                  </li>
+                  <li>
+                    <button
+                      type="button"
+                      className="w-full py-2 px-4 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
+                      data-modal-target="comment-delete-modal"
+                      data-modal-toggle="comment-delete-modal"
+                    >
+                      Supprimer
+                    </button>
+                  </li>
+                </>
+                ) : (
                 <li>
                   <button
                     type="button"
                     className="w-full py-2 px-4 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
-                    onClick={() => setFormUpdate(!formUpdate)}
+                    onClick={() => {handleReport()}}
                   >
-                    Modifier
+                    Report
                   </button>
-                </li>
-                <li>
-                  <button
-                    type="button"
-                    className="w-full py-2 px-4 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
-                    data-modal-target="comment-delete-modal"
-                    data-modal-toggle="comment-delete-modal"
-                  >
-                    Supprimer
-                  </button>
-                </li>
-              </>
-              ) : (
-              <li>
-                <button
-                  type="button"
-                  className="w-full py-2 px-4 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
-                  onClick={() => {handleReport()}}
-                >
-                  Report
-                </button>
-              </li>)
-              }
-          </ul>
-        </div>
+                </li>)
+                }
+            </ul>
+          </div>
+        </>
+        }
 
         {/* Modale de confirmation pour delete le commentaire */}
-        {user.id === comment.user.id ? (
+        {user && user.id === comment.user.id ? (
         <div
           id="comment-delete-modal"
           tabIndex={-1}

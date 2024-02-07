@@ -7,20 +7,23 @@ import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { initFlowbite } from 'flowbite';
 import ImgCrop from '../../components/Crop/ImgCrop';
+import { useNavigate } from 'react-router-dom';
 
 export default function StoryCreate() {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   // const apiURL = import.meta.env.VITE_API_URL;
-  const userId = JSON.parse(localStorage.getItem('user')).id;
+  // const userId = JSON.parse(localStorage.getItem('user')).id;
+  const user = useSelector((state) => state.user.detail);
   // const token = localStorage.getItem('token');
   const loaded = useSelector((state) => state.theme.loaded);
   const themeList = useSelector((state) => state.theme.list);
   const [selectedImage, setSelectedImage] = useState(null);
   const [cropData, setCropData] = useState(null); // Ici tu stockeras les données du crop
 
-  console.log('user storycreate', userId);
+  console.log('user storycreate', user.id);
   console.log('themes storycreate', themeList);
-  console.log('token storycreate', token);
+  // console.log('token storycreate', token);
 
   const {
     handleSubmit,
@@ -72,7 +75,7 @@ export default function StoryCreate() {
     })
     .then((response) => {
       toast.success('Nouvelle histoire publiée !', { duration: 9000 });
-      Navigate('/');
+      navigate('/');
     })
     .catch((error) => {
       if (error.response.data.detail === 'Title already used.') {
@@ -137,6 +140,7 @@ export default function StoryCreate() {
                   </p>
                 )}
               </div>
+
               <div className="sm:col-span-2">
                 <label
                   htmlFor="synopsis"
@@ -306,7 +310,7 @@ export default function StoryCreate() {
               type="hidden"
               name="userId"
               id="userId"
-              value={userId}
+              value={user.id}
               {...register('userId')}
             />
             <div className="flex items-center space-x-4 mt-4">

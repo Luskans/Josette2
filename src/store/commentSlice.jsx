@@ -9,9 +9,10 @@ export const commentSlice = createSlice({
   initialState: {
     list: [],
     loaded: false,
+    updated: false,
     currentPage: 1,
-    totalPage: 0,
-    totalComment: 0
+    totalPage: 1,
+    totalComment: 0,
   },
   reducers: {
     setComments: (state, action) => {
@@ -21,9 +22,13 @@ export const commentSlice = createSlice({
     resetComments: (state, action) => {
       state.list = [];
       state.loaded = false;
+      state.updated = false;
+      state.currentPage = 1;
+      state.totalPage = 1;
+      state.totalComment = 0;
     },
-    resetLoaded: (state) => {
-      state.loaded = false;
+    updateComments: (state) => {
+      state.updated = !state.updated;
     },
     setCurrentPage: (state, action) => {
       state.currentPage = action.payload;
@@ -37,7 +42,7 @@ export const commentSlice = createSlice({
   },
 });
 
-export const { setComments, resetComments, resetLoaded, setCurrentPage, setTotalPage, setTotalComment } = commentSlice.actions;
+export const { setComments, resetComments, updateComments, resetLoaded, setCurrentPage, setTotalPage, setTotalComment } = commentSlice.actions;
 
 export const getComments = (storyId, page) => (dispatch, getState) => {
   const state = getState();

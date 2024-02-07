@@ -1,10 +1,13 @@
 import { initFlowbite } from 'flowbite'
 import { useEffect } from 'react';
+import { useSelector } from 'react-redux';
 
-export default function StoryBarOff({ id, story, onCommentIconClick }) {
+export default function StoryBarOff({ id, onCommentIconClick }) {
+  const story = useSelector((state) => state.story.detail);
+
   useEffect(() => {
     initFlowbite();
-  }, []);
+  });
 
   return (
     <div className='flex justify-between py-4 px-3 mb-10 border-y dark:border-gray-400'>

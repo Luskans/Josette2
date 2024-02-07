@@ -8,14 +8,14 @@ import Footer from './components/Footer';
 import StoryCreate from './pages/story/StoryCreate';
 import ProfilView from './pages/profil/ProfilView';
 import Error from './pages/Error';
-import ProfilList from './pages/profil/ProfilList';
 import Signup from './pages/authentification/Signup';
 import Login from './pages/authentification/Login';
-import StoryView from './pages/story/StoryView';
 import { fetchConnectedUser } from './store/authSlice2';
 import { useDispatch, useSelector } from 'react-redux';
 import { useEffect } from 'react';
 import { fetchThemes } from './store/themeSlice';
+import ProfilUpdate from './pages/profil/ProfilUpdate';
+import StoryView from './pages/story/StoryView';
 
 export default function App() {
   const dispatch = useDispatch();
@@ -48,10 +48,11 @@ export default function App() {
           <Route path="/" element={<Home key={window.location.pathname} />} />
           <Route path="/signup" element={<Signup />} />
           <Route path="/login" element={<Login />} />
-          <Route path="/profil" element={<ProfilList />} />
           <Route path="/profil/view/:id" element={<ProfilView />} />
+          <Route path="/profil/update/:id" element={<ProfilUpdate />} />
           <Route path="/story/create" element={<StoryCreate />} />
-          <Route path="/story/view/:id" element={<StoryView key={window.location.pathname} />} />
+          {/* <Route path="/story/view/:id" element={<StoryView key={window.location.pathname} />} /> */}
+          <Route path="/story/view/:id" element={<StoryView />} />
           <Route path="*" element={<Error />} />
       </Routes>
       {showHeaderAndFooter && <Footer />}
