@@ -17,6 +17,13 @@ export const storySlice = createSlice({
     currentPage: 1,
     totalPage: 1,
     search: 'order[createdAt]=asc',
+    create: {
+      title: '',
+      synopsis: '',
+      themes: [],
+      image: '',
+      content: ''
+    }
   },
   reducers: {
     setStory: (state, action) => {
@@ -52,10 +59,22 @@ export const storySlice = createSlice({
     setSearch: (state, action) => {
       state.search = action.payload;
     },
+    setCreate: (state, action) => {
+      state.create = action.payload;
+    },
+    resetCreate: (state) => {
+      state.create = {
+        title: '',
+        synopsis: '',
+        themes: [],
+        image: '',
+        content: ''
+      }
+    },
   },
 });
 
-export const { setStory, resetStory, setStories, resetStories, updateStory, setCurrentPage, setTotalPage, setSearch } = storySlice.actions;
+export const { setStory, resetStory, setStories, resetStories, updateStory, setCurrentPage, setTotalPage, setSearch, setCreate, resetCreate } = storySlice.actions;
 
 export const getStory = (id) => (dispatch, getState) => {
   axiosBase

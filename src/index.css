@@ -10,6 +10,15 @@
 @import url('https://fonts.googleapis.com/css2?family=Nanum+Myeongjo&display=swap');
 /* Tranchant */
 @import url('https://fonts.googleapis.com/css2?family=Cinzel&display=swap');
+/* Majuscules */
+@import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap');
+/* Enfantin */
+@import url('https://fonts.googleapis.com/css2?family=Satisfy&display=swap');
+/* Tranchant */
+@import url('https://fonts.googleapis.com/css2?family=Philosopher&display=swap');
+/* Majuscules */
+@import url('https://fonts.googleapis.com/css2?family=Amatic+SC&display=swap');
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -38,6 +47,15 @@
 
 p {
     /* font-family: 'Comfortaa', sans-serif; */
+    /* font-family: 'Nanum Myeongjo', serif; */
+    /* font-family: 'Bebas Neue', sans-serif; */
+}
+
+span {
+    /* font-family: 'Bebas Neue', sans-serif; */
+    /* font-family: 'Satisfy', cursive; */
+    /* font-family: 'Philosopher', sans-serif;
+    font-family: 'Amatic SC', sans-serif; */
 }
 
 h1, h2, h3 {
@@ -46,4 +64,19 @@ h1, h2, h3 {
     /* font-family: 'Cute Font', sans-serif; */
     /* font-family: 'Nanum Myeongjo', serif; */
     font-family: 'Cinzel', serif;
+    /* font-family: 'Bebas Neue', sans-serif; */
+    /* font-family: 'Philosopher', sans-serif; */
+}
+
+h1 {
+    /* font-family: 'Honk', system-ui; */
+    /* font-family: 'Lobster', sans-serif; */
+    /* font-family: 'Cute Font', sans-serif; */
+    /* font-family: 'Nanum Myeongjo', serif; */
+    /* font-family: 'Cinzel', serif;
+    font-family: 'Bebas Neue', sans-serif; */
+    /* font-family: 'Satisfy', cursive; */
+    /* font-family: 'Philosopher', sans-serif;
+    font-family: 'Amatic SC', sans-serif; */
+
 }

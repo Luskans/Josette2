@@ -50,7 +50,7 @@ export default function ProfilStories() {
   return (
     <section className="pb-16">
       {/* <h2 className="mb-4 text-3xl lg:text-4xl tracking-tight font-extrabold text-gray-900 dark:text-white"> */}
-      <h2 className="flex justify-center text-2xl md:text-4xl font-extrabold line-clamp-1 mb-8 md:mb-10 text-gray-900 dark:text-white">
+      <h2 className="text-center text-2xl md:text-4xl font-extrabold mb-8 md:mb-10 text-gray-900 dark:text-white">
         Histoires de l'auteur par {title()}
       </h2>
       <div className="flex flex-wrap justify-center gap-5 items-center">

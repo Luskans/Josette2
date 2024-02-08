@@ -90,9 +90,9 @@ export default function StoryCreate() {
     <>
       <section className="bg-white dark:bg-gray-900">
         <div className="py-8 px-4 mx-auto max-w-2xl lg:py-16">
-          <h2 className="mb-4 text-xl font-bold text-gray-900 dark:text-white">
+          <h1 className="mb-8 text-3xl font-bold text-gray-900 dark:text-white">
             Crée ta petite histoire !
-          </h2>
+          </h1>
           <form onSubmit={handleSubmit(onSubmit)}>
             <div className="grid gap-4 sm:grid-cols-2 sm:gap-6">
               <div className="sm:col-span-2">
@@ -153,7 +153,7 @@ export default function StoryCreate() {
                   name="synopsis"
                   id="synopsis"
                   className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-600 focus:border-blue-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                  placeholder="Synopsis de ton histoire"
+                  placeholder="Courte mise en bouche de ton histoire"
                   required=""
                   {...register('synopsis', {
                     required: {
@@ -200,11 +200,12 @@ export default function StoryCreate() {
                     >
                       {themeList.map((theme) => (
                         <Controller
+                        key={theme.id}
                         name="themes"
                         control={control}
                         rules={{ validate: validateThemes }}
                         render={({ field }) => (
-                          <li key={theme.id} className="flex items-center pl-3 p-1 rounded hover:bg-gray-100 dark:hover:bg-gray-600">
+                          <li className="flex items-center pl-3 p-1 rounded hover:bg-gray-100 dark:hover:bg-gray-600">
                             <input
                               {...field}
                               type="checkbox"
@@ -239,7 +240,7 @@ export default function StoryCreate() {
                 )}
               </div>
 
-              <div className="sm:col-span-2">
+              {/* <div className="sm:col-span-2">
                 <label
                   htmlFor="image"
                   className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
@@ -255,7 +256,7 @@ export default function StoryCreate() {
                 <p className="mt-1 text-xs text-gray-400 dark:text-gray-400">
                   SVG, PNG, JPG or GIF (MAX. 800x400px).
                 </p>
-              </div>
+              </div> */}
               {/* <ImgCrop
                 image={selectedImage}
                 onImageLoaded={setImage}

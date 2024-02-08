@@ -56,9 +56,9 @@ export default function Home() {
       <section className="bg-white dark:bg-gray-900">
         <div className="py-12 px-4 mx-auto max-w-screen-xl lg:px-6">
           <div className="mx-auto max-w-screen-sm text-center lg:mb-16 mb-8">
-            <h2 className="mb-4 text-3xl lg:text-4xl tracking-tight font-extrabold text-gray-900 dark:text-white">
+            <h1 className="mb-4 text-3xl lg:text-4xl tracking-tight font-extrabold text-gray-900 dark:text-white">
               Histoires par {title()}
-            </h2>
+            </h1>
           </div>
           <div className="grid gap-4 lg:grid-cols-4 md:grid-cols-3 sm:grid-cols-2">
             {loaded &&

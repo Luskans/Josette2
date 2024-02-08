@@ -1,5 +1,4 @@
 import React, { useState, useRef } from "react";
-
 import ReactCrop, {
   centerCrop,
   makeAspectCrop,
@@ -9,8 +8,9 @@ import ReactCrop, {
 } from "react-image-crop";
 import { canvasPreview } from "./canvasPreview";
 import { useDebounceEffect } from "./useDebounceEffect";
-
 import "react-image-crop/dist/ReactCrop.css";
+import { useDispatch, useSelector } from "react-redux";
+import { setCreate } from "../../store/storySlice";
 
 // This is to demonstate how to make and center a % aspect crop
 // which is a bit trickier so we use some helper functions.
@@ -39,7 +39,9 @@ function centerAspectCrop(
   );
 }
 
-export default function ImgCrop() {
+export default function ImgCrop({ handlePrev, handleNext, handleBlob }) {
+  const dispatch = useDispatch();
+  const storyCreate = useSelector((state) => state.story.create);
   const [imgSrc, setImgSrc] = useState("");
   const previewCanvasRef = useRef<HTMLCanvasElement>(null);
   const imgRef = useRef<HTMLImageElement>(null);
@@ -49,7 +51,8 @@ export default function ImgCrop() {
     unit: 'px',
     width: 400,
     height: 400,
-    aspect: 1
+    aspect: 1,
+    locked: true
   });
   const [completedCrop, setCompletedCrop] = useState<PixelCrop>();
   const [scale, setScale] = useState(1);
@@ -115,7 +118,20 @@ export default function ImgCrop() {
       quality: 0.8
     });
 
-    console.log('blob', blob);
+    handleBlob(blob);
+
+
+    // const newData = {
+    //   title: storyCreate.title,
+    //   synopsis: storyCreate.synopsis,
+    //   themes: storyCreate.themes,
+    //   image: blob,
+    //   content: ''
+    // }
+    // dispatch(setCreate(newData));
+
+    handleNext();
+    // console.log('blob', blob);
 
     // if (blobUrlRef.current) {
     //   URL.revokeObjectURL(blobUrlRef.current);
@@ -225,13 +241,14 @@ export default function ImgCrop() {
           minWidth={400}
           minHeight={400}
           aspect={1}
+          locked={true}
         // circularCrop
         >
           <img
             ref={imgRef}
             alt="Crop me"
             src={imgSrc}
-            style={{ transform: `scale(${scale}) rotate(${rotate}deg)` }}
+            style={{ transform: `scale(${scale}) rotate(${rotate}deg)`}}
             onLoad={onImageLoad}
           />
         </ReactCrop>
@@ -246,10 +263,11 @@ export default function ImgCrop() {
                 objectFit: "contain",
                 width: completedCrop.width,
                 height: completedCrop.height,
+                margin: 'auto'
               }}
             />
           </div>
-          <div>
+          {/* <div>
             <button onClick={onDownloadCropClick}>Download Crop</button>
             <div style={{ fontSize: 12, color: "#666" }}>
               You need to open the CodeSandbox preview in a new window (top
@@ -267,9 +285,26 @@ export default function ImgCrop() {
             >
               Hidden download
             </a>
-          </div>
+          </div> */}
         </>
       )}
+      <div className="w-full mt-12 flex justify-center items-center space-x-4 mt-4">
+        <button
+          onClick={handlePrev}
+          type="button"
+          className="text-gray-500 bg-white border border-gray-300 hover:bg-gray-200 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:text-gray-400 dark:border-gray-500 dark:bg-gray-900 dark:hover:bg-gray-800"
+        >
+          Précédent
+        </button>
+
+        <button
+          onClick={onDownloadCropClick}
+          type="submit"
+          className="text-white bg-blue-700 hover:bg-blue-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700"
+        >
+          Suivant
+        </button>
+      </div>
     </>
   );
 }

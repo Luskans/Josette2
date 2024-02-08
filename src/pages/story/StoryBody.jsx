@@ -1,5 +1,6 @@
 import defaultStoryImage from '@/assets/story_image.jpg';
 import { useSelector } from 'react-redux';
+import getImageUrl from '@/utils/getImageUrl';
 
 export default function StoryBody() {
     const story = useSelector((state) => state.story.detail);
@@ -7,8 +8,8 @@ export default function StoryBody() {
   return (
     <main>
         <img
-            src={story.image ? story.image.imagePath : defaultStoryImage}
-            alt={`${story.name}'s cover picture`}
+            src={story.image ? getImageUrl(story.image.name) : defaultStoryImage}
+            alt={`${story.title}'s cover picture`}
             className="mb-12 lg:mb-14 w-full"
         />
 
