@@ -39,7 +39,7 @@ function centerAspectCrop(
   );
 }
 
-export default function ImgCrop({ handlePrev, handleNext, handleBlob }) {
+export default function ImgCrop({ handlePrev, handleNext, handleBlob, target }) {
   const dispatch = useDispatch();
   const storyCreate = useSelector((state) => state.story.create);
   const [imgSrc, setImgSrc] = useState("");
@@ -54,10 +54,30 @@ export default function ImgCrop({ handlePrev, handleNext, handleBlob }) {
     aspect: 1,
     locked: true
   });
+  console.log('target', target)
+  // const [crop, setCrop] = useState<Crop>(() => {
+  //   if (target === 'story') {
+  //     return {
+  //       unit: 'px',
+  //       // width: 711, // Largeur calculée pour un aspect de 16:9
+  //       minHeight: 400,
+  //       aspect: 16 / 9,
+  //       locked: true
+  //     };
+  //   } else {
+  //     return {
+  //       unit: 'px',
+  //       width: 400,
+  //       height: 400,
+  //       aspect: 1,
+  //       locked: true
+  //     };
+  //   }
+  // });
   const [completedCrop, setCompletedCrop] = useState<PixelCrop>();
   const [scale, setScale] = useState(1);
   const [rotate, setRotate] = useState(0);
-  const [aspect, setAspect] = useState<number | undefined>(1);
+  const [aspect, setAspect] = useState<number | undefined>(target === 'story' ? 16/9 : 1);
 
   function onSelectFile(e: React.ChangeEvent<HTMLInputElement>) {
     if (e.target.files && e.target.files.length > 0) {
@@ -119,16 +139,6 @@ export default function ImgCrop({ handlePrev, handleNext, handleBlob }) {
     });
 
     handleBlob(blob);
-
-
-    // const newData = {
-    //   title: storyCreate.title,
-    //   synopsis: storyCreate.synopsis,
-    //   themes: storyCreate.themes,
-    //   image: blob,
-    //   content: ''
-    // }
-    // dispatch(setCreate(newData));
 
     handleNext();
     // console.log('blob', blob);
@@ -196,7 +206,7 @@ export default function ImgCrop({ handlePrev, handleNext, handleBlob }) {
           className="block w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400"
         />
         <p className="mt-1 mb-6 text-xs text-gray-400 dark:text-gray-400">
-          SVG, PNG, JPG or GIF (MAX. 800x400px).
+          SVG, PNG, JPG, WEBP ou GIF
         </p>
         <div className="flex justify-center gap-5 mb-4 text-sm text-gray-700 dark:text-gray-200">
           <div>
@@ -232,15 +242,16 @@ export default function ImgCrop({ handlePrev, handleNext, handleBlob }) {
         </div> */}
       </div>
       {!!imgSrc && (
-        <ReactCrop
+        target === 'story'
+        ? <ReactCrop
           crop={crop}
           onChange={(_, percentCrop) => setCrop(percentCrop)}
           onComplete={(c) => setCompletedCrop(c)}
           // aspect={aspect}
           // minHeight={100}
-          minWidth={400}
+          // minWidth={711}
           minHeight={400}
-          aspect={1}
+          aspect={16/9}
           locked={true}
         // circularCrop
         >
@@ -252,7 +263,27 @@ export default function ImgCrop({ handlePrev, handleNext, handleBlob }) {
             onLoad={onImageLoad}
           />
         </ReactCrop>
-      )}
+        : <ReactCrop
+        crop={crop}
+        onChange={(_, percentCrop) => setCrop(percentCrop)}
+        onComplete={(c) => setCompletedCrop(c)}
+        // aspect={aspect}
+        // minHeight={100}
+        minWidth={400}
+        minHeight={400}
+        aspect={1}
+        locked={true}
+        circularCrop
+      >
+        <img
+          ref={imgRef}
+          alt="Crop me"
+          src={imgSrc}
+          style={{ transform: `scale(${scale}) rotate(${rotate}deg)`, marginBottom: '20px'}}
+          onLoad={onImageLoad}
+        />
+      </ReactCrop>
+    )}
       {!!completedCrop && (
         <>
           <div>
@@ -288,6 +319,7 @@ export default function ImgCrop({ handlePrev, handleNext, handleBlob }) {
           </div> */}
         </>
       )}
+      {/* {target === 'story' && */}
       <div className="w-full mt-12 flex justify-center items-center space-x-4 mt-4">
         <button
           onClick={handlePrev}
@@ -305,6 +337,7 @@ export default function ImgCrop({ handlePrev, handleNext, handleBlob }) {
           Suivant
         </button>
       </div>
+      {/* } */}
     </>
   );
 }

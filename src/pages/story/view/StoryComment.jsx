@@ -1,12 +1,12 @@
 import { initFlowbite } from 'flowbite';
 import { useEffect, useState } from 'react';
-import localDate from '../../utils/formatDate';
-import defaultUserImage from '../../assets/user_image.webp';
+import localDate from '@/utils/formatDate';
+import defaultUserImage from '@/assets/user_image.webp';
 import { useDispatch, useSelector } from 'react-redux';
-import { axiosSecu } from '../../utils/axios';
+import { axiosSecu } from '@/utils/axios';
 import toast from 'react-hot-toast';
 import { useForm } from 'react-hook-form';
-import { updateComments } from '../../store/commentSlice';
+import { updateComments } from '@/store/commentSlice';
 
 export default function StoryComment({ comment }) {
   const dispatch = useDispatch();

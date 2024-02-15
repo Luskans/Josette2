@@ -49,7 +49,7 @@ export default function ProfilDetail() {
                 <ProfilFollow />
             }
           </div>
-          <blockquote className="text-xl italic text-justify break-words font-semibold text-gray-500 dark:text-white">
+          <blockquote className="text-xl italic text-justify break-words font-semibold text-gray-500 dark:text-gray-300">
             <p>{profil.quote ? `"${profil.quote}"` : 'Nouvel arrivant ~'}</p>
           </blockquote>
           <p className="text-gray-500 text-justify leading-loose break-words dark:text-gray-400">

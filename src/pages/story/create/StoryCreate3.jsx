@@ -1,6 +1,6 @@
 import { useForm } from 'react-hook-form';
 import { useDispatch, useSelector } from 'react-redux';
-import { setCreate } from '../../store/storySlice';
+import { setCreate } from '../../../store/storySlice';
 
 export default function StoryCreate3({ handlePrev, handleNext }) {
     const dispatch = useDispatch();

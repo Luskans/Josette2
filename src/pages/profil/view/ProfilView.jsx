@@ -1,6 +1,6 @@
 import { useDispatch, useSelector } from 'react-redux';
-import { getProfil, resetProfil } from '../../store/profilSlice';
-import BotNav from '../../components/BotNav';
+import { getProfil, resetProfil } from '../../../store/profilSlice';
+import BotNav from '../../../components/BotNav';
 import { useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import ProfilDetail from './ProfilDetail';

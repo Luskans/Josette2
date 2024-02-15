@@ -8,7 +8,7 @@ import StoryComment from "./StoryComment";
 import StoryCommentsButton from "./StoryCommentsButton";
 import { resetComments } from "@/store/commentSlice";
 import { useForm } from "react-hook-form";
-import { updateComments } from "../../store/commentSlice";
+import { updateComments } from "../../../store/commentSlice";
 import { Link } from "react-router-dom";
 
 const StoryComments = forwardRef((props, ref) => {

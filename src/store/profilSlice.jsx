@@ -8,7 +8,12 @@ export const profilSlice = createSlice({
   name: 'profil',
   initialState: {
     detail: '',
-    loaded: false
+    loaded: false,
+    update: {
+      quote: '',
+      description: '',
+      image: ''
+    }
   },
   reducers: {
     setProfil: (state, action) => {
@@ -19,10 +24,20 @@ export const profilSlice = createSlice({
       state.detail = '';
       state.loaded = false;
     },
+    setUpdate: (state, action) => {
+      state.create = action.payload;
+    },
+    resetUpdate: (state) => {
+      state.create = {
+        quote: '',
+        description: '',
+        image: ''
+      }
+    },
   },
 });
 
-export const { setProfil, resetProfil } = profilSlice.actions;
+export const { setProfil, resetProfil, setUpdate, resetUpdate } = profilSlice.actions;
 
 export const getProfil = (id) => (dispatch, getState) => {
   axiosBase

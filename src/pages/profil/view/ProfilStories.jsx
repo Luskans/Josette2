@@ -1,7 +1,7 @@
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { getStories, resetStories } from "../../store/storySlice";
-import StoryCardMin from "../story/StoryCardMin";
+import { getStories, resetStories } from "../../../store/storySlice";
+import StoryCardMin from "../../story/StoryCardMin";
 
 export default function ProfilStories() {
   const dispatch = useDispatch();
