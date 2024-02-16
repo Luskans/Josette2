@@ -39,7 +39,7 @@ function centerAspectCrop(
   );
 }
 
-export default function ImgCrop({ handlePrev, handleNext, handleBlob, target }) {
+export default function ImgCrop({ handlePrev, handleNext, handleBlob, page }) {
   const dispatch = useDispatch();
   const storyCreate = useSelector((state) => state.story.create);
   const [imgSrc, setImgSrc] = useState("");
@@ -54,7 +54,6 @@ export default function ImgCrop({ handlePrev, handleNext, handleBlob, target }) 
     aspect: 1,
     locked: true
   });
-  console.log('target', target)
   // const [crop, setCrop] = useState<Crop>(() => {
   //   if (target === 'story') {
   //     return {
@@ -77,7 +76,7 @@ export default function ImgCrop({ handlePrev, handleNext, handleBlob, target }) 
   const [completedCrop, setCompletedCrop] = useState<PixelCrop>();
   const [scale, setScale] = useState(1);
   const [rotate, setRotate] = useState(0);
-  const [aspect, setAspect] = useState<number | undefined>(target === 'story' ? 16/9 : 1);
+  const [aspect, setAspect] = useState<number | undefined>(page === 'story' ? 16/9 : 1);
 
   function onSelectFile(e: React.ChangeEvent<HTMLInputElement>) {
     if (e.target.files && e.target.files.length > 0) {
@@ -101,6 +100,7 @@ export default function ImgCrop({ handlePrev, handleNext, handleBlob, target }) 
     const image = imgRef.current;
     const previewCanvas = previewCanvasRef.current;
     if (!image || !previewCanvas || !completedCrop) {
+      handleNext();
       throw new Error("Crop canvas does not exist");
     }
 
@@ -242,7 +242,7 @@ export default function ImgCrop({ handlePrev, handleNext, handleBlob, target }) 
         </div> */}
       </div>
       {!!imgSrc && (
-        target === 'story'
+        page === 'story'
         ? <ReactCrop
           crop={crop}
           onChange={(_, percentCrop) => setCrop(percentCrop)}

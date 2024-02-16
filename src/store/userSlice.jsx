@@ -55,8 +55,8 @@ export const userSlice = createSlice({
 export const { setToken, setUser, resetUser } = userSlice.actions;
 
 // Thunks
-export const login = (token) => dispatch => {
-  const decodeToken = jwtDecode(token);
+export const login = (token) => async (dispatch) => {
+  const decodeToken = await jwtDecode(token);
   dispatch(setToken(token));
   dispatch(setUser(decodeToken));
 };

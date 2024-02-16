@@ -9,11 +9,7 @@ export const profilSlice = createSlice({
   initialState: {
     detail: '',
     loaded: false,
-    update: {
-      quote: '',
-      description: '',
-      image: ''
-    }
+    update: null
   },
   reducers: {
     setProfil: (state, action) => {
@@ -25,14 +21,10 @@ export const profilSlice = createSlice({
       state.loaded = false;
     },
     setUpdate: (state, action) => {
-      state.create = action.payload;
+      state.update = action.payload;
     },
     resetUpdate: (state) => {
-      state.create = {
-        quote: '',
-        description: '',
-        image: ''
-      }
+      state.update = null
     },
   },
 });

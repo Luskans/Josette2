@@ -1,14 +1,14 @@
 import defaultUserImage from '@/assets/user_image.webp';
-import defaultStoryImage from '@/assets/story_image.jpg';
 import { useSelector } from 'react-redux';
-import { fullLocalDate } from '@/utils/formatDate';
 import { axiosSecu } from '@/utils/axios';
 import toast from 'react-hot-toast';
+import getImageUrl from '@/utils/getImageUrl';
 
 export default function ProfilUpdate3({ handlePrev, blob }) {
   const user = useSelector((state) => state.user.detail);
   const profil = useSelector((state) => state.profil.detail);
   const profilUpdate = useSelector((state) => state.profil.update);
+  const imageUrl = blob && URL.createObjectURL(blob); 
 
   const blobToFile = (blob) => {
     if (!blob) {
@@ -26,16 +26,18 @@ export default function ProfilUpdate3({ handlePrev, blob }) {
     const formData = new FormData();
     formData.append('quote', profilUpdate.quote);
     formData.append('description', profilUpdate.description);
+    // formData.append('profilId', `${profil.id}`);
+    formData.append('profilId', profil.id);
     if (image) {
       formData.append('image', image);
     }
-    formData.append('profilId', profil.id);
-    console.log('formdata final', formData);
 
     axiosSecu
-      .patch(`/users`, formData, {
+      // .post(`/users/update/${user.id}`, formData, {
+        .post(`/users/update`, formData, {
         headers: {
           // 'Content-Type': 'application/merge-patch+json',
+          // 'method': 'patch',
           'Content-Type': 'multipart/form-data',
         },
       })
@@ -48,16 +50,25 @@ export default function ProfilUpdate3({ handlePrev, blob }) {
       });
   };
 
+  console.log('state redux', profilUpdate)
+
   return (
     <>
-      <section className="flex flex-col mx-auto items-center border-b max-w-4xl mb-16">
+      <section className="flex flex-col w-full mx-auto items-center border-b max-w-4xl mb-16">
         <div className="flex flex-col w-full sm:flex-row gap-6 mb-12 items-center text-gray-900 dark:text-white">
           <div className="w-[300px] min-w-[300px]">
-            <img
-              className="w-full"
-              src={profil.image ? profil.image.imagePath : defaultUserImage}
+            {blob
+            ? <img 
+              src={imageUrl} 
+              alt={`${profil.name}'s profil picture`} 
+              className="w-full rounded-[50%]" 
+            />
+            : <img
+              className="w-full rounded-[50%]"
+              src={profil.image ? getImageUrl(profil.image.name) : defaultUserImage}
               alt={`${profil.name}'s profil picture`}
             />
+            }
           </div>
           <div className="flex flex-col items-center gap-8">
             <div className="w-full gap-4 flex justify-center items-end">

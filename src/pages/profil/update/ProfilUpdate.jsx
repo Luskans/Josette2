@@ -25,11 +25,7 @@ export default function ProfilUpdate() {
     control,
     setValue,
     formState: { errors },
-  } = useForm({
-    defaultValues: {
-      themes: [],
-    },
-  });
+  } = useForm();
 
   useEffect(() => {
     dispatch(getProfil(id));

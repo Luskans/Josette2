@@ -11,18 +11,13 @@ export default function ProfilUpdate1({ handleNext }) {
     handleSubmit,
     register,
     formState: { errors },
-  } = useForm({
-    defaultValues: {
-      themes: [],
-    },
-  });
+  } = useForm();
 
   const onSubmit = (data) => {
     console.log('test data en profil update', data);
     const newData = {
       quote: data.quote,
-      description: data.description,
-      image: ''
+      description: data.description
     };
     dispatch(setUpdate(newData));
     handleNext();

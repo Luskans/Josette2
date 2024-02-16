@@ -4,10 +4,12 @@ import { useSelector } from 'react-redux';
 import { fullLocalDate } from '@/utils/formatDate';
 import { axiosSecu } from '@/utils/axios';
 import toast from 'react-hot-toast';
+import getImageUrl from '@/utils/getImageUrl';
 
 export default function StoryCreate4({ handlePrev, blob }) {
   const user = useSelector((state) => state.user.detail);
   const storyCreate = useSelector((state) => state.story.create);
+  const imageUrl = blob && URL.createObjectURL(blob); 
 
   const blobToFile = (blob) => {
     if (!blob) {
@@ -67,7 +69,7 @@ export default function StoryCreate4({ handlePrev, blob }) {
           <div className="text-xl font-bold text-gray-900 dark:text-white">
             <img
               className="mr-4 w-16 h-16 rounded-full"
-              src={user.image ? user.image.imagePath : defaultUserImage}
+              src={user.image ? getImageUrl(user.image.name) : defaultUserImage}
               alt={`${user.name} profil picture`}
             />
           </div>
@@ -90,6 +92,18 @@ export default function StoryCreate4({ handlePrev, blob }) {
           alt={`${storyCreate.title}'s cover picture`}
           className="mb-12 lg:mb-14 w-full"
         /> */}
+        {blob
+          ? <img 
+            className="mb-12 lg:mb-14 w-full" 
+            src={imageUrl} 
+            alt={`${storyCreate.title}'s cover picture`} 
+          />
+          : <img
+            className="mb-12 lg:mb-14 w-full"
+            src={defaultStoryImage}
+            alt={`${storyCreate.title}'s cover picture`}
+          />
+        }
 
         <h1 className="mb-6 text-3xl font-extrabold leading-tight break-words text-gray-900 lg:text-4xl dark:text-white">
           {storyCreate.title}

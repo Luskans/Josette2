@@ -2,6 +2,7 @@ import { Link } from 'react-router-dom';
 import ProfilFollow from './ProfilFollow';
 import { useSelector } from 'react-redux';
 import defaultUserImage from '@/assets/user_image.webp';
+import getImageUrl from '@/utils/getImageUrl';
 
 export default function ProfilDetail() {
   const user = useSelector((state) => state.user.detail);
@@ -35,12 +36,12 @@ export default function ProfilDetail() {
       <div className="flex flex-col w-full sm:flex-row gap-6 mb-12 items-center text-gray-900 dark:text-white">
         <div className="w-[300px] min-w-[300px]">
           <img
-            className="w-full"
-            src={profil.image ? profil.image.imagePath : defaultUserImage}
+            className="w-full rounded-[50%]"
+            src={profil.image ? getImageUrl(profil.image.name) : defaultUserImage}
             alt={`${profil.name}'s profil picture`}
           />
         </div>
-        <div className="flex flex-col items-center gap-8">
+        <div className="flex flex-col w-full items-center gap-8">
           <div className="w-full gap-4 flex justify-center items-end">
             <h2 className="text-2xl md:text-4xl font-extrabold line-clamp-1.5">
               {profil.name}
