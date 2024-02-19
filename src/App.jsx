@@ -16,7 +16,7 @@ import { fetchThemes } from './store/themeSlice';
 import ProfilUpdate from './pages/profil/update/ProfilUpdate';
 import StoryView from './pages/story/view/StoryView';
 import StoryCreate from './pages/story/create/StoryCreate';
-import ProfilUpdateX from './pages/profil/update/ProfilUpdateX';
+import ProfilUpdate from './pages/profil/update/ProfilUpdate';
 
 export default function App() {
   const dispatch = useDispatch();
@@ -50,7 +50,7 @@ export default function App() {
           <Route path="/signup" element={<Signup />} />
           <Route path="/login" element={<Login />} />
           <Route path="/profil/view/:id" element={<ProfilView />} />
-          <Route path="/profil/update/:id" element={<ProfilUpdateX />} />
+          <Route path="/profil/update/:id" element={<ProfilUpdate />} />
           <Route path="/story/create" element={<StoryCreate />} />
           {/* <Route path="/story/view/:id" element={<StoryView key={window.location.pathname} />} /> */}
           <Route path="/story/view/:id" element={<StoryView />} />

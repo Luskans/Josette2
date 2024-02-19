@@ -2,7 +2,7 @@ import ctaImage from '../../assets/cta.webp';
 
 export default function Cta() {
   return (
-    <section className="bg-blue-700 dark:bg-blue-100">
+    <section className="bg-blue-700 dark:bg-blue-300">
         <div className="flex flex-col sm:flex-row gap-8 items-center py-8 px-4 mx-auto max-w-3xl xl:gap-16 sm:py-6 lg:px-6">
             <img className=" w-3/5 rounded-2xl" src={ctaImage} alt="cta image of a boy writing" />
             <div className="mt-4 md:mt-0">

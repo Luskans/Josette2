@@ -76,7 +76,7 @@ export default function ProfilUpdate3({ handlePrev, blob }) {
                 {profil.name}
               </h2>
             </div>
-            <blockquote className="text-xl italic text-justify break-words font-semibold text-gray-500 dark:text-gray-300">
+            <blockquote className="calli text-xl italic text-justify break-words font-semibold text-gray-500 dark:text-gray-300">
               <p>{profilUpdate.quote}</p>
             </blockquote>
             <p className="text-gray-500 text-justify leading-loose break-words dark:text-gray-400">

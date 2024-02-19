@@ -53,6 +53,9 @@ export default function ProfilStories() {
       <h2 className="text-center text-2xl md:text-4xl font-extrabold mb-8 md:mb-10 text-gray-900 dark:text-white">
         Histoires de l'auteur par {title()}
       </h2>
+      <span className="block text-center text-2xl md:text-4xl  mb-8 md:mb-10 text-gray-900 dark:text-white">
+        ~
+      </span>
       <div className="flex flex-wrap justify-center gap-5 items-center">
         {/* {profil.stories.map((story) => (
           <StoryCardMin key={story.id} story={story} />

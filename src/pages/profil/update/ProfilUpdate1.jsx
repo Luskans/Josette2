@@ -43,7 +43,7 @@ export default function ProfilUpdate1({ handleNext }) {
             rows={4}
             name="quote"
             id="quote"
-            className="text-xl italic font-semibold bg-gray-50 border border-gray-300 text-gray-500 text-sm rounded-lg focus:ring-blue-600 focus:border-blue-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-gray-300 dark:focus:ring-blue-500 dark:focus:border-blue-500"
+            className="calli text-xl italic font-semibold bg-gray-50 border border-gray-300 text-gray-500 text-sm rounded-lg focus:ring-blue-600 focus:border-blue-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-gray-300 dark:focus:ring-blue-500 dark:focus:border-blue-500"
             defaultValue={
               profil.quote ? `"${profil.quote}"` : 'Nouvel arrivant ~'
             }
@@ -61,7 +61,8 @@ export default function ProfilUpdate1({ handleNext }) {
                 message: 'La citation doit contenir au maximum 128 caractères.',
               },
               pattern: {
-                value: /^(?=[A-Za-z0-9 ]*[A-Za-z]){4}[A-Za-z0-9 ]*$/,
+                // value: /^(?=[A-Za-z0-9 ]*[A-Za-z]){4}[A-Za-z0-9 ]*$/,
+                value: /^[a-zA-Z0-9\s.,;!?\'"\-éèàçùëüïôâêîäöûÉÈÀÇÙËÜÏÔÂÊÎÄÖÛ]*$/,
                 message:
                   'La citation ne doit contenir que des lettres (2 min. 128 max.) et des chiffres.',
               },
@@ -110,7 +111,8 @@ export default function ProfilUpdate1({ handleNext }) {
                   'La description doit contenir au maximum 512 caractères.',
               },
               pattern: {
-                value: /^(?=[A-Za-z0-9 ]*[A-Za-z]){4}[A-Za-z0-9 ]*$/,
+                // value: /^(?=[A-Za-z0-9 ]*[A-Za-z]){4}[A-Za-z0-9 ]*$/,
+                value: /^[a-zA-Z0-9\s.,;!?\'"\-éèàçùëüïôâêîäöûÉÈÀÇÙËÜÏÔÂÊÎÄÖÛ]*$/,
                 message:
                   'La description ne doit contenir que des lettres (2 min. 512 max.) et des chiffres.',
               },

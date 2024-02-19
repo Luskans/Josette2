@@ -59,6 +59,9 @@ export default function Home() {
             <h1 className="mb-4 text-3xl lg:text-4xl tracking-tight font-extrabold text-gray-900 dark:text-white">
               Histoires par {title()}
             </h1>
+            <span className="block text-center text-2xl md:text-4xl  mb-8 md:mb-10 text-gray-900 dark:text-white">
+              ~
+            </span>
           </div>
           <div className="grid gap-4 lg:grid-cols-4 md:grid-cols-3 sm:grid-cols-2">
             {loaded &&

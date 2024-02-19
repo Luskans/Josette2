@@ -1,4 +1,4 @@
-import defaultStoryImage from '@/assets/story_image.jpg';
+import defaultStory from '@/assets/defaultStory.webp';
 import { useSelector } from 'react-redux';
 import getImageUrl from '@/utils/getImageUrl';
 
@@ -8,12 +8,12 @@ export default function StoryBody() {
   return (
     <main>
         <img
-            src={story.image ? getImageUrl(story.image.name) : defaultStoryImage}
+            src={story.image ? getImageUrl(story.image.name) : defaultStory}
             alt={`${story.title}'s cover picture`}
-            className="mb-12 lg:mb-14 w-full"
+            className="mb-16 w-full"
         />
 
-        <h1 className="mb-6 text-3xl font-extrabold leading-tight break-words text-gray-900 lg:mb-10 lg:text-4xl dark:text-white">
+        <h1 className="calli mb-10 text-3xl font-extrabold leading-tight break-words text-gray-900 lg:mb-10 lg:text-4xl dark:text-white">
             {story.title}
         </h1>
 

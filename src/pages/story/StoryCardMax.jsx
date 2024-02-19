@@ -1,15 +1,22 @@
-import storyThumbnail from '../../assets/story_thumbnail2.webp';
-import styled from 'styled-components';
 import localDate from '../../utils/formatDate';
 import readingTime from '../../utils/getReadingTime';
 import { Link } from 'react-router-dom';
 import getColorByTheme from '../../utils/getColorByTheme';
+import getImageUrl from '@/utils/getImageUrl';
+import defaultProfil2 from '@/assets/defaultProfil2.webp';
+import defaultStory from '@/assets/defaultStory.webp';
+import { useState } from 'react';
 
 export default function StoryCardMax({ story }) {
+  const [isHovered, setIsHovered] = useState(false);
 
   return (
     // SANS IMAGE
-    <article className="p-6 flex flex-col justify-between bg-white rounded-lg border border-gray-200 shadow-md dark:bg-gray-800 dark:border-gray-700">
+    <article 
+    className="p-4 flex w-[300px] h-[350px] flex-col bg-white rounded-lg border border-gray-200 shadow-md dark:bg-gray-800 dark:border-gray-700 hover:mb-2 hover:-mt-2 hover:shadow-xl transition-all duration-300"
+    onMouseEnter={() => setIsHovered(true)}
+    onMouseLeave={() => setIsHovered(false)}
+    >
       <div className="flex justify-between items-between mb-5 text-gray-500">
         <div className="flex gap-2">
           {story.themes.map(theme => (
@@ -21,25 +28,47 @@ export default function StoryCardMax({ story }) {
         <span className="text-sm text-gray-500 dark:text-gray-400">{readingTime(story.content.length)}</span>
       </div>
       <div className="h-full min-h-[184px]">
-        <h2 className="mb-2 text-lg line-clamp-2 break-words font-bold tracking-tight text-gray-900 dark:text-white">
+        <h2 className="calli mb-2 text-lg line-clamp-2 min-h-14 break-words font-bold tracking-tight text-gray-900 dark:text-white">
           <Link to={`/story/view/${story.id}`}>{story.title}</Link>
         </h2>
-        <p className="mb-5 text-sm line-clamp-7 break-words text-justify font-light text-gray-500 dark:text-gray-400">
+        {/* <p className="mb-5 text-sm line-clamp-7 break-words text-justify font-light text-gray-500 dark:text-gray-400">
           <Link to={`/story/view/${story.id}`}>{story.synopsis}</Link>
         </p>
+        <Link to={`/story/view/${story.id}`}>
+          <img 
+          className="mb-5 text-sm line-clamp-7 break-words text-justify font-light text-gray-500 dark:text-gray-400"
+          src={story.image ? getImageUrl(story.image.name) : defaultStory}
+          alt={`${story.title}'s story cover picture`}
+          />
+        </Link> */}
+        <Link to={`/story/view/${story.id}`}>
+          {isHovered
+          ? <p 
+          className="mb-5 text-sm line-clamp-7 break-words text-justify font-light text-gray-500 dark:text-gray-400"
+          >
+            {story.synopsis}
+          </p>
+          : <img 
+            className="mb-5 w-[266px] h-[150px]"
+            src={story.image ? getImageUrl(story.image.name) : defaultStory}
+            alt={`${story.title}'s story cover picture`}
+            />
+          }
+        </Link>
+
       </div>
       <div className="flex justify-between items-center">
         <div className="flex items-center space-x-3">
           <Link to={`/profil/view/${story.user.id}`}>
             <img
               className="w-10 h-10 rounded-full"
-              src="https://flowbite.s3.amazonaws.com/blocks/marketing-ui/avatars/jese-leos.png"
-              alt="Jese Leos avatar"
+              src={story.user.image ? getImageUrl(story.user.image.name) : defaultProfil2}
+              alt={`${story.user.name}'s profile picture`}
             />
           </Link>
           <div className="flex flex-col">
             <Link to={`/profil/view/${story.user.id}`}>
-              <span className="font-medium text-sm line-clamp-1 dark:text-white">{story.user.name}</span>
+              <span className="author font-medium text-sm line-clamp-1 dark:text-white">{story.user.name}</span>
             </Link>
             <span className="font-light text-sm text-gray-500 dark:text-gray-400">{localDate(story.createdAt)}</span>
           </div>
@@ -96,24 +125,6 @@ export default function StoryCardMax({ story }) {
             </svg>
           </div>
         </div>
-        {/* <a
-          href="#"
-          className="inline-flex items-center font-medium text-blue-600 dark:text-blue-500 hover:underline"
-        >
-          Plus
-          <svg
-            className="ml-1 w-4 h-4"
-            fill="currentColor"
-            viewBox="0 0 20 20"
-            xmlns="http://www.w3.org/2000/svg"
-          >
-            <path
-              fillRule="evenodd"
-              d="M10.293 3.293a1 1 0 011.414 0l6 6a1 1 0 010 1.414l-6 6a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-4.293-4.293a1 1 0 010-1.414z"
-              clipRule="evenodd"
-            ></path>
-          </svg>
-        </a> */}
       </div>
     </article>
   );

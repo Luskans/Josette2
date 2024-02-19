@@ -1,10 +1,15 @@
-import logoBluette from '../assets/logoV2.png';
-import userImage from '../assets/user_image.webp';
+import { logo } from '@/assets/logo';
+import defaultProfil from '@/assets/defaultProfil.webp';
+import defaultProfil2 from '@/assets/defaultProfil2.webp';
+import defaultProfil3 from '@/assets/defaultProfil3.webp';
 import styled from 'styled-components';
 import { useDispatch, useSelector } from 'react-redux';
 import { useEffect, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { logout } from '../store/userSlice';
+import { logout } from '@/store/userSlice';
+import getImageUrl from '@/utils/getImageUrl';
+
+// import { ReactComponent as LogoComponent } from '@/assets/logo.svg';
 
 const NavContainer = styled.nav`
   transition: all 0.5s ease-in-out;
@@ -61,10 +66,12 @@ export default function Header() {
       <div className="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto px-6 py-4">
         <Link
           to="/"
-          className="flex items-center space-x-3 rtl:space-x-reverse"
+          className="flex items-center space-x-2 rtl:space-x-reverse"
         >
-          <img src={logoBluette} className="h-8" alt="Bluette Logo" />
-          <span className="self-center text-2xl font-semibold whitespace-nowrap dark:text-white">
+          <span className="w-11 h-11 text-gray-800 dark:text-white">
+            {logo()}
+          </span>
+          <span className="brand self-center text-3xl font-semibold whitespace-nowrap text-gray-800 dark:text-white">
             Bluette
           </span>
         </Link>
@@ -88,37 +95,37 @@ export default function Header() {
                 to="/login"
                 className="hover:underline text-gray-600 dark:text-gray-400"
               >
-                Login
+                Connexion
               </Link>
               <Link to="/signup">
                 <button
                   type="button"
                   className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
                 >
-                  Sign up
+                  Inscription
                 </button>
               </Link>
             </>
           ) : (
             <>
               <Link to="/story/create">
-              <svg
-                className="w-9 h-9 text-gray-600 dark:text-white"
-                aria-hidden="true"
-                xmlns="http://www.w3.org/2000/svg"
-                fill="currentColor"
-                viewBox="0 0 24 24"
-              >
-                <path
-                  fillRule="evenodd"
-                  d="M6 2a2 2 0 0 0-2 2v15a3 3 0 0 0 3 3h12a1 1 0 1 0 0-2h-2v-2h2c.6 0 1-.4 1-1V4a2 2 0 0 0-2-2h-8v16h5v2H7a1 1 0 1 1 0-2h1V2H6Z"
-                  clipRule="evenodd"
-                />
-              </svg>
+                <svg
+                  className="w-9 h-9 text-gray-600 dark:text-white"
+                  aria-hidden="true"
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    fillRule="evenodd"
+                    d="M6 2a2 2 0 0 0-2 2v15a3 3 0 0 0 3 3h12a1 1 0 1 0 0-2h-2v-2h2c.6 0 1-.4 1-1V4a2 2 0 0 0-2-2h-8v16h5v2H7a1 1 0 1 1 0-2h1V2H6Z"
+                    clipRule="evenodd"
+                  />
+                </svg>
               </Link>
               <button
                 type="button"
-                className="flex text-sm bg-gray-800 rounded-full md:me-0 focus:ring-4 focus:ring-gray-300 dark:focus:ring-gray-600"
+                className="flex text-sm"
                 id="user-menu-button"
                 aria-expanded="false"
                 data-dropdown-toggle="user-dropdown"
@@ -126,9 +133,9 @@ export default function Header() {
               >
                 <span className="sr-only">Open user menu</span>
                 <img
-                  className="w-8 h-8 rounded-full"
-                  src={userImage}
-                  alt="user photo"
+                  className="w-9 h-9 rounded-full"
+                  src={user.image ? getImageUrl(user.image.name) : defaultProfil2}
+                  alt={`${user.name}'s profil picture`}
                 />
               </button>
               

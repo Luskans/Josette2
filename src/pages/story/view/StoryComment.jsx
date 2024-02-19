@@ -7,6 +7,8 @@ import { axiosSecu } from '@/utils/axios';
 import toast from 'react-hot-toast';
 import { useForm } from 'react-hook-form';
 import { updateComments } from '@/store/commentSlice';
+import getImageUrl from '@/utils/getImageUrl';
+import defaultProfil2 from '@/assets/defaultProfil2.webp';
 
 export default function StoryComment({ comment }) {
   const dispatch = useDispatch();
@@ -67,15 +69,15 @@ export default function StoryComment({ comment }) {
       <div key={comment.id} className="flex items-start gap-2.5 mb-8">
         <img
           className="w-8 h-8 rounded-full"
-          src={comment.user.image ? comment.user.image : defaultUserImage}
+          src={comment.user.image ? getImageUrl(comment.user.image.name) : defaultProfil2}
           alt={`${comment.user.name}'s profil picture`}
         />
         <div className="flex flex-col gap-1 w-full ">
           <div className="flex items-center space-x-2 rtl:space-x-reverse">
-            <span className="text-sm font-semibold text-gray-900 dark:text-white">
+            <span className="author text-sm font-semibold text-gray-900 dark:text-white">
               {comment.user.name}
             </span>
-            <span className="text-sm font-normal text-gray-500 dark:text-gray-400">
+            <span className="text-xs font-normal text-gray-500 dark:text-gray-400">
               {localDate(comment.createdAt)}{comment.updatedAt ? ' (modifié)' : null}
             </span>
           </div>
@@ -103,7 +105,8 @@ export default function StoryComment({ comment }) {
                           'Le commentaire doit contenir au maximum 512 caractères.',
                       },
                       pattern: {
-                        value: /^(?=[A-Za-z0-9 ]*[A-Za-z]){4}[A-Za-z0-9 ]*$/,
+                        // value: /^(?=[A-Za-z0-9 ]*[A-Za-z]){4}[A-Za-z0-9 ]*$/,
+                        value: /^[a-zA-Z0-9\s.,;!?\'"\-éèàçùëüïôâêîäöûÉÈÀÇÙËÜÏÔÂÊÎÄÖÛ]*$/,
                         message:
                           'Le commentaire ne doit contenir que des lettres (4 min. 512 max.) et des chiffres.',
                       },

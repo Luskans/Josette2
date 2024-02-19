@@ -93,7 +93,8 @@ export default function StoryCreate1({ handleNext }) {
                     'Le title doit contenir au maximum 64 caractères.',
                 },
                 pattern: {
-                    value: /^(?=[A-Za-z0-9 ]*[A-Za-z]){4}[A-Za-z0-9 ]*$/,
+                    // value: /^(?=[A-Za-z0-9 ]*[A-Za-z]){4}[A-Za-z0-9 ]*$/,
+                    value: /^[a-zA-Z0-9\s.,;!?\'"\-éèàçùëüïôâêîäöûÉÈÀÇÙËÜÏÔÂÊÎÄÖÛ]*$/,
                     message:
                     'Le titre ne doit contenir que des lettres (4 min. 64 max.) et des chiffres.',
                 },
@@ -141,9 +142,10 @@ export default function StoryCreate1({ handleNext }) {
                     'Le synopsis doit contenir au maximum 200 caractères.',
                 },
                 pattern: {
-                    value: /^(?=[A-Za-z0-9 ]*[A-Za-z]){4}[A-Za-z0-9 ]*$/,
+                    // value: /^(?=[A-Za-z0-9 ]*[A-Za-z]){4}[A-Za-z0-9 ]*$/,
+                    value: /^[a-zA-Z0-9\s.,;!?\'"\-éèàçùëüïôâêîäöûÉÈÀÇÙËÜÏÔÂÊÎÄÖÛ]*$/,
                     message:
-                    'Le synopsis ne doit contenir que des lettres (4 min. 200 max.) et des chiffres.',
+                    'Le synopsis ne doit contenir que des lettres (16 min. 200 max.) et des chiffres.',
                 },
                 })}
             />

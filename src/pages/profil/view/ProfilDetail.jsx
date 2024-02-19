@@ -1,7 +1,7 @@
 import { Link } from 'react-router-dom';
 import ProfilFollow from './ProfilFollow';
 import { useSelector } from 'react-redux';
-import defaultUserImage from '@/assets/user_image.webp';
+import defaultProfil2 from '@/assets/defaultProfil2.webp';
 import getImageUrl from '@/utils/getImageUrl';
 
 export default function ProfilDetail() {
@@ -37,7 +37,7 @@ export default function ProfilDetail() {
         <div className="w-[300px] min-w-[300px]">
           <img
             className="w-full rounded-[50%]"
-            src={profil.image ? getImageUrl(profil.image.name) : defaultUserImage}
+            src={profil.image ? getImageUrl(profil.image.name) : defaultProfil2}
             alt={`${profil.name}'s profil picture`}
           />
         </div>
@@ -50,7 +50,7 @@ export default function ProfilDetail() {
                 <ProfilFollow />
             }
           </div>
-          <blockquote className="text-xl italic text-justify break-words font-semibold text-gray-500 dark:text-gray-300">
+          <blockquote className="calli text-xl italic text-justify break-words font-semibold text-gray-500 dark:text-gray-300">
             <p>{profil.quote ? `"${profil.quote}"` : 'Nouvel arrivant ~'}</p>
           </blockquote>
           <p className="text-gray-500 text-justify leading-loose break-words dark:text-gray-400">

@@ -3,6 +3,8 @@ import { Link } from "react-router-dom";
 import defaultUserImage from "@/assets/user_image.webp"
 import StoryFollow from "./StoryFollow";
 import { fullLocalDate } from "@/utils/formatDate";
+import getImageUrl from '@/utils/getImageUrl';
+import defaultProfil2 from '@/assets/defaultProfil2.webp';
 
 export default function StoryHead() {
   const user = useSelector((state) => state.user.detail);
@@ -19,7 +21,7 @@ export default function StoryHead() {
           >
             <img
               className="mr-4 w-16 h-16 rounded-full"
-              src={story.user.image ? story.user.image : defaultUserImage}
+              src={story.user.image ? getImageUrl(story.user.image.name) : defaultProfil2}
               alt={`${story.user.name} profil picture`}
             />
           </Link>
@@ -28,7 +30,7 @@ export default function StoryHead() {
               <Link
                 to={`/profil/view/${story.user.id}`}
                 rel="author"
-                className="text-xl font-bold text-gray-900 dark:text-white"
+                className="author text-2xl font-bold text-gray-900 dark:text-white"
               >
                 {story.user.name}
               </Link>

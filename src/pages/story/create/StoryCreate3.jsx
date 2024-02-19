@@ -58,6 +58,12 @@ export default function StoryCreate3({ handlePrev, handleNext }) {
                 value: 12000,
                 message: 'Le texte doit contenir au maximum 12 000 caractères.',
               },
+              pattern: {
+                // value: /^(?=[A-Za-z0-9 ]*[A-Za-z]){4}[A-Za-z0-9 ]*$/,
+                value: /^[a-zA-Z0-9\s.,;!?\'"\-éèàçùëüïôâêîäöûÉÈÀÇÙËÜÏÔÂÊÎÄÖÛ]*$/,
+                message:
+                'Le texte ne doit contenir que des lettres (200 min. 12000 max.) et des chiffres.',
+              },
             })}
           />
           {errors.content ? (

@@ -1,41 +1,40 @@
-import logoBluette from '../assets/logoV2.png';
+import { logo } from '@/assets/logo';
+import { Link } from 'react-router-dom';
 
 export default function Footer() {
   return (
-    <footer className="p-4 bg-blue-700 sm:p-6 dark:bg-blue-100">
+    <footer className="p-4 bg-blue-700 sm:p-6 dark:bg-blue-300">
       <div className="mx-auto max-w-screen-xl">
         <div className="flex justify-between">
           <div className="flex sm:flex-row gap-5 dark:text-gray-600 text-gray-300">
-            <a href="https://flowbite.com" className="hover:underline">
+            <a href="#" className="hover:underline">
               About
             </a>
-            <a href="https://flowbite.com" className="hover:underline">
+            <a href="#" className="hover:underline">
               Terms
             </a>
-            <a href="https://flowbite.com" className="hover:underline">
+            <a href="#" className="hover:underline">
               Privacy
             </a>
           </div>
           <div className="">
-            <a href="https://flowbite.com" className="flex items-center">
-              <img
-                src={logoBluette}
-                className="mr-3 h-8"
-                alt="Bluette Logo"
-              />
-              <span className="self-center text-2xl font-semibold whitespace-nowrap dark:text-gray-600 text-gray-300">
+            <Link to="/" className="flex items-center gap-2">
+              <span className="w-11 h-11 dark:text-gray-600 text-gray-300">
+                {logo()}
+              </span>
+              <span className="brand self-center text-3xl font-bold whitespace-nowrap dark:text-gray-600 text-gray-300">
                 Bluette
               </span>
-            </a>
+            </Link>
           </div>
         </div>
-        <hr className="my-6 border-gray-200 sm:mx-auto dark:border-gray-700 lg:my-8" />
+        <hr className="my-6 border-gray-200 sm:mx-auto dark:border-gray-700" />
         <div className="sm:flex sm:items-center sm:justify-between">
           <span className="text-sm dark:text-gray-500 sm:text-center text-gray-300">
             © 2024{' '}
-            <a href="https://flowbite.com" className="hover:underline">
+            <Link to="/" className="hover:underline">
               Bluette™
-            </a>
+            </Link>
             . All Rights Reserved.
           </span>
           <div className="flex mt-4 space-x-6 sm:justify-center sm:mt-0">

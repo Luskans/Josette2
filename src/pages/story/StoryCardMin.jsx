@@ -1,21 +1,21 @@
 import { Link } from 'react-router-dom';
-import readingTime from '../../utils/getReadingTime';
-import storyThumbnail from '../../assets/story_thumbnail2.webp';
-import storyImage from '../../assets/story_image.jpg';
-import localDate from '../../utils/formatDate';
-import getColorByTheme from '../../utils/getColorByTheme';
+import readingTime from '@/utils/getReadingTime';
+import defaultStory2 from '@/assets/defaultStory2.webp';
+import localDate from '@/utils/formatDate';
+import getColorByTheme from '@/utils/getColorByTheme';
+import getImageUrl from '@/utils/getImageUrl';
 
 export default function StoryCardMin({ story }) {
 
   return (
     <>
-        <div className="w-60 flex flex-col bg-white rounded-lg border border-gray-200 shadow-md dark:bg-gray-800 dark:border-gray-700">
+        <div className="w-60 h-52 flex flex-col bg-white rounded-lg border border-gray-200 shadow-md dark:bg-gray-800 dark:border-gray-700">
           <div className="flex">
-            <Link to={`/story/view/${story.id}`}>
+            <Link to={`/story/view/${story.id}`} className="w-[120px] h-[120px] overflow-hidden">
               <img
-                className="w-[120px] h-[120px] min-w-[100px] rounded-tl-lg rounded-br-lg"
-                src={story.image ? story.image.imagePath : storyImage}
-                alt={story.image ? story.image.name : "Story's cover"}
+                className="object-cover object-center h-full w-auto rounded-tl-lg rounded-br-lg"
+                src={story.image ? getImageUrl(story.image.name) : defaultStory2}
+                alt={`${story.title}'s story cover picture`}
               />
             </Link>
             <div className="flex flex-col gap-2 p-2">
@@ -143,7 +143,7 @@ export default function StoryCardMin({ story }) {
                 </div>
             </div>
           </div>
-          <h3 className="min-h-[40px] leading-none line-clamp-2 break-words mb-2 pl-2 pt-2 text-sm font-bold tracking-tight text-gray-900 dark:text-white">
+          <h3 className="calli min-h-[40px] leading-none line-clamp-2 break-words mb-2 px-2 pt-2 text-sm font-bold tracking-tight text-gray-900 dark:text-white">
             <Link to={`/story/view/${story.id}`}>{story.title}</Link>
           </h3>
           <div className="flex justify-end gap-2 pt-1 p-2">
