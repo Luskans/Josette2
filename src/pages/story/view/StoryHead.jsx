@@ -30,7 +30,7 @@ export default function StoryHead() {
               <Link
                 to={`/profil/view/${story.user.id}`}
                 rel="author"
-                className="author text-2xl font-bold text-gray-900 dark:text-white"
+                className="author text-2xl font-medium text-gray-900 dark:text-white"
               >
                 {story.user.name}
               </Link>

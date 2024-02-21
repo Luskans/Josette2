@@ -1,6 +1,3 @@
-import React from 'react';
-import imgtest from '../../assets/logoV2.png';
-
 
 export default function Carousel() {
   return (

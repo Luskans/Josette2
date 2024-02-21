@@ -25,7 +25,7 @@ export default function ProfilDetail() {
   };
 
   return (
-    <section className="flex flex-col mx-auto items-center border-b max-w-4xl mb-16">
+    <section className="flex flex-col mx-auto items-center border-b mb-16">
       {user && user.id === profil.id && (
         <Link to={`/profil/update/${profil.id}`} className="self-end">
           <button className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700">
@@ -33,24 +33,24 @@ export default function ProfilDetail() {
           </button>
         </Link>
       )}
-      <div className="flex flex-col w-full sm:flex-row gap-6 mb-12 items-center text-gray-900 dark:text-white">
-        <div className="w-[300px] min-w-[300px]">
+      <div className="flex flex-col w-full md:flex-row gap-6 md:gap-16 mb-12 items-center md:justify-center text-gray-900 dark:text-white">
+        <div className="w-[300px] min-w-[300px] mb-6 sm:mb-0">
           <img
             className="w-full rounded-[50%]"
             src={profil.image ? getImageUrl(profil.image.name) : defaultProfil2}
             alt={`${profil.name}'s profil picture`}
           />
         </div>
-        <div className="flex flex-col w-full items-center gap-8">
+        <div className="flex flex-col items-center gap-8 md:max-w-lg">
           <div className="w-full gap-4 flex justify-center items-end">
-            <h2 className="text-2xl md:text-4xl font-extrabold line-clamp-1.5">
+            <h2 className="text-2xl md:text-3xl lg:text-4xl font-extrabold line-clamp-1.5">
               {profil.name}
             </h2>
             {user &&
                 <ProfilFollow />
             }
           </div>
-          <blockquote className="calli text-xl italic text-justify break-words font-semibold text-gray-500 dark:text-gray-300">
+          <blockquote className="calli text-md lg:text-xl italic text-justify break-words font-semibold text-gray-500 dark:text-gray-300">
             <p>{profil.quote ? `"${profil.quote}"` : 'Nouvel arrivant ~'}</p>
           </blockquote>
           <p className="text-gray-500 text-justify leading-loose break-words dark:text-gray-400">

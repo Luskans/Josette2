@@ -8,33 +8,32 @@ import axiosBase, { axiosSecu } from '../utils/axios';
 export const likeSlice = createSlice({
   name: 'like',
   initialState: {
-    list: [],
+    // list: [],
     detail: [],
     loaded: false
   },
   reducers: {
-    setLikes: (state, action) => {
-      state.list = action.payload;
-      state.loaded = true;
-    },
+    // setLikes: (state, action) => {
+    //   state.list = action.payload;
+    //   state.loaded = true;
+    // },
     setLike: (state, action) => {
       state.detail = action.payload;
       state.loaded = true;
     },
+    resetLike: (state) => {
+      state.detail = [];
+      state.loaded = false;
+    },
   },
 });
 
-export const { setLikes, setLike } = likeSlice.actions;
+export const { resetLike, setLike } = likeSlice.actions;
 
 export const getLike = (userId, storyId) => (dispatch, getState) => {
-  axiosSecu
+  axiosBase
     // .get(`${apiURL}/likes?user.id[]=${userId}&story.id[]=${storyId}`, {
-    .get(`/likes?user.id[]=${userId}&story.id[]=${storyId}`, {
-      headers: {
-        'Content-Type': 'application/json',
-        // 'Authorization': `Bearer ${token}`
-      },
-    })
+    .get(`/likes?user.id[]=${userId}&story.id[]=${storyId}`)
     .then((response) => {
       // console.log('likes response', response)
       dispatch(setLike(response.data))

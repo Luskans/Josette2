@@ -10,15 +10,13 @@ export default function StoryFollow() {
   const [authorFollowed, setAuthorFollowed] = useState(false);
 
   useEffect(() => {
-    dispatch(getFollow(user.id, story.user.id));
-
-    // if (user.id && story.user && story.user.id) {
-    //   dispatch(getFollow(user.id, story.user.id));
-    // }
-
-    return () => {
-      dispatch(resetFollow());
+    if (user) {
+      dispatch(getFollow(user.id, story.user.id));
     }
+
+    // return () => {
+    //   dispatch(resetFollow());
+    // }
   }, [authorFollowed])
 
   const addFollow = (followerId, followedId) => {
@@ -44,7 +42,7 @@ export default function StoryFollow() {
           {(follow.length != 0) ? (
             <button
               onClick={() => removeFollow(follow[0].id)}
-              className="leading-10 mt-0.5 text-blue-500 hover:text-blue-600 dark:text-blue-400 hover:dark:text-blue-300"
+              className="leading-10 mt-0.5 font-semibold text-blue-500 hover:text-blue-600 dark:text-blue-400 hover:dark:text-blue-300"
             >
               Suivi
             </button>

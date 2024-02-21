@@ -3,10 +3,10 @@ import { Link } from 'react-router-dom';
 
 export default function Footer() {
   return (
-    <footer className="p-4 bg-blue-700 sm:p-6 dark:bg-blue-300">
+    <footer className="p-4 bg-white dark:bg-gray-900 sm:p-6 border-t border-gray-200 dark:border-gray-600">
       <div className="mx-auto max-w-screen-xl">
         <div className="flex justify-between">
-          <div className="flex sm:flex-row gap-5 dark:text-gray-600 text-gray-300">
+          <div className="flex sm:flex-row gap-5 dark:text-gray-300 text-gray-500">
             <a href="#" className="hover:underline">
               About
             </a>
@@ -19,10 +19,10 @@ export default function Footer() {
           </div>
           <div className="">
             <Link to="/" className="flex items-center gap-2">
-              <span className="w-11 h-11 dark:text-gray-600 text-gray-300">
+              <span className="w-11 h-11 dark:text-gray-300 text-gray-500">
                 {logo()}
               </span>
-              <span className="brand self-center text-3xl font-bold whitespace-nowrap dark:text-gray-600 text-gray-300">
+              <span className="brand self-center text-3xl font-bold whitespace-nowrap dark:text-gray-300 text-gray-500">
                 Bluette
               </span>
             </Link>
@@ -30,7 +30,7 @@ export default function Footer() {
         </div>
         <hr className="my-6 border-gray-200 sm:mx-auto dark:border-gray-700" />
         <div className="sm:flex sm:items-center sm:justify-between">
-          <span className="text-sm dark:text-gray-500 sm:text-center text-gray-300">
+          <span className="text-sm dark:text-gray-300 sm:text-center text-gray-500">
             © 2024{' '}
             <Link to="/" className="hover:underline">
               Bluette™
@@ -40,7 +40,7 @@ export default function Footer() {
           <div className="flex mt-4 space-x-6 sm:justify-center sm:mt-0">
             <a
               href="#"
-              className="dark:text-gray-500 dark:hover:text-gray-900 text-gray-300 hover:text-white"
+              className="dark:text-gray-300 dark:hover:text-gray-200 text-gray-500 hover:text-gray-600"
             >
               <svg
                 className="w-5 h-5"
@@ -57,7 +57,7 @@ export default function Footer() {
             </a>
             <a
               href="#"
-              className="dark:text-gray-500 dark:hover:text-gray-900 text-gray-300 hover:text-white"
+              className="dark:text-gray-300 dark:hover:text-gray-200 text-gray-500 hover:text-gray-600"
             >
               <svg
                 className="w-5 h-5"
@@ -74,7 +74,7 @@ export default function Footer() {
             </a>
             <a
               href="#"
-              className="dark:text-gray-500 dark:hover:text-gray-900 text-gray-300 hover:text-white"
+              className="dark:text-gray-300 dark:hover:text-gray-200 text-gray-500 hover:text-gray-600"
             >
               <svg
                 className="w-5 h-5"
@@ -87,7 +87,7 @@ export default function Footer() {
             </a>
             <a
               href="#"
-              className="dark:text-gray-500 dark:hover:text-gray-900 text-gray-300 hover:text-white"
+              className="dark:text-gray-300 dark:hover:text-gray-200 text-gray-500 hover:text-gray-600"
             >
               <svg
                 className="w-5 h-5"
@@ -104,7 +104,7 @@ export default function Footer() {
             </a>
             <a
               href="#"
-              className="dark:text-gray-500 dark:hover:text-gray-900 text-gray-300 hover:text-white"
+              className="dark:text-gray-300 dark:hover:text-gray-200 text-gray-500 hover:text-gray-600"
             >
               <svg
                 className="w-5 h-5"

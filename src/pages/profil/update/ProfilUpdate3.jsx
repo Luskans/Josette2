@@ -43,7 +43,7 @@ export default function ProfilUpdate3({ handlePrev, blob }) {
       })
       .then((response) => {
         toast.success('Profil mis à jour !', { duration: 9000 });
-        //   navigate('/');
+        navigate('/');
       })
       .catch((error) => {
           toast.error("Une erreur est survenue.", { duration: 9000 });
@@ -55,7 +55,7 @@ export default function ProfilUpdate3({ handlePrev, blob }) {
   return (
     <>
       <section className="flex flex-col w-full mx-auto items-center border-b max-w-4xl mb-16">
-        <div className="flex flex-col w-full sm:flex-row gap-6 mb-12 items-center text-gray-900 dark:text-white">
+        <div className="flex flex-col w-full sm:flex-row gap-6 mb-12 items-center justify-between text-gray-900 dark:text-white">
           <div className="w-[300px] min-w-[300px]">
             {blob
             ? <img 

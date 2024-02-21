@@ -2,7 +2,6 @@ import { logo } from '@/assets/logo';
 import defaultProfil from '@/assets/defaultProfil.webp';
 import defaultProfil2 from '@/assets/defaultProfil2.webp';
 import defaultProfil3 from '@/assets/defaultProfil3.webp';
-import styled from 'styled-components';
 import { useDispatch, useSelector } from 'react-redux';
 import { useEffect, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
@@ -10,10 +9,6 @@ import { logout } from '@/store/userSlice';
 import getImageUrl from '@/utils/getImageUrl';
 
 // import { ReactComponent as LogoComponent } from '@/assets/logo.svg';
-
-const NavContainer = styled.nav`
-  transition: all 0.5s ease-in-out;
-`;
 
 export default function Header() {
   const [isToggled, setIsToggled] = useState(
@@ -45,10 +40,10 @@ export default function Header() {
     console.log('darkmode : ', isToggled);
     console.log('theme', localStorage.getItem('theme'));
 
-    const main = document.querySelector('.main');
+    const app = document.querySelector('.app');
     const theme = isToggled ? 'light' : 'dark';
-    main.classList.remove('light', 'dark');
-    main.classList.add(theme);
+    app.classList.remove('light', 'dark');
+    app.classList.add(theme);
     localStorage.setItem('theme', theme);
     // localStorage.clear();
     // console.log('storageee', localStorage);
@@ -62,7 +57,7 @@ export default function Header() {
   };
 
   return (
-    <NavContainer className="header bg-white dark:bg-gray-900 fixed w-full z-20 top-0 start-0 border-b border-gray-200 dark:border-gray-600">
+    <header className="header transition-all duration-500 bg-white dark:bg-gray-900 fixed w-full z-20 top-0 start-0 border-b border-gray-200 dark:border-gray-600">
       <div className="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto px-6 py-4">
         <Link
           to="/"
@@ -93,7 +88,7 @@ export default function Header() {
             <>
               <Link
                 to="/login"
-                className="hover:underline text-gray-600 dark:text-gray-400"
+                className="hover:underline text-gray-800 dark:text-gray-200"
               >
                 Connexion
               </Link>
@@ -134,7 +129,7 @@ export default function Header() {
                 <span className="sr-only">Open user menu</span>
                 <img
                   className="w-9 h-9 rounded-full"
-                  src={user.image ? getImageUrl(user.image.name) : defaultProfil2}
+                  src={user.image ? getImageUrl(user.image) : defaultProfil2}
                   alt={`${user.name}'s profil picture`}
                 />
               </button>
@@ -153,14 +148,14 @@ export default function Header() {
                   </span>
                 </div>
                 <ul className="py-2" aria-labelledby="user-menu-button">
-                  <li>
-                    <a
+                  <Link to={`/profil/view/${user.id}`}>
+                    <li
                       href="#"
                       className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white"
                     >
                       Profil
-                    </a>
-                  </li>
+                    </li>
+                  </Link>
                   <li>
                     <a
                       href="#"
@@ -208,6 +203,6 @@ export default function Header() {
           )}
         </div>
       </div>
-    </NavContainer>
+    </header>
   );
 }

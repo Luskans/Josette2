@@ -127,19 +127,18 @@ const StoryComments = forwardRef((props, ref) => {
           </button>
         </form>
         ) : (
-          <p className="text-sm text-center italic text-gray-500 dark:text-gray-300 mb-10"><Link to="/login" className="text-blue-500 font-semibold">Connectez</Link>-vous pour pouvoir laisser un message, ou bien <Link to ="/signup" className="text-blue-500 font-semibold">inscrivez</Link>-vous si vous n'avez pas de compte !</p>
+          <p className="text-sm text-center italic text-gray-500 dark:text-gray-300 mb-10"><Link to="/login" className="text-blue-500 font-semibold">Connectez</Link>-vous pour laisser un message, ou bien <Link to ="/signup" className="text-blue-500 font-semibold">inscrivez</Link>-vous si vous n'avez pas de compte !</p>
         ) 
       }
 
-      {/* {!commentsLoaded ? ( */}
-        <>
+      {commentsLoaded
+        ? <>
           {comments.map((comment) => (
             <StoryComment key={comment.id} comment={comment} />
           ))}
         </>
-      {/* ) : (
-          <Loader />
-      )} */}
+        : <Loader />
+      }
 
       {(comments.length != 0) ? (
         <StoryCommentsButton />

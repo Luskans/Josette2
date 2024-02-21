@@ -16,14 +16,13 @@ import { fetchThemes } from './store/themeSlice';
 import ProfilUpdate from './pages/profil/update/ProfilUpdate';
 import StoryView from './pages/story/view/StoryView';
 import StoryCreate from './pages/story/create/StoryCreate';
-import ProfilUpdate from './pages/profil/update/ProfilUpdate';
 
 export default function App() {
   const dispatch = useDispatch();
   // const user = useSelector(state => state.auth2.user);
   const navigate = useNavigate();
   const location = useLocation();
-  const theme = localStorage.getItem('theme');
+  // const theme = localStorage.getItem('theme');
   const showHeaderAndFooter = location.pathname !== '/login' && location.pathname !== '/signup';
   const showBotNav = location.pathname === '/' || location.pathname.startsWith('/profil/view/');
 
@@ -41,23 +40,22 @@ export default function App() {
   }, [location]);
 
   return (
-    <>
-    <main className={`main ${theme ?? 'light'} text-foreground bg-background bg-white dark:bg-gray-900 ${showHeaderAndFooter && 'pt-16'} ${showBotNav && 'pb-16'} min-h-96`}>
+    <div className={`flex flex-col items-between justify-between bg-white dark:bg-gray-900 ${showHeaderAndFooter && 'pt-20'} ${showBotNav && 'pb-16'} min-h-screen`}>
       <Toaster />
       {showHeaderAndFooter && <Header />}
       <Routes>
-          <Route path="/" element={<Home key={window.location.pathname} />} />
+          {/* <Route path="/" element={<Home key={window.location.pathname} />} /> */}
+          <Route path="/" element={<Home />} />
           <Route path="/signup" element={<Signup />} />
           <Route path="/login" element={<Login />} />
           <Route path="/profil/view/:id" element={<ProfilView />} />
           <Route path="/profil/update/:id" element={<ProfilUpdate />} />
+          <Route path="/story/view/:id" element={<StoryView />} />
           <Route path="/story/create" element={<StoryCreate />} />
           {/* <Route path="/story/view/:id" element={<StoryView key={window.location.pathname} />} /> */}
-          <Route path="/story/view/:id" element={<StoryView />} />
           <Route path="*" element={<Error />} />
       </Routes>
       {showHeaderAndFooter && <Footer />}
-    </main>
-    </>
+    </div>
   );
 }

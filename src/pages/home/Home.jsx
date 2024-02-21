@@ -6,6 +6,7 @@ import Notification from './Notification';
 import Cta from './Cta';
 import StoryCardMax from '../story/StoryCardMax';
 import Carousel from './Carousel';
+import Loader from '../../components/Loader';
 
 export default function Home() {
   const dispatch = useDispatch();
@@ -54,20 +55,22 @@ export default function Home() {
     <>
       {user ? <Carousel /> : <Cta />}
       <section className="bg-white dark:bg-gray-900">
-        <div className="py-12 px-4 mx-auto max-w-screen-xl lg:px-6">
+        <div className="py-12 px-4 mx-auto max-w-screen-2xl lg:px-6">
           <div className="mx-auto max-w-screen-sm text-center lg:mb-16 mb-8">
-            <h1 className="mb-4 text-3xl lg:text-4xl tracking-tight font-extrabold text-gray-900 dark:text-white">
+            <h1 className="mb-4 text-2xl sm:text-3xl lg:text-4xl tracking-tight font-extrabold text-gray-900 dark:text-white">
               Histoires par {title()}
             </h1>
             <span className="block text-center text-2xl md:text-4xl  mb-8 md:mb-10 text-gray-900 dark:text-white">
               ~
             </span>
           </div>
-          <div className="grid gap-4 lg:grid-cols-4 md:grid-cols-3 sm:grid-cols-2">
-            {loaded &&
-              storyList.map(story => (
+          <div className="flex flex-wrap justify-center gap-4">
+            {loaded
+              ? storyList.map(story => (
                 <StoryCardMax key={story.id} story={story} />
-            ))}
+              ))
+              : <Loader />
+            }
           </div>
         </div>
       </section>

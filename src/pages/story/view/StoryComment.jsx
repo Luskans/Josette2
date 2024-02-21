@@ -74,10 +74,10 @@ export default function StoryComment({ comment }) {
         />
         <div className="flex flex-col gap-1 w-full ">
           <div className="flex items-center space-x-2 rtl:space-x-reverse">
-            <span className="author text-sm font-semibold text-gray-900 dark:text-white">
+            <span className="author text-sm font-medium text-gray-800 dark:text-white">
               {comment.user.name}
             </span>
-            <span className="text-xs font-normal text-gray-500 dark:text-gray-400">
+            <span className="text-xs font-normal text-gray-500 dark:text-gray-400 mb-0.5">
               {localDate(comment.createdAt)}{comment.updatedAt ? ' (modifié)' : null}
             </span>
           </div>
@@ -146,7 +146,7 @@ export default function StoryComment({ comment }) {
                 </div>
               </form>
             ) : (
-              <p className="text-sm text-gray-800 break-words text-justify dark:text-gray-100">
+              <p className="text-sm text-gray-700 break-words text-justify dark:text-gray-200">
                 {comment.content}
               </p>
             )}

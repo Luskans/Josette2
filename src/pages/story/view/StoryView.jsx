@@ -7,6 +7,7 @@ import StoryBarOff from './StoryBarOff';
 import StoryHead from './StoryHead';
 import StoryBody from './StoryBody';
 import StoryComments from './StoryComments';
+import Loader from '@/components/Loader';
 
 export default function StoryView() {
   let { id } = useParams();
@@ -30,39 +31,38 @@ export default function StoryView() {
 
   return (
     <>
-      {story && (
-        <>
-          <main className="pt-8 pb-16 lg:pt-16 lg:pb-24 bg-white dark:bg-gray-900 antialiased">
-            <div className="flex justify-between px-4 mx-auto max-w-screen-xl ">
-              <div className="mx-auto w-full max-w-2xl format format-sm sm:format-base lg:format-lg format-blue dark:format-invert">
-                <StoryHead />
+      {storyLoaded && story
+        ? <main className="pt-8 pb-16 lg:pt-16 lg:pb-24 bg-white dark:bg-gray-900 antialiased">
+          <div className="flex justify-between px-4 mx-auto max-w-screen-xl ">
+            <div className="mx-auto w-full max-w-2xl format format-sm sm:format-base lg:format-lg format-blue dark:format-invert">
+              <StoryHead />
 
-                {user ? (
-                  <StoryBar
-                    id={1}
-                    onCommentIconClick={scrollToComments}
-                  />
-                ) : (
-                  <StoryBarOff
-                    id={1}
-                    onCommentIconClick={scrollToComments}
-                  />
-                )}
+              {user ? (
+                <StoryBar
+                  id={1}
+                  onCommentIconClick={scrollToComments}
+                />
+              ) : (
+                <StoryBarOff
+                  id={1}
+                  onCommentIconClick={scrollToComments}
+                />
+              )}
 
-                <StoryBody />
+              <StoryBody />
 
-                {user ? (
-                  <StoryBar id={2} />
-                ) : (
-                  <StoryBarOff id={2} />
-                )}
+              {user ? (
+                <StoryBar id={2} />
+              ) : (
+                <StoryBarOff id={2} />
+              )}
 
-                <StoryComments ref={commentsAnchor} />
-              </div>
+              <StoryComments ref={commentsAnchor} />
             </div>
-          </main>
-        </>
-      )}
+          </div>
+        </main>
+        : <Loader />
+      }
     </>
   );
 }

@@ -31,14 +31,9 @@ export const followSlice = createSlice({
 export const { setFollows, setFollow, resetFollow } = followSlice.actions;
 
 export const getFollow = (followerId, followedId) => (dispatch, getState) => {
-  axiosSecu
+  axiosBase
     // .get(`${apiURL}/follows?follower.id[]=${followerId}&followed.id[]=${followedId}`, {
-    .get(`/follows?follower.id[]=${followerId}&followed.id[]=${followedId}`, {
-      headers: {
-        'Content-Type': 'application/json',
-        // 'Authorization': `Bearer ${token}`
-      },
-    })
+    .get(`/follows?follower.id[]=${followerId}&followed.id[]=${followedId}`)
     .then((response) => {
       // console.log('follow response', response)
       dispatch(setFollow(response.data))

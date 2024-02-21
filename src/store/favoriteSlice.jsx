@@ -21,10 +21,14 @@ export const favoriteSlice = createSlice({
       state.detail = action.payload;
       state.loaded = true;
     },
+    resetFavorite: (state, action) => {
+      state.detail = [];
+      state.loaded = false;
+    },
   },
 });
 
-export const { setFavorites, setFavorite } = favoriteSlice.actions;
+export const { setFavorites, setFavorite, resetFavorite } = favoriteSlice.actions;
 
 // export const getFavorite = () => (dispatch, getState) => {
 //   const state = getState();
@@ -47,14 +51,9 @@ export const { setFavorites, setFavorite } = favoriteSlice.actions;
 // };
 
 export const getFavorite = (userId, storyId) => (dispatch, getState) => {
-  axiosSecu
+  axiosBase
     // .get(`${apiURL}/favorites?user.id[]=${userId}&story.id[]=${storyId}`, {
-    .get(`/favorites?user.id[]=${userId}&story.id[]=${storyId}`, {
-      headers: {
-        'Content-Type': 'application/json',
-        // 'Authorization': `Bearer ${token}`
-      },
-    })
+    .get(`/favorites?user.id[]=${userId}&story.id[]=${storyId}`)
     .then((response) => {
       // console.log('favorites response', response)
       dispatch(setFavorite(response.data))

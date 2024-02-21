@@ -77,7 +77,7 @@ export default function StoryCardMax({ story }) {
           <div className="flex gap-2.5">
             <p className="text-xs text-gray-500 dark:text-gray-300">{story.likes.length}</p>
             <svg
-              className="w-4 h-4 text-gray-400 hover:text-gray-500 hover:dark:text-gray-300"
+              className="w-4 h-4 text-gray-500 hover:text-gray-600 dark:text-gray-300 hover:dark:text-gray-200"
               aria-hidden="true"
               viewBox="0 0 20 20"
               fill="none"
@@ -107,7 +107,7 @@ export default function StoryCardMax({ story }) {
           <div className="flex gap-2.5">
             <p className="text-xs text-gray-500 dark:text-gray-300">{story.viewCount ? story.viewCount : 0}</p>
             <svg
-              className="w-4 h-4 text-gray-400 hover:text-gray-500 hover:dark:text-gray-300"
+              className="w-4 h-4 text-gray-500 hover:text-gray-600 dark:text-gray-300 hover:dark:text-gray-200"
               aria-hidden="true"
               xmlns="http://www.w3.org/2000/svg"
               fill="none"

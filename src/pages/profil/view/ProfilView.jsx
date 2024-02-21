@@ -5,6 +5,7 @@ import { useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import ProfilDetail from './ProfilDetail';
 import ProfilStories from './ProfilStories';
+import Loader from '../../../components/Loader';
 
 export default function ProfilView() {
   const dispatch = useDispatch();
@@ -21,12 +22,13 @@ export default function ProfilView() {
 
   return (
     <>
-      {profilLoaded && (
-        <main className="bg-white dark:bg-gray-900 px-6 pt-10 antialiased">
+      {profilLoaded
+        ? <main className="mx-auto max-w-screen-xl bg-white dark:bg-gray-900 px-6 pt-10">
           <ProfilDetail />
           <ProfilStories />
         </main>
-      )}
+        : <Loader />
+      }
 
       <BotNav page={'profil'} />
     </>

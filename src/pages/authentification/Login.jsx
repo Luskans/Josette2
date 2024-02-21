@@ -28,16 +28,33 @@ export default function Login() {
   const [showPassword, setShowPassword] = useState(false);
   const handleClickPassword = () => setShowPassword(!showPassword);
 
+  // const onSubmit = (data) => {
+  //   axiosBase
+  //     // .post(`${apiURL}/login`, data)
+  //     .post(`/login`, data)
+  //     .then((response) => {
+  //       toast.success('Connexion réussie !', { duration: 9000 });
+  //       dispatch(login(response.data));
+
+  //       // console.log('redux token', token); // pas affiché la premiere fois car redux asynchrone
+  //       // console.log('redux user', user);
+  //       navigate('/');
+  //     })
+  //     .catch((error) => {
+  //       if (error) {
+  //         toast.error('Email ou mot de passe incorrect.', { duration: 9000 });
+  //       }
+  //     });
+  // };
+
   const onSubmit = (data) => {
     axiosBase
       // .post(`${apiURL}/login`, data)
       .post(`/login`, data)
       .then((response) => {
+        dispatch(login(response.data));
+        
         toast.success('Connexion réussie !', { duration: 9000 });
-        dispatch(login(response.data.token));
-
-        // console.log('redux token', token); // pas affiché la premiere fois car redux asynchrone
-        // console.log('redux user', user);
         navigate('/');
       })
       .catch((error) => {
@@ -45,22 +62,6 @@ export default function Login() {
           toast.error('Email ou mot de passe incorrect.', { duration: 9000 });
         }
       });
-
-    // CONNEXION UTILISANT JUSTE COOKIES, PROBLEME STOCKAGE COOKIE
-    // axios
-    //   .post(`${apiURL}/login`, data)
-    //   .then((response) => {
-    //     toast.success('Connexion réussie !', { duration: 9000 });
-    //     console.log('login response', response);
-    //     console.log('login user', user2);
-    //     navigate('/');
-    //   })
-    //   .catch((error) => {
-    //     if (error) {
-    //       toast.error('Email ou mot de passe incorrect.', { duration: 9000 });
-    //       console.log(error.message)
-    //     }
-    //   });
   };
 
   return (

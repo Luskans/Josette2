@@ -114,6 +114,7 @@ export default function ImgCrop({ handlePrev, handleNext, handleBlob, page }) {
       completedCrop.width * scaleX,
       completedCrop.height * scaleY,
     );
+    
     const ctx = offscreen.getContext("2d");
     if (!ctx) {
       throw new Error("No 2d context");
@@ -208,7 +209,7 @@ export default function ImgCrop({ handlePrev, handleNext, handleBlob, page }) {
         <p className="mt-1 mb-6 text-xs text-gray-400 dark:text-gray-400">
           SVG, PNG, JPG, WEBP ou GIF
         </p>
-        <div className="flex justify-center gap-5 mb-4 text-sm text-gray-700 dark:text-gray-200">
+        <div className="flex justify-center gap-5 mb-8 text-sm text-gray-700 dark:text-gray-200">
           <div>
             <label htmlFor="scale-input" className="mb-2 mr-2 text-sm font-medium text-gray-900 dark:text-white">Scale: </label>
             <input
@@ -235,12 +236,8 @@ export default function ImgCrop({ handlePrev, handleNext, handleBlob, page }) {
             />
           </div>
         </div>
-        {/* <div>
-          <button onClick={handleToggleAspectClick}>
-            Toggle aspect {aspect ? "off" : "on"}
-          </button>
-        </div> */}
       </div>
+      <div className="flex flex-col items-center justify-center gap-8 w-full">
       {!!imgSrc && (
         page === 'story'
         ? <ReactCrop
@@ -250,6 +247,7 @@ export default function ImgCrop({ handlePrev, handleNext, handleBlob, page }) {
           // aspect={aspect}
           // minHeight={100}
           // minWidth={711}
+          // minWidth={640}
           minHeight={400}
           aspect={16/9}
           locked={true}
@@ -259,6 +257,7 @@ export default function ImgCrop({ handlePrev, handleNext, handleBlob, page }) {
             ref={imgRef}
             alt="Crop me"
             src={imgSrc}
+            className="w-full max-h-[800px]"
             style={{ transform: `scale(${scale}) rotate(${rotate}deg)`}}
             onLoad={onImageLoad}
           />
@@ -279,7 +278,8 @@ export default function ImgCrop({ handlePrev, handleNext, handleBlob, page }) {
           ref={imgRef}
           alt="Crop me"
           src={imgSrc}
-          style={{ transform: `scale(${scale}) rotate(${rotate}deg)`, marginBottom: '20px'}}
+          className="w-full max-h-[800px]"
+          style={{ transform: `scale(${scale}) rotate(${rotate}deg)`}}
           onLoad={onImageLoad}
         />
       </ReactCrop>
@@ -319,8 +319,9 @@ export default function ImgCrop({ handlePrev, handleNext, handleBlob, page }) {
           </div> */}
         </>
       )}
+      </div>
       {/* {target === 'story' && */}
-      <div className="w-full mt-12 flex justify-center items-center space-x-4 mt-4">
+      <div className="w-full mt-12 flex justify-center items-center space-x-4 mt-8">
         <button
           onClick={handlePrev}
           type="button"

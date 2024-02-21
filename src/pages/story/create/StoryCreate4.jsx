@@ -51,7 +51,7 @@ export default function StoryCreate4({ handlePrev, blob }) {
     })
     .then((response) => {
       toast.success('Nouvelle histoire publiée !', { duration: 9000 });
-    //   navigate('/');
+      navigate('/');
     })
     .catch((error) => {
       if (error.response.data.detail === 'Title already used.') {
@@ -69,7 +69,7 @@ export default function StoryCreate4({ handlePrev, blob }) {
           <div className="text-xl font-bold text-gray-900 dark:text-white">
             <img
               className="mr-4 w-16 h-16 rounded-full"
-              src={user.image ? getImageUrl(user.image.name) : defaultUserImage}
+              src={user.image ? getImageUrl(user.image) : defaultUserImage}
               alt={`${user.name} profil picture`}
             />
           </div>
