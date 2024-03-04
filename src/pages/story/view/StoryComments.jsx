@@ -1,4 +1,4 @@
-import { forwardRef, useEffect, useRef, useState } from "react";
+import { forwardRef, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { axiosSecu } from '@/utils/axios';
 import toast from 'react-hot-toast';
@@ -8,7 +8,7 @@ import StoryComment from "./StoryComment";
 import StoryCommentsButton from "./StoryCommentsButton";
 import { resetComments } from "@/store/commentSlice";
 import { useForm } from "react-hook-form";
-import { updateComments } from "../../../store/commentSlice";
+import { updateComments } from "@/store/commentSlice";
 import { Link } from "react-router-dom";
 
 const StoryComments = forwardRef((props, ref) => {
@@ -88,7 +88,6 @@ const StoryComments = forwardRef((props, ref) => {
                     'Le commentaire doit contenir au maximum 512 caractères.',
                 },
                 pattern: {
-                  // value: /^(?=[A-Za-z0-9 ]*[A-Za-z]){4}[A-Za-z0-9 ]*$/,
                   value: /^[a-zA-Z0-9\s.,;!?\'"\-éèàçùëüïôâêîäöûÉÈÀÇÙËÜÏÔÂÊÎÄÖÛ]*$/,
                   message:
                     'Le commentaire ne doit contenir que des lettres (4 min. 512 max.) et des chiffres.',

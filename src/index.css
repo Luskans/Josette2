@@ -1,28 +1,7 @@
-/* Police reposante pour p */
-@import url('https://fonts.googleapis.com/css2?family=Comfortaa:wght@700&display=swap');
-/* Police funky, retro et colorée */
-@import url('https://fonts.googleapis.com/css2?family=Honk&display=swap');
-/* Un peu calygraphiée */
-@import url('https://fonts.googleapis.com/css2?family=Lobster&display=swap');
-/* Style scary, fantomatique */
-@import url('https://fonts.googleapis.com/css2?family=Cute+Font&display=swap');
-/* Classe */
-@import url('https://fonts.googleapis.com/css2?family=Nanum+Myeongjo&display=swap');
-/* Tranchant */
 @import url('https://fonts.googleapis.com/css2?family=Cinzel&display=swap');
-/* Majuscules */
 @import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap');
-/* Enfantin */
-@import url('https://fonts.googleapis.com/css2?family=Satisfy&display=swap');
-/* Tranchant */
-@import url('https://fonts.googleapis.com/css2?family=Philosopher&display=swap');
-/* Majuscules */
 @import url('https://fonts.googleapis.com/css2?family=Amatic+SC&display=swap');
-/* Calligrahie */
 @import url('https://fonts.googleapis.com/css2?family=Calligraffitti&display=swap');
-/* Majuscules */
-@import url('https://fonts.googleapis.com/css2?family=Trade+Winds&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=La+Belle+Aurore&family=Niconne&family=Send+Flowers&display=swap');
 
 @tailwind base;
 @tailwind components;
@@ -33,10 +12,6 @@
     padding: 0;
     box-sizing: border-box;
 }
-
-/* #root {
-    position: relative;
-} */
 
 .scrollNav {
     transform: translateY(100%);
@@ -64,48 +39,4 @@
 
 h1, h2, h3, h4 {
     font-family: 'Cinzel', serif;
-}
-
-h2 {
-    /* font-family: 'Philosopher', sans-serif;
-    font-family: "Calligraffitti", cursive; */
-    /* font-family: "Send Flowers", cursive; */
-    /* font-family: "Niconne", cursive; */
-    /* font-family: "La Belle Aurore", cursive; */
-}
-
-p {
-    /* font-family: 'Comfortaa', sans-serif; */
-    /* font-family: 'Nanum Myeongjo', serif; */
-    /* font-family: 'Bebas Neue', sans-serif; */
-}
-
-span {
-    /* font-family: 'Bebas Neue', sans-serif; */
-    /* font-family: 'Satisfy', cursive; */
-    /* font-family: 'Philosopher', sans-serif;
-    font-family: 'Amatic SC', sans-serif; */
-}
-
-h1, h2, h3 {
-    /* font-family: 'Honk', system-ui; */
-    /* font-family: 'Lobster', sans-serif; */
-    /* font-family: 'Cute Font', sans-serif; */
-    /* font-family: 'Nanum Myeongjo', serif; */
-    /* font-family: 'Cinzel', serif; */
-    /* font-family: 'Bebas Neue', sans-serif; */
-    /* font-family: 'Philosopher', sans-serif; */
-}
-
-h1 {
-    /* font-family: 'Honk', system-ui; */
-    /* font-family: 'Lobster', sans-serif; */
-    /* font-family: 'Cute Font', sans-serif; */
-    /* font-family: 'Nanum Myeongjo', serif; */
-    /* font-family: 'Cinzel', serif;
-    font-family: 'Bebas Neue', sans-serif; */
-    /* font-family: 'Satisfy', cursive; */
-    /* font-family: 'Philosopher', sans-serif;
-    font-family: 'Amatic SC', sans-serif; */
-
 }

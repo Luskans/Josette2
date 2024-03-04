@@ -1,8 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit';
-// import axios from 'axios';
-import axiosBase, { axiosSecu } from '../utils/axios';
-
-// const apiURL = import.meta.env.VITE_API_URL;
+import axiosBase from '@/utils/axios';
 
 export const commentSlice = createSlice({
   name: 'comment',
@@ -19,7 +16,7 @@ export const commentSlice = createSlice({
       state.list = action.payload;
       state.loaded = true;
     },
-    resetComments: (state, action) => {
+    resetComments: (state) => {
       state.list = [];
       state.loaded = false;
       state.updated = false;
@@ -44,15 +41,12 @@ export const commentSlice = createSlice({
 
 export const { setComments, resetComments, updateComments, resetLoaded, setCurrentPage, setTotalPage, setTotalComment } = commentSlice.actions;
 
-export const getComments = (storyId, page) => (dispatch, getState) => {
-  const state = getState();
+export const getComments = (storyId, page) => (dispatch) => {
   axiosBase
-    // .get(`${apiURL}/comments/?story.id=${storyId}&page=${page}`, {
     .get(`/comments/?story.id=${storyId}&page=${page}`, {
       headers: {'Accept': 'application/ld+json'}
     })
     .then(response => {
-      // console.log('response', response.data);
       dispatch(setComments(response.data['hydra:member']));
       const totalPage = Math.ceil(response.data['hydra:totalItems'] / 10);
       dispatch(setTotalPage(totalPage));

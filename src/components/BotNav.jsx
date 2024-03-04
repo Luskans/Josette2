@@ -1,12 +1,7 @@
 import { useEffect, useState } from 'react';
-import styled from 'styled-components';
 import { initFlowbite } from 'flowbite'
 import { useDispatch, useSelector } from 'react-redux';
-import { getStories, setCurrentPage, setSearch } from '../store/storySlice';
-
-const NavContainer = styled.nav`
-  transition: all 0.5s ease-in-out;
-`;
+import { getStories, setCurrentPage, setNameSearch, setSearch } from '@/store/storySlice';
 
 export default function BotNav({ page }) {
     let prevScroll = window.scrollY;
@@ -37,6 +32,10 @@ export default function BotNav({ page }) {
       initFlowbite();
     }, []);
 
+    const handleNameSearch = (name) => {
+      dispatch(setNameSearch(name));
+    }
+
     const handleSearch = (parameters) => {
       dispatch(setCurrentPage(1));
       dispatch(setSearch(parameters));
@@ -58,7 +57,7 @@ export default function BotNav({ page }) {
     };
 
   return (
-    <NavContainer className="botNav fixed bottom-0 left-0 z-20 w-full h-16  bg-white border-t border-gray-200 dark:bg-gray-700 dark:border-gray-600">
+    <nav className="botNav fixed bottom-0 left-0 z-20 w-full h-16 bg-gray-200 border-t border-gray-200 dark:bg-gray-800 dark:border-gray-600 transition-all duration-500">
       <div className="grid h-full max-w-lg grid-cols-6 mx-auto">
 
         {/* BOUTON 1 */}
@@ -67,7 +66,7 @@ export default function BotNav({ page }) {
           data-dropdown-toggle="searchOptionsDropdown"
           data-tooltip-target="tooltip-search"
           type="button"
-          className="inline-flex flex-col items-center justify-center px-5 hover:bg-gray-50 dark:hover:bg-gray-800 group"
+          className="inline-flex flex-col items-center justify-center px-5 hover:bg-gray-50 dark:hover:bg-gray-900 group"
         >
           <svg
             className="w-5 h-5 mb-1 text-gray-500 dark:text-gray-400 group-hover:text-blue-600 dark:group-hover:text-blue-500"
@@ -94,8 +93,9 @@ export default function BotNav({ page }) {
         >
           <form onSubmit={(e) => {
             e.preventDefault();
-            const formData = new FormData(e.target)
-            const title = formData.get('title')
+            const formData = new FormData(e.target);
+            const title = formData.get('title');
+            handleNameSearch('titre');
             {page === 'home'
             ? handleSearch(`title[]=${title}`)
             : handleSearch(`user.id[]=${profil.id}&title[]=${title}`)
@@ -141,7 +141,7 @@ export default function BotNav({ page }) {
           data-dropdown-toggle="themeOptionsDropdown"
           data-tooltip-target="tooltip-theme"
           type="button"
-          className="inline-flex flex-col items-center justify-center px-5 hover:bg-gray-50 dark:hover:bg-gray-800 group"
+          className="inline-flex flex-col items-center justify-center px-5 hover:bg-gray-50 dark:hover:bg-gray-900 group"
         >
           <svg
             className="w-5 h-5 mb-1 text-gray-500 dark:text-gray-400 group-hover:text-blue-600 dark:group-hover:text-blue-500"
@@ -176,6 +176,7 @@ export default function BotNav({ page }) {
                   type="button"
                   className="w-full flex px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
                   onClick={() => {
+                    handleNameSearch('thème');
                     (page === 'home')
                     ? handleSearch(`themeName=${theme.name}`)
                     : handleSearch(`user.id[]=${profil.id}&themeName=${theme.name}`)
@@ -193,10 +194,10 @@ export default function BotNav({ page }) {
           <div className="flex items-center justify-between w-full text-gray-600 dark:text-gray-400 bg-gray-100 rounded-lg dark:bg-gray-600 max-w-[128px] mx-2">
             <button
               type="button"
-              className="inline-flex items-center justify-center h-8 px-1 w-6 bg-gray-100 rounded-s-lg dark:bg-gray-600 hover:bg-gray-200 dark:hover:bg-gray-800 focus:outline-none focus:ring-2 focus:ring-gray-200 dark:focus:ring-gray-800"
+              className="inline-flex items-center justify-center h-8 px-1 w-6 bg-gray-100 rounded-s-lg dark:bg-gray-600 hover:bg-gray-300 dark:hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-gray-200 dark:focus:ring-gray-800"
               onClick={(e) => {
                 e.preventDefault;
-                handlePrevious(search, currentPage)
+                handlePrevious(search, currentPage);
               }}
             >
               <svg
@@ -221,10 +222,10 @@ export default function BotNav({ page }) {
             </span>
             <button
               type="button"
-              className="inline-flex items-center justify-center h-8 px-1 w-6 bg-gray-100 rounded-e-lg dark:bg-gray-600 hover:bg-gray-200 dark:hover:bg-gray-800 focus:outline-none focus:ring-2 focus:ring-gray-200 dark:focus:ring-gray-800"
+              className="inline-flex items-center justify-center h-8 px-1 w-6 bg-gray-100 rounded-e-lg dark:bg-gray-600 hover:bg-gray-300 dark:hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-gray-200 dark:focus:ring-gray-800"
               onClick={(e) => {
                 e.preventDefault;
-                handleNext(search, currentPage, totalPage)
+                handleNext(search, currentPage, totalPage);
               }}
             >
               <svg
@@ -253,7 +254,7 @@ export default function BotNav({ page }) {
           data-dropdown-toggle="dateOptionsDropdown"
           data-tooltip-target="tooltip-date"
           type="button"
-          className="inline-flex flex-col items-center justify-center px-5 hover:bg-gray-50 dark:hover:bg-gray-800 group"
+          className="inline-flex flex-col items-center justify-center px-5 hover:bg-gray-50 dark:hover:bg-gray-900 group"
         >
           <svg
             className="w-5 h-5 mb-1 text-gray-500 dark:text-gray-400 group-hover:text-blue-600 dark:group-hover:text-blue-500"
@@ -287,6 +288,7 @@ export default function BotNav({ page }) {
                 type="button"
                 className="w-full flex px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
                 onClick={() => {
+                  handleNameSearch('date croissante');
                   (page === 'home')
                   ? handleSearch("order[createdAt]=asc")
                   : handleSearch(`user.id[]=${profil.id}&order[createdAt]=asc`)
@@ -315,6 +317,7 @@ export default function BotNav({ page }) {
                 type="button"
                 className="w-full flex px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
                 onClick={() => {
+                  handleNameSearch('date décroissante');
                   (page === 'home')
                   ? handleSearch("order[createdAt]=desc")
                   : handleSearch(`user.id[]=${profil.id}&order[createdAt]=desc`)
@@ -343,6 +346,7 @@ export default function BotNav({ page }) {
                 type="button"
                 className="w-full flex px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
                 onClick={() => {
+                  handleNameSearch('temps de lecture croissant');
                   (page === 'home')
                   ? handleSearch("byReadingTime=true&order=ASC")
                   : handleSearch(`user.id[]=${profil.id}&byReadingTime=true&order=ASC`)
@@ -371,6 +375,7 @@ export default function BotNav({ page }) {
                 type="button"
                 className="w-full flex px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
                 onClick={() => {
+                  handleNameSearch('temps de lecture décroissant');
                   (page === 'home')
                   ? handleSearch("byReadingTime=true&order=DESC")
                   : handleSearch(`user.id[]=${profil.id}&byReadingTime=true&order=DESC`)
@@ -403,7 +408,7 @@ export default function BotNav({ page }) {
           data-dropdown-toggle="likeOptionsDropdown"
           data-tooltip-target="tooltip-like"
           type="button"
-          className="inline-flex flex-col items-center justify-center px-5 hover:bg-gray-50 dark:hover:bg-gray-800 group"
+          className="inline-flex flex-col items-center justify-center px-5 hover:bg-gray-50 dark:hover:bg-gray-900 group"
         >
           <svg
             className="w-6 h-6 mb-1 text-gray-500 dark:text-gray-400 group-hover:text-blue-600 dark:group-hover:text-blue-500"
@@ -437,6 +442,7 @@ export default function BotNav({ page }) {
                 type="button"
                 className="w-full flex px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
                 onClick={() => {
+                  handleNameSearch('nombre de bravos croissant');
                   (page === 'home')
                   ? handleSearch("byLikes=true&order=ASC")
                   : handleSearch(`user.id[]=${profil.id}&byLikes=true&order=ASC`)
@@ -465,6 +471,7 @@ export default function BotNav({ page }) {
                 type="button"
                 className="w-full flex px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
                 onClick={() => {
+                  handleNameSearch('nombre de bravos décroissant');
                   (page === 'home')
                   ? handleSearch("byLikes=true&order=DESC")
                   : handleSearch(`user.id[]=${profil.id}&byLikes=true&order=DESC`)
@@ -493,6 +500,7 @@ export default function BotNav({ page }) {
                 type="button"
                 className="w-full flex px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
                 onClick={() => {
+                  handleNameSearch('nombre de vues croissant');
                   (page === 'home')
                   ? handleSearch("order[viewCount]=asc")
                   : handleSearch(`user.id[]=${profil.id}&order[viewCount]=asc`)
@@ -521,6 +529,7 @@ export default function BotNav({ page }) {
                 type="button"
                 className="w-full flex px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
                 onClick={() => {
+                  handleNameSearch('nombre de vues décroissant');
                   (page === 'home')
                   ? handleSearch("order[viewCount]=desc")
                   : handleSearch(`user.id[]=${profil.id}&order[viewCount]=desc`)
@@ -547,6 +556,6 @@ export default function BotNav({ page }) {
           </ul>
         </div>
       </div>
-    </NavContainer>
+    </nav>
   );
 }

@@ -2,7 +2,7 @@ import { useForm } from 'react-hook-form';
 import React, { useState } from 'react';
 import axiosBase from '@/utils/axios';
 import { Link, useNavigate } from 'react-router-dom';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { login } from '@/store/userSlice';
 import toast from 'react-hot-toast';
 import { logo } from '@/assets/logo';
@@ -11,45 +11,17 @@ export default function Login() {
   const {
     handleSubmit,
     register,
-    formState: { errors, isSubmitting },
+    formState: { errors },
   } = useForm();
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  // const token = useSelector((state) => state.user.token);
-  // const user = useSelector((state) => state.user.detail);
-
-  // const token = useSelector((state) => state.auth.token);
-  // const user = useSelector((state) => state.auth.user);
-  // const user2 = useSelector((state) => state.auth2.user);
-
-  // const apiURL = import.meta.env.VITE_API_URL;
 
   const [showPassword, setShowPassword] = useState(false);
   const handleClickPassword = () => setShowPassword(!showPassword);
 
-  // const onSubmit = (data) => {
-  //   axiosBase
-  //     // .post(`${apiURL}/login`, data)
-  //     .post(`/login`, data)
-  //     .then((response) => {
-  //       toast.success('Connexion réussie !', { duration: 9000 });
-  //       dispatch(login(response.data));
-
-  //       // console.log('redux token', token); // pas affiché la premiere fois car redux asynchrone
-  //       // console.log('redux user', user);
-  //       navigate('/');
-  //     })
-  //     .catch((error) => {
-  //       if (error) {
-  //         toast.error('Email ou mot de passe incorrect.', { duration: 9000 });
-  //       }
-  //     });
-  // };
-
   const onSubmit = (data) => {
     axiosBase
-      // .post(`${apiURL}/login`, data)
       .post(`/login`, data)
       .then((response) => {
         dispatch(login(response.data));
@@ -104,7 +76,6 @@ export default function Login() {
                   {...register('email', {
                     required: 'Un email est requis.',
                     pattern: {
-                      // value: /[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$/,
                       value: /(?:[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*|"(?:[\x01-\x08\x0b\x0c\x0e-\x1f\x21\x23-\x5b\x5d-\x7f]|\\[\x01-\x09\x0b\x0c\x0e-\x7f])*")@(?:(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?|\[(?:(?:(2(5[0-5]|[0-4][0-9])|1[0-9][0-9]|[1-9]?[0-9]))\.){3}(?:(2(5[0-5]|[0-4][0-9])|1[0-9][0-9]|[1-9]?[0-9])|[a-z0-9-]*[a-z0-9]:(?:[\x01-\x08\x0b\x0c\x0e-\x1f\x21-\x5a\x53-\x7f]|\\[\x01-\x09\x0b\x0c\x0e-\x7f])+)\])/,
                       message: 'Veuillez entrer un email valide.',
                     },
@@ -189,7 +160,7 @@ export default function Login() {
                       htmlFor="remember"
                       className="text-gray-500 dark:text-gray-300"
                     >
-                      Remember me
+                      Se souvenir de moi
                     </label>
                   </div>
                 </div>

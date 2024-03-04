@@ -1,8 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit';
-// import axios from 'axios';
-import axiosBase, { axiosSecu } from '../utils/axios';
-
-// const apiURL = import.meta.env.VITE_API_URL;
+import axiosBase from '@/utils/axios';
 
 export const profilSlice = createSlice({
   name: 'profil',
@@ -31,12 +28,10 @@ export const profilSlice = createSlice({
 
 export const { setProfil, resetProfil, setUpdate, resetUpdate } = profilSlice.actions;
 
-export const getProfil = (id) => (dispatch, getState) => {
+export const getProfil = (id) => (dispatch) => {
   axiosBase
-    // .get(`${apiURL}/users/${id}`)
     .get(`/users/${id}`)
     .then(response => {
-      console.log('response', response.data);
       dispatch(setProfil(response.data));
     })
     .catch(error => console.error('Erreur de chargement', error));

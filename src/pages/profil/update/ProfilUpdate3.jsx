@@ -3,8 +3,10 @@ import { useSelector } from 'react-redux';
 import { axiosSecu } from '@/utils/axios';
 import toast from 'react-hot-toast';
 import getImageUrl from '@/utils/getImageUrl';
+import { useNavigate } from 'react-router-dom';
 
 export default function ProfilUpdate3({ handlePrev, blob }) {
+  const navigate = useNavigate();
   const user = useSelector((state) => state.user.detail);
   const profil = useSelector((state) => state.profil.detail);
   const profilUpdate = useSelector((state) => state.profil.update);
@@ -26,18 +28,14 @@ export default function ProfilUpdate3({ handlePrev, blob }) {
     const formData = new FormData();
     formData.append('quote', profilUpdate.quote);
     formData.append('description', profilUpdate.description);
-    // formData.append('profilId', `${profil.id}`);
     formData.append('profilId', profil.id);
     if (image) {
       formData.append('image', image);
     }
 
     axiosSecu
-      // .post(`/users/update/${user.id}`, formData, {
         .post(`/users/update`, formData, {
         headers: {
-          // 'Content-Type': 'application/merge-patch+json',
-          // 'method': 'patch',
           'Content-Type': 'multipart/form-data',
         },
       })

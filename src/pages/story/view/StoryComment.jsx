@@ -1,7 +1,6 @@
 import { initFlowbite } from 'flowbite';
 import { useEffect, useState } from 'react';
 import localDate from '@/utils/formatDate';
-import defaultUserImage from '@/assets/user_image.webp';
 import { useDispatch, useSelector } from 'react-redux';
 import { axiosSecu } from '@/utils/axios';
 import toast from 'react-hot-toast';
@@ -22,7 +21,6 @@ export default function StoryComment({ comment }) {
   } = useForm();
 
   useEffect(() => {
-  
   }, [updatedComment])
 
   useEffect(() => {
@@ -105,7 +103,6 @@ export default function StoryComment({ comment }) {
                           'Le commentaire doit contenir au maximum 512 caractères.',
                       },
                       pattern: {
-                        // value: /^(?=[A-Za-z0-9 ]*[A-Za-z]){4}[A-Za-z0-9 ]*$/,
                         value: /^[a-zA-Z0-9\s.,;!?\'"\-éèàçùëüïôâêîäöûÉÈÀÇÙËÜÏÔÂÊÎÄÖÛ]*$/,
                         message:
                           'Le commentaire ne doit contenir que des lettres (4 min. 512 max.) et des chiffres.',

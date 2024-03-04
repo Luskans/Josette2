@@ -1,16 +1,13 @@
 import { useForm } from 'react-hook-form';
 import { useDispatch, useSelector } from 'react-redux';
-import { setCreate } from '../../../store/storySlice';
+import { setCreate } from '@/store/storySlice';
 
 export default function StoryCreate3({ handlePrev, handleNext }) {
-    const dispatch = useDispatch();
-    const storyCreate = useSelector((state) => state.story.create);
+  const dispatch = useDispatch();
+  const storyCreate = useSelector((state) => state.story.create);
   const {
     handleSubmit,
     register,
-    watch,
-    control,
-    setValue,
     formState: { errors },
   } = useForm({
     defaultValues: {
@@ -20,11 +17,11 @@ export default function StoryCreate3({ handlePrev, handleNext }) {
 
   const onSubmit = (data) => {
     const newData = {
-        title: storyCreate.title,
-        synopsis: storyCreate.synopsis,
-        themes: storyCreate.themes,
-        content: data.content
-    }
+      title: storyCreate.title,
+      synopsis: storyCreate.synopsis,
+      themes: storyCreate.themes,
+      content: data.content,
+    };
     dispatch(setCreate(newData));
     handleNext();
   };
@@ -59,10 +56,10 @@ export default function StoryCreate3({ handlePrev, handleNext }) {
                 message: 'Le texte doit contenir au maximum 12 000 caractères.',
               },
               pattern: {
-                // value: /^(?=[A-Za-z0-9 ]*[A-Za-z]){4}[A-Za-z0-9 ]*$/,
-                value: /^[a-zA-Z0-9\s.,;!?\'"\-éèàçùëüïôâêîäöûÉÈÀÇÙËÜÏÔÂÊÎÄÖÛ]*$/,
+                value:
+                  /^[a-zA-Z0-9\s.,;!?\'"\-éèàçùëüïôâêîäöûÉÈÀÇÙËÜÏÔÂÊÎÄÖÛ]*$/,
                 message:
-                'Le texte ne doit contenir que des lettres (200 min. 12000 max.) et des chiffres.',
+                  'Le texte ne doit contenir que des lettres (200 min. 12000 max.) et des chiffres.',
               },
             })}
           />
@@ -87,7 +84,6 @@ export default function StoryCreate3({ handlePrev, handleNext }) {
         </button>
 
         <button
-        //   onClick={handleNext}
           type="submit"
           className="text-white bg-blue-700 hover:bg-blue-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700"
         >

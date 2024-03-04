@@ -1,5 +1,4 @@
 import { configureStore } from "@reduxjs/toolkit";
-import authReducer from './authSlice';
 import userReducer from './userSlice';
 import storyReducer from './storySlice';
 import profilReducer from './profilSlice';
@@ -11,8 +10,6 @@ import favoriteReducer from './favoriteSlice';
 
 const store = configureStore({
     reducer: {
-        auth: authReducer,
-        auth2: authReducer,
         user: userReducer,
         story: storyReducer,
         profil: profilReducer,

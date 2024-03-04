@@ -29,7 +29,7 @@ export default function Footer() {
           </div>
         </div>
         <hr className="my-6 border-gray-200 sm:mx-auto dark:border-gray-700" />
-        <div className="sm:flex sm:items-center sm:justify-between">
+        <div className="flex sm:items-center justify-between">
           <span className="text-sm dark:text-gray-300 sm:text-center text-gray-500">
             © 2024{' '}
             <Link to="/" className="hover:underline">

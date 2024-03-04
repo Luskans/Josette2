@@ -1,11 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit';
-// import axios from 'axios';
 import toast from 'react-hot-toast';
-import axiosBase, { axiosSecu } from '../utils/axios';
-
-
-// const apiURL = import.meta.env.VITE_API_URL;
-// const token = localStorage.getItem('token');
+import axiosBase, { axiosSecu } from '@/utils/axios';
 
 export const storySlice = createSlice({
   name: 'story',
@@ -17,6 +12,7 @@ export const storySlice = createSlice({
     currentPage: 1,
     totalPage: 1,
     search: 'order[createdAt]=asc',
+    nameSearch: "date croissante",
     create: {
       title: '',
       synopsis: '',
@@ -46,6 +42,7 @@ export const storySlice = createSlice({
       state.currentPage = 1;
       state.totalPage = 1;
       state.search = 'order[createdAt]=asc';
+      state.nameSearch = 'date croissante'
     },
     updateStory: (state) => {
       state.updated = !state.updated;
@@ -58,6 +55,9 @@ export const storySlice = createSlice({
     },
     setSearch: (state, action) => {
       state.search = action.payload;
+    },
+    setNameSearch: (state, action) => {
+      state.nameSearch = action.payload;
     },
     setCreate: (state, action) => {
       state.create = action.payload;
@@ -74,14 +74,12 @@ export const storySlice = createSlice({
   },
 });
 
-export const { setStory, resetStory, setStories, resetStories, updateStory, setCurrentPage, setTotalPage, setSearch, setCreate, resetCreate } = storySlice.actions;
+export const { setStory, resetStory, setStories, resetStories, updateStory, setCurrentPage, setTotalPage, setSearch, setNameSearch, setCreate, resetCreate } = storySlice.actions;
 
 export const getStory = (id) => (dispatch, getState) => {
   axiosBase
-    // .get(`${apiURL}/stories/${id}`)
     .get(`/stories/${id}`)
     .then(response => {
-      // console.log('response', response.data);
       dispatch(setStory(response.data));
 
       // Incrémenter viewCount après avoir récupéré la story
@@ -89,7 +87,7 @@ export const getStory = (id) => (dispatch, getState) => {
       const data = {
         viewCount: viewCount
       }
-      // return axios.patch(`${apiURL}/stories/${id}`, data, {
+    
       return axiosBase.patch(`/stories/${id}`, data, {
         headers: {'Content-Type': 'application/merge-patch+json'}
       });
@@ -97,34 +95,11 @@ export const getStory = (id) => (dispatch, getState) => {
     .catch(error => console.error('Erreur de chargement', error));
 };
 
-// export const postStory = (data) => {
-//   axios
-//     .post(`${apiURL}/stories`, data, {
-//       headers: {
-//         'Content-Type': 'application/merge-patch+json',
-//         'Authorization': `Bearer ${token}`
-//       },
-//     })
-//     .then((response) => {
-//       toast.success('Nouvelle histoire publiée !', { duration: 9000 });
-//       Navigate('/');
-//     })
-//     .catch((error) => {
-//       if (error.response.data.detail === 'Title already used.') {
-//         toast.error("Nom d'histoire déjà utilisé.", { duration: 9000 });
-//       } else {
-//         toast.error('Une erreur est survenue.', { duration: 9000 });
-//       }
-//     });
-// };
-
 export const deleteStory = (storyId) => (dispatch, getState) => {
   axiosSecu
-    // .delete(`${apiURL}/stories/${storyId}`, {
     .delete(`/stories/${storyId}`, {
       headers: {
         'Content-Type': 'application/json',
-        // 'Authorization': `Bearer ${token}`
       },
     })
     .then(response => {
@@ -136,15 +111,12 @@ export const deleteStory = (storyId) => (dispatch, getState) => {
     });
 };
 
-export const getStories = (parameters, page) => (dispatch, getState) => {
-  const state = getState();
+export const getStories = (parameters, page) => (dispatch) => {
   axiosBase
-    // .get(`${apiURL}/stories?${parameters}&page=${page}`, {
     .get(`/stories?${parameters}&page=${page}`, {
       headers: {'Accept': 'application/ld+json'}
     })
     .then(response => {
-      // console.log('response', response);
       dispatch(setStories(response.data['hydra:member']));
       const totalPage = Math.ceil(response.data['hydra:totalItems'] / 20);
       dispatch(setTotalPage(totalPage))

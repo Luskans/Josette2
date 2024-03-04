@@ -1,21 +1,18 @@
 import { useDispatch, useSelector } from 'react-redux';
-import { useEffect, useState } from 'react';
-import { getStories, resetStories } from '../../store/storySlice';
-import BotNav from '../../components/BotNav';
-import Notification from './Notification';
+import { useEffect } from 'react';
+import { getStories, resetStories } from '@/store/storySlice';
+import BotNav from '@/components/BotNav';
 import Cta from './Cta';
-import StoryCardMax from '../story/StoryCardMax';
+import StoryCardMax from '@/pages/story/StoryCardMax';
 import Carousel from './Carousel';
-import Loader from '../../components/Loader';
+import Loader from '@/components/Loader';
 
 export default function Home() {
   const dispatch = useDispatch();
   const loaded = useSelector((state) => state.story.loaded);
   const storyList = useSelector((state) => state.story.list);
   const user = useSelector((state) => state.user.detail);
-  const search = useSelector((state) => state.story.search);
-
-  console.log('user sur home', user)
+  const nameSearch = useSelector((state) => state.story.nameSearch);
 
   useEffect(() => {
     dispatch(getStories("order[createdAt]=asc", 1));
@@ -25,32 +22,6 @@ export default function Home() {
     };
   }, []);
 
-  const title = () => {
-    if (search === 'order[createdAt]=asc') {
-        return "date croissante";
-    } else if (search === 'order[createdAt]=desc') {
-        return "date décroissante";
-    } else if (search === 'byReadingTime=true&order=ASC') {
-        return "temps de lecture croissant";
-    } else if (search === 'byReadingTime=true&order=DESC') {
-        return "temps de lecture décroissant";
-    } else if (search === 'byLikes=true&order=ASC') {
-        return "nombre de bravos croissant";
-    } else if (search === 'byLikes=true&order=DESC') {
-        return "nombre de bravos décroissant";
-    } else if (search === 'order[viewCount]=asc') {
-        return "nombre de vues croissant";
-    } else if (search === 'order[viewCount]=desc') {
-        return "nombre de vues décroissant";
-    } else if (search.startsWith('themeName=')) {
-        return `thème ${search.split('=')[1]}`;
-    } else if (search.startsWith('title[]=')) {
-        return `titre qui contient "${search.split('=')[1]}"`;
-    } else {
-        return "date croissante";
-    }
-  }
-
   return (
     <>
       {user ? <Carousel /> : <Cta />}
@@ -58,7 +29,7 @@ export default function Home() {
         <div className="py-12 px-4 mx-auto max-w-screen-2xl lg:px-6">
           <div className="mx-auto max-w-screen-sm text-center lg:mb-16 mb-8">
             <h1 className="mb-4 text-2xl sm:text-3xl lg:text-4xl tracking-tight font-extrabold text-gray-900 dark:text-white">
-              Histoires par {title()}
+              Histoires par {nameSearch}
             </h1>
             <span className="block text-center text-2xl md:text-4xl  mb-8 md:mb-10 text-gray-900 dark:text-white">
               ~

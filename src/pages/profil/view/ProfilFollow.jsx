@@ -11,9 +11,6 @@ export default function ProfilFollow() {
 
   useEffect(() => {
     dispatch(getFollow(user.id, profil.id));
-    // if (profil.id) {
-    //   dispatch(getFollow(user.id, profil.id));
-    // }
 
     return () => {
       dispatch(resetFollow());

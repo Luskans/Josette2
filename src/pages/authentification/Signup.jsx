@@ -1,6 +1,6 @@
 import { useForm } from 'react-hook-form';
 import React, { useState } from 'react';
-import axiosBase, { axiosSecu } from '../../utils/axios';
+import axiosBase from '@/utils/axios';
 import toast from 'react-hot-toast';
 import { Link } from 'react-router-dom';
 import { logo } from '@/assets/logo';
@@ -10,10 +10,8 @@ export default function Signup() {
     handleSubmit,
     register,
     watch,
-    formState: { errors, isSubmitting },
+    formState: { errors },
   } = useForm();
-
-  // const apiURL = import.meta.env.VITE_API_URL;
 
   const [showPassword, setShowPassword] = useState(false);
   const handleClickPassword = () => setShowPassword(!showPassword);
@@ -23,7 +21,6 @@ export default function Signup() {
 
   const onSubmit = (data) => {
     axiosBase
-      // .post(`${apiURL}/signup`, data, {
       .post(`/signup`, data, {
         headers: {
           'Content-Type': 'application/json',
@@ -91,7 +88,6 @@ export default function Signup() {
                         'Le nom doit contenir au moins 4 caractères.',
                     },
                     pattern: {
-                      // value: /^(?=[A-Za-z0-9]*[A-Za-z]){4}[A-Za-z0-9]*$/,
                       value: /^[a-zA-Z0-9\s\-éèàçùëüïôâêîäöûÉÈÀÇÙËÜÏÔÂÊÎÄÖÛ]*$/,
                       message: 'Le nom ne doit contenir que des lettres (4 min.) et des chiffres.',
                     },
@@ -118,7 +114,6 @@ export default function Signup() {
                   {...register('email', {
                     required: 'Un email est requis.',
                     pattern: {
-                      // value: /[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$/,
                       value: /(?:[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*|"(?:[\x01-\x08\x0b\x0c\x0e-\x1f\x21\x23-\x5b\x5d-\x7f]|\\[\x01-\x09\x0b\x0c\x0e-\x7f])*")@(?:(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?|\[(?:(?:(2(5[0-5]|[0-4][0-9])|1[0-9][0-9]|[1-9]?[0-9]))\.){3}(?:(2(5[0-5]|[0-4][0-9])|1[0-9][0-9]|[1-9]?[0-9])|[a-z0-9-]*[a-z0-9]:(?:[\x01-\x08\x0b\x0c\x0e-\x1f\x21-\x5a\x53-\x7f]|\\[\x01-\x09\x0b\x0c\x0e-\x7f])+)\])/,
                       message: 'Veuillez entrer un email valide.',
                     },

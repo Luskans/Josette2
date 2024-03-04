@@ -5,8 +5,10 @@ import { fullLocalDate } from '@/utils/formatDate';
 import { axiosSecu } from '@/utils/axios';
 import toast from 'react-hot-toast';
 import getImageUrl from '@/utils/getImageUrl';
+import { useNavigate } from 'react-router-dom';
 
 export default function StoryCreate4({ handlePrev, blob }) {
+  const navigate = useNavigate();
   const user = useSelector((state) => state.user.detail);
   const storyCreate = useSelector((state) => state.story.create);
   const imageUrl = blob && URL.createObjectURL(blob); 
@@ -31,10 +33,6 @@ export default function StoryCreate4({ handlePrev, blob }) {
     if (storyCreate.themes[1]) {
         formData.append('theme2', storyCreate.themes[1]);
     }
-    // storyCreate.themes.forEach(themeId => {
-    //     formData.append('themes[]', themeId);
-    // });
-    // formData.append('themes', storyCreate.themes);
     if (image) {
         formData.append('image', image);
     }
@@ -45,7 +43,6 @@ export default function StoryCreate4({ handlePrev, blob }) {
     axiosSecu
     .post(`/stories`, formData, {
       headers: {
-        // 'Content-Type': 'application/merge-patch+json',
         'Content-Type': 'multipart/form-data'
       },
     })
@@ -87,11 +84,6 @@ export default function StoryCreate4({ handlePrev, blob }) {
       </header>
 
       <main>
-        {/* <img
-          src={blobToFile().src ? blobToFile().src : defaultStoryImage}
-          alt={`${storyCreate.title}'s cover picture`}
-          className="mb-12 lg:mb-14 w-full"
-        /> */}
         {blob
           ? <img 
             className="mb-12 lg:mb-14 w-full" 

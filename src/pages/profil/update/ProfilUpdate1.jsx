@@ -5,7 +5,6 @@ import { setUpdate } from '@/store/profilSlice';
 
 export default function ProfilUpdate1({ handleNext }) {
   const dispatch = useDispatch();
-  const loaded = useSelector((state) => state.profil.loaded);
   const profil = useSelector((state) => state.profil.detail);
   const {
     handleSubmit,
@@ -48,10 +47,6 @@ export default function ProfilUpdate1({ handleNext }) {
               profil.quote ? `"${profil.quote}"` : 'Nouvel arrivant ~'
             }
             {...register('quote', {
-              // required: {
-              //   value: true,
-              //   message: 'Un synopsis est requis.',
-              // },
               minLength: {
                 value: 2,
                 message: 'La citation doit contenir au moins 2 caractères.',
@@ -61,7 +56,6 @@ export default function ProfilUpdate1({ handleNext }) {
                 message: 'La citation doit contenir au maximum 128 caractères.',
               },
               pattern: {
-                // value: /^(?=[A-Za-z0-9 ]*[A-Za-z]){4}[A-Za-z0-9 ]*$/,
                 value: /^[a-zA-Z0-9\s.,;!?\'"\-éèàçùëüïôâêîäöûÉÈÀÇÙËÜÏÔÂÊÎÄÖÛ]*$/,
                 message:
                   'La citation ne doit contenir que des lettres (2 min. 128 max.) et des chiffres.',
@@ -97,10 +91,6 @@ export default function ProfilUpdate1({ handleNext }) {
                 : 'Aucune description pour le moment.'
             }
             {...register('description', {
-              // required: {
-              //   value: true,
-              //   message: 'Un synopsis est requis.',
-              // },
               minLength: {
                 value: 2,
                 message: 'La description doit contenir au moins 2 caractères.',
@@ -111,7 +101,6 @@ export default function ProfilUpdate1({ handleNext }) {
                   'La description doit contenir au maximum 512 caractères.',
               },
               pattern: {
-                // value: /^(?=[A-Za-z0-9 ]*[A-Za-z]){4}[A-Za-z0-9 ]*$/,
                 value: /^[a-zA-Z0-9\s.,;!?\'"\-éèàçùëüïôâêîäöûÉÈÀÇÙËÜÏÔÂÊÎÄÖÛ]*$/,
                 message:
                   'La description ne doit contenir que des lettres (2 min. 512 max.) et des chiffres.',
@@ -134,7 +123,7 @@ export default function ProfilUpdate1({ handleNext }) {
             type="submit"
             className="text-white bg-blue-700 hover:bg-blue-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700"
             >
-            Suivant
+              Suivant
             </button>
         </div>
       </form>

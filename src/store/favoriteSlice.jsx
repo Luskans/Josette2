@@ -1,9 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit';
-// import axios from 'axios';
-import axiosBase, { axiosSecu } from '../utils/axios';
-
-// const apiURL = import.meta.env.VITE_API_URL;
-// const token = localStorage.getItem('token');
+import axiosBase, { axiosSecu } from '@/utils/axios';
 
 export const favoriteSlice = createSlice({
   name: 'favorite',
@@ -21,7 +17,7 @@ export const favoriteSlice = createSlice({
       state.detail = action.payload;
       state.loaded = true;
     },
-    resetFavorite: (state, action) => {
+    resetFavorite: (state) => {
       state.detail = [];
       state.loaded = false;
     },
@@ -30,73 +26,39 @@ export const favoriteSlice = createSlice({
 
 export const { setFavorites, setFavorite, resetFavorite } = favoriteSlice.actions;
 
-// export const getFavorite = () => (dispatch, getState) => {
-//   const state = getState();
-//   if (!state.favorite.loaded) {
-//     const token = localStorage.getItem('token');
-//     // const token = state.auth.token;
-
-//     axios
-//       .get(`${apiURL}/favorites`, {
-//         headers: {
-//           'Authorization': `Bearer ${token}`
-//         }
-//       })
-//       .then(response => {
-//         // console.log('response', response.data);
-//         dispatch(setFavorites(response.data));
-//       })
-//       .catch(error => console.error('Erreur de chargement', error));
-//   }
-// };
-
-export const getFavorite = (userId, storyId) => (dispatch, getState) => {
+export const getFavorite = (userId, storyId) => (dispatch) => {
   axiosBase
-    // .get(`${apiURL}/favorites?user.id[]=${userId}&story.id[]=${storyId}`, {
     .get(`/favorites?user.id[]=${userId}&story.id[]=${storyId}`)
     .then((response) => {
-      // console.log('favorites response', response)
       dispatch(setFavorite(response.data))
     })
-    .catch((error) => {
-      // toast.error("Une erreur est survenue.", { duration: 9000 });
-    });
+    .catch(error => console.error('Erreur de chargement', error));
 };
 
-export const postFavorite = (data) => (dispatch, getState) => {
+export const postFavorite = (data) => (dispatch) => {
   axiosSecu
-    // .post(`${apiURL}/favorites`, data, {
     .post(`/favorites`, data, {
       headers: {
         'Content-Type': 'application/ld+json',
-        // 'Authorization': `Bearer ${token}`
       },
     })
     .then((response) => {
-      // console.log('favorites response', response)
       dispatch(setFavorite(response.data))
     })
-    .catch((error) => {
-      // toast.error("Une erreur est survenue.", { duration: 9000 });
-    });
+    .catch(error => console.error('Erreur de chargement', error));
 };
 
-export const deleteFavorite = (favoriteId) => (dispatch, getState) => {
+export const deleteFavorite = (favoriteId) => (dispatch) => {
   axiosSecu
-    // .delete(`${apiURL}/favorites/${favoriteId}`, {
     .delete(`/favorites/${favoriteId}`, {
       headers: {
         'Content-Type': 'application/json',
-        // 'Authorization': `Bearer ${token}`
       },
     })
     .then((response) => {
-      // console.log('favorites response', response)
       dispatch(setFavorite([]))
     })
-    .catch((error) => {
-      // toast.error("Une erreur est survenue.", { duration: 9000 });
-    });
+    .catch(error => console.error('Erreur de chargement', error));
 };
 
 export default favoriteSlice.reducer;

@@ -1,5 +1,5 @@
 import { useDispatch, useSelector } from 'react-redux';
-import { deleteFollow, getFollow, postFollow, resetFollow } from '@/store/followSlice';
+import { deleteFollow, getFollow, postFollow } from '@/store/followSlice';
 import { useEffect, useState } from 'react';
 
 export default function StoryFollow() {
@@ -14,9 +14,6 @@ export default function StoryFollow() {
       dispatch(getFollow(user.id, story.user.id));
     }
 
-    // return () => {
-    //   dispatch(resetFollow());
-    // }
   }, [authorFollowed])
 
   const addFollow = (followerId, followedId) => {

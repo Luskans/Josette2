@@ -1,6 +1,5 @@
 import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
-import defaultUserImage from "@/assets/user_image.webp"
 import StoryFollow from "./StoryFollow";
 import { fullLocalDate } from "@/utils/formatDate";
 import getImageUrl from '@/utils/getImageUrl';

@@ -1,22 +1,13 @@
 import { createSlice } from '@reduxjs/toolkit';
-// import axios from 'axios';
-import axiosBase, { axiosSecu } from '../utils/axios';
-
-// const apiURL = import.meta.env.VITE_API_URL;
-// const token = localStorage.getItem('token');
+import axiosBase, { axiosSecu } from '@/utils/axios';
 
 export const likeSlice = createSlice({
   name: 'like',
   initialState: {
-    // list: [],
     detail: [],
     loaded: false
   },
   reducers: {
-    // setLikes: (state, action) => {
-    //   state.list = action.payload;
-    //   state.loaded = true;
-    // },
     setLike: (state, action) => {
       state.detail = action.payload;
       state.loaded = true;
@@ -30,53 +21,40 @@ export const likeSlice = createSlice({
 
 export const { resetLike, setLike } = likeSlice.actions;
 
-export const getLike = (userId, storyId) => (dispatch, getState) => {
+export const getLike = (userId, storyId) => (dispatch) => {
   axiosBase
-    // .get(`${apiURL}/likes?user.id[]=${userId}&story.id[]=${storyId}`, {
     .get(`/likes?user.id[]=${userId}&story.id[]=${storyId}`)
     .then((response) => {
-      // console.log('likes response', response)
       dispatch(setLike(response.data))
     })
-    .catch((error) => {
-      // toast.error("Une erreur est survenue.", { duration: 9000 });
-    });
+    .catch(error => console.error('Erreur de chargement', error));
 };
 
-export const postLike = (data) => (dispatch, getState) => {
+export const postLike = (data) => (dispatch) => {
   axiosSecu
-    // .post(`${apiURL}/likes`, data, {
     .post(`/likes`, data, {
       headers: {
         'Content-Type': 'application/ld+json',
-        // 'Authorization': `Bearer ${token}`
       },
     })
     .then((response) => {
-      console.log('likes response', response)
       dispatch(setLike(response.data))
     })
-    .catch((error) => {
-      // toast.error("Une erreur est survenue.", { duration: 9000 });
-    });
+    .catch(error => console.error('Erreur de chargement', error));
 };
 
-export const deleteLike = (likeId) => (dispatch, getState) => {
+export const deleteLike = (likeId) => (dispatch) => {
   axiosSecu
-    // .delete(`${apiURL}/likes/${likeId}`, {
     .delete(`/likes/${likeId}`, {
       headers: {
         'Content-Type': 'application/json',
-        // 'Authorization': `Bearer ${token}`
       },
     })
     .then((response) => {
       console.log('likes response', response)
       dispatch(setLike([]))
     })
-    .catch((error) => {
-      // toast.error("Une erreur est survenue.", { duration: 9000 });
-    });
+    .catch(error => console.error('Erreur de chargement', error));
 };
 
 export default likeSlice.reducer;

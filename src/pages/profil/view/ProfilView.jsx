@@ -1,11 +1,11 @@
 import { useDispatch, useSelector } from 'react-redux';
-import { getProfil, resetProfil } from '../../../store/profilSlice';
-import BotNav from '../../../components/BotNav';
+import { getProfil, resetProfil } from '@/store/profilSlice';
+import BotNav from '@/components/BotNav';
 import { useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import ProfilDetail from './ProfilDetail';
 import ProfilStories from './ProfilStories';
-import Loader from '../../../components/Loader';
+import Loader from '@/components/Loader';
 
 export default function ProfilView() {
   const dispatch = useDispatch();

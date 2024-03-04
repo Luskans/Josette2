@@ -8,8 +8,6 @@ import { Link, useNavigate } from 'react-router-dom';
 import { logout } from '@/store/userSlice';
 import getImageUrl from '@/utils/getImageUrl';
 
-// import { ReactComponent as LogoComponent } from '@/assets/logo.svg';
-
 export default function Header() {
   const [isToggled, setIsToggled] = useState(
     localStorage.getItem('theme') === 'light' ? false : true
@@ -37,23 +35,16 @@ export default function Header() {
 
   const handleChange = () => {
     setIsToggled(!isToggled);
-    console.log('darkmode : ', isToggled);
-    console.log('theme', localStorage.getItem('theme'));
-
     const app = document.querySelector('.app');
     const theme = isToggled ? 'light' : 'dark';
     app.classList.remove('light', 'dark');
     app.classList.add(theme);
     localStorage.setItem('theme', theme);
-    // localStorage.clear();
-    // console.log('storageee', localStorage);
   };
 
   const handleClick = () => {
-    // dispatch(clearAuth());
     dispatch(logout());
     navigate('/');
-    console.log('deco');
   };
 
   return (
@@ -80,9 +71,6 @@ export default function Header() {
               className="sr-only peer"
             />
             <div className="w-11 h-6 bg-gray-200 peer-focus:outline-none dark:peer-focus:ring-blue-800 rounded-full peer dark:bg-gray-700 peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-blue-600"></div>
-            {/* <span className="ms-3 text-sm font-medium text-gray-900 dark:text-gray-300">
-              Toggle me
-            </span> */}
           </label>
           {!user ? (
             <>

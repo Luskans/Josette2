@@ -1,7 +1,7 @@
-import localDate from '../../utils/formatDate';
-import readingTime from '../../utils/getReadingTime';
+import localDate from '@/utils/formatDate';
+import readingTime from '@/utils/getReadingTime';
 import { Link } from 'react-router-dom';
-import getColorByTheme from '../../utils/getColorByTheme';
+import getColorByTheme from '@/utils/getColorByTheme';
 import getImageUrl from '@/utils/getImageUrl';
 import defaultProfil2 from '@/assets/defaultProfil2.webp';
 import defaultStory from '@/assets/defaultStory.webp';
@@ -11,7 +11,6 @@ export default function StoryCardMax({ story }) {
   const [isHovered, setIsHovered] = useState(false);
 
   return (
-    // SANS IMAGE
     <article 
     className="p-4 flex w-[300px] h-[350px] flex-col bg-white rounded-lg border border-gray-200 shadow-md dark:bg-gray-800 dark:border-gray-700 hover:mb-2 hover:-mt-2 hover:shadow-xl transition-all duration-300"
     onMouseEnter={() => setIsHovered(true)}
@@ -31,16 +30,6 @@ export default function StoryCardMax({ story }) {
         <h2 className="calli mb-2 text-lg line-clamp-2 min-h-14 break-words font-bold tracking-tight text-gray-900 dark:text-white">
           <Link to={`/story/view/${story.id}`}>{story.title}</Link>
         </h2>
-        {/* <p className="mb-5 text-sm line-clamp-7 break-words text-justify font-light text-gray-500 dark:text-gray-400">
-          <Link to={`/story/view/${story.id}`}>{story.synopsis}</Link>
-        </p>
-        <Link to={`/story/view/${story.id}`}>
-          <img 
-          className="mb-5 text-sm line-clamp-7 break-words text-justify font-light text-gray-500 dark:text-gray-400"
-          src={story.image ? getImageUrl(story.image.name) : defaultStory}
-          alt={`${story.title}'s story cover picture`}
-          />
-        </Link> */}
         <Link to={`/story/view/${story.id}`}>
           {isHovered
           ? <p 
