@@ -1,4 +1,4 @@
-import defaultUserImage from '@/assets/user_image.webp';
+import defaultProfil2 from '@/assets/defaultProfil2.webp';
 import { useSelector } from 'react-redux';
 import { axiosSecu } from '@/utils/axios';
 import toast from 'react-hot-toast';
@@ -63,7 +63,7 @@ export default function ProfilUpdate3({ handlePrev, blob }) {
             />
             : <img
               className="w-full rounded-[50%]"
-              src={profil.image ? getImageUrl(profil.image.name) : defaultUserImage}
+              src={profil.image ? getImageUrl(profil.image.name) : defaultProfil2}
               alt={`${profil.name}'s profil picture`}
             />
             }
