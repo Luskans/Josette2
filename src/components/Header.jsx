@@ -57,11 +57,11 @@ export default function Header() {
           <span className="w-11 h-11 text-gray-800 dark:text-white">
             {logo()}
           </span>
-          <span className="brand self-center text-3xl font-semibold whitespace-nowrap text-gray-800 dark:text-white">
+          <span className="brand self-center text-xl sm:text-3xl font-semibold whitespace-nowrap text-gray-800 dark:text-white">
             Bluette
           </span>
         </Link>
-        <nav className="flex items-center md:order-2 space-x-5 md:space-x-8 rtl:space-x-reverse">
+        <nav className="flex items-center md:order-2 space-x-3 sm:space-x-5 md:space-x-8 rtl:space-x-reverse">
           <div className="relative inline-flex items-center cursor-pointer">
             <input
               onChange={handleChange}
@@ -76,14 +76,14 @@ export default function Header() {
             <>
               <Link
                 to="/login"
-                className="hover:underline text-gray-800 dark:text-gray-200"
+                className="hover:underline text-xs sm:text-base text-gray-800 dark:text-gray-200"
               >
                 Connexion
               </Link>
               <Link to="/signup">
                 <button
                   type="button"
-                  className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+                  className="text-white text-xs bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg sm:text-sm px-2 sm:px-4 py-1 sm:py-2 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
                 >
                   Inscription
                 </button>
