@@ -23,7 +23,7 @@ export default function Home() {
   }, []);
 
   return (
-    <>
+    <main>
       {user ? <Carousel /> : <Cta />}
       <section className="bg-white dark:bg-gray-900">
         <div className="py-12 px-4 mx-auto max-w-screen-2xl lg:px-6">
@@ -46,6 +46,6 @@ export default function Home() {
         </div>
       </section>
       <BotNav page={'home'} />
-    </>
+    </main>
   );
 }

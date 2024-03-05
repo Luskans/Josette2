@@ -41,7 +41,7 @@ export default function ProfilUpdate3({ handlePrev, blob }) {
       })
       .then((response) => {
         toast.success('Profil mis à jour !', { duration: 9000 });
-        navigate('/');
+        navigate(`/profil/view/${profil.id}`);
       })
       .catch((error) => {
           toast.error("Une erreur est survenue.", { duration: 9000 });
@@ -70,9 +70,9 @@ export default function ProfilUpdate3({ handlePrev, blob }) {
           </div>
           <div className="flex flex-col items-center gap-8">
             <div className="w-full gap-4 flex justify-center items-end">
-              <h2 className="text-2xl md:text-4xl font-extrabold line-clamp-1.5">
+              <h1 className="text-2xl md:text-4xl font-extrabold line-clamp-1.5">
                 {profil.name}
-              </h2>
+              </h1>
             </div>
             <blockquote className="calli text-xl italic text-justify break-words font-semibold text-gray-500 dark:text-gray-300">
               <p>{profilUpdate.quote}</p>

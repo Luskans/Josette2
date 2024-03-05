@@ -43,9 +43,9 @@ export default function ProfilDetail() {
         </div>
         <div className="flex flex-col items-center gap-8 md:max-w-lg">
           <div className="w-full gap-4 flex justify-center items-end">
-            <h2 className="text-2xl md:text-3xl lg:text-4xl font-extrabold line-clamp-1.5">
+            <h1 className="text-2xl md:text-3xl lg:text-4xl font-extrabold line-clamp-1.5">
               {profil.name}
-            </h2>
+            </h1>
             {user &&
                 <ProfilFollow />
             }
@@ -56,7 +56,7 @@ export default function ProfilDetail() {
           <p className="text-gray-500 text-justify leading-loose break-words dark:text-gray-400">
             {profil.description
               ? profil.description
-              : 'Aucune description opour le moment.'}
+              : 'Aucune description pour le moment.'}
           </p>
         </div>
       </div>

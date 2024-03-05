@@ -52,7 +52,7 @@ export default function ProfilUpdate() {
   });
 
   return (
-    <section className="bg-white dark:bg-gray-900">
+    <main className="bg-white dark:bg-gray-900">
       <div className="py-8 px-4 mx-auto max-w-2xl lg:py-16">
         <ProfilUpdateStepper step={step} />
 
@@ -70,6 +70,6 @@ export default function ProfilUpdate() {
           <ProfilUpdate3 handlePrev={handlePrev} blob={blob} />
         )}
       </div>
-    </section>
+    </main>
   );
 }

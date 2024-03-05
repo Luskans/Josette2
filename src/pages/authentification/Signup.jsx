@@ -2,10 +2,11 @@ import { useForm } from 'react-hook-form';
 import React, { useState } from 'react';
 import axiosBase from '@/utils/axios';
 import toast from 'react-hot-toast';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { logo } from '@/assets/logo';
 
 export default function Signup() {
+  const navigate = useNavigate();
   const {
     handleSubmit,
     register,
@@ -23,7 +24,7 @@ export default function Signup() {
     axiosBase
       .post(`/signup`, data, {
         headers: {
-          'Content-Type': 'application/json',
+          'Content-Type': 'application/ld+json',
         },
       })
       .then((response) => {
@@ -44,7 +45,7 @@ export default function Signup() {
   };
 
   return (
-    <section className="bg-gray-50 dark:bg-gray-900">
+    <main className="bg-gray-50 dark:bg-gray-900">
       <div className="flex flex-col items-center justify-center px-6 py-8 mx-auto">
         <Link
           to="/"
@@ -297,6 +298,6 @@ export default function Signup() {
           </div>
         </div>
       </div>
-    </section>
+    </main>
   );
 }

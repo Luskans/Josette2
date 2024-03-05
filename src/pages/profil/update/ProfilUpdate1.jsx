@@ -28,9 +28,9 @@ export default function ProfilUpdate1({ handleNext }) {
         onSubmit={handleSubmit(onSubmit)}
         className="flex flex-col w-full items-center gap-8"
       >
-        <h2 className="text-2xl md:text-4xl font-extrabold line-clamp-1.5 text-gray-900 dark:text-white">
+        <h1 className="text-2xl md:text-4xl font-extrabold line-clamp-1.5 text-gray-900 dark:text-white">
             {profil.name}
-        </h2>
+        </h1>
         <div className="w-full">
           <label
             htmlFor="quote"

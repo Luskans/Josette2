@@ -27,9 +27,9 @@ export default function StoryCardMax({ story }) {
         <span className="text-sm text-gray-500 dark:text-gray-400">{readingTime(story.content.length)}</span>
       </div>
       <div className="h-full min-h-[184px]">
-        <h2 className="calli mb-2 text-lg line-clamp-2 min-h-14 break-words font-bold tracking-tight text-gray-900 dark:text-white">
+        <h3 className="calli mb-2 text-lg line-clamp-2 min-h-14 break-words font-bold tracking-tight text-gray-900 dark:text-white">
           <Link to={`/story/view/${story.id}`}>{story.title}</Link>
-        </h2>
+        </h3>
         <Link to={`/story/view/${story.id}`}>
           {isHovered
           ? <p 
@@ -44,7 +44,6 @@ export default function StoryCardMax({ story }) {
             />
           }
         </Link>
-
       </div>
       <div className="flex justify-between items-center">
         <div className="flex items-center space-x-3">

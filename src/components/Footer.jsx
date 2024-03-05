@@ -6,23 +6,23 @@ export default function Footer() {
     <footer className="p-4 bg-white dark:bg-gray-900 sm:p-6 border-t border-gray-200 dark:border-gray-600">
       <div className="mx-auto max-w-screen-xl">
         <div className="flex justify-between">
-          <div className="flex sm:flex-row gap-5 dark:text-gray-300 text-gray-500">
+          <nav className="flex text-xs sm:text-sm md:text-base sm:flex-row gap-5 dark:text-gray-300 text-gray-500">
             <a href="#" className="hover:underline">
-              About
+              À propos
             </a>
             <a href="#" className="hover:underline">
-              Terms
+              Conditions
             </a>
             <a href="#" className="hover:underline">
-              Privacy
+              Confidentialité
             </a>
-          </div>
+          </nav>
           <div className="">
             <Link to="/" className="flex items-center gap-2">
               <span className="w-11 h-11 dark:text-gray-300 text-gray-500">
                 {logo()}
               </span>
-              <span className="brand self-center text-3xl font-bold whitespace-nowrap dark:text-gray-300 text-gray-500">
+              <span className="brand hidden sm:block self-center text-3xl font-bold whitespace-nowrap dark:text-gray-300 text-gray-500">
                 Bluette
               </span>
             </Link>
@@ -30,14 +30,14 @@ export default function Footer() {
         </div>
         <hr className="my-6 border-gray-200 sm:mx-auto dark:border-gray-700" />
         <div className="flex sm:items-center justify-between">
-          <span className="text-sm dark:text-gray-300 sm:text-center text-gray-500">
+          <span className="text-xs sm:text-sm dark:text-gray-300 sm:text-center text-gray-500">
             © 2024{' '}
             <Link to="/" className="hover:underline">
-              Bluette™
+              Bluette
             </Link>
-            . All Rights Reserved.
+            . Tous droits réservés.
           </span>
-          <div className="flex mt-4 space-x-6 sm:justify-center sm:mt-0">
+          <div className="flex sm:mt-4 space-x-4 sm:space-x-6 sm:justify-center sm:mt-0">
             <a
               href="#"
               className="dark:text-gray-300 dark:hover:text-gray-200 text-gray-500 hover:text-gray-600"

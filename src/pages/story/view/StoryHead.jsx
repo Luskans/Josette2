@@ -11,7 +11,7 @@ export default function StoryHead() {
 
   return (
     <>
-      <header className="flex items-center mb-6 not-italic">
+      <div className="flex items-center mb-6 not-italic">
         <div className="flex items-center mr-3 text-sm text-gray-900 dark:text-white">
           <Link
             to={`/profil/view/${story.user.id}`}
@@ -44,7 +44,7 @@ export default function StoryHead() {
             </p>
           </div>
         </div>
-      </header>
+      </div>
     </>
   );
 }

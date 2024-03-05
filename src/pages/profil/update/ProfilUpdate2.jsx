@@ -1,5 +1,5 @@
 import ImgCrop from '@/components/Crop/ImgCrop';
-import userImage from '@/assets/user_image.webp';
+import defaultProfil2 from '@/assets/defaultProfil2.webp';
 import { useSelector } from 'react-redux';
 import getImageUrl from '@/utils/getImageUrl';
 
@@ -11,7 +11,7 @@ export default function ProfilUpdate2({ handlePrev, handleNext, handleBlob }) {
         <div className="w-[300px] min-w-[300px]">
           <img
             className="w-full rounded-[50%]"
-            src={profil.image ? getImageUrl(profil.image.name) : userImage}
+            src={profil.image ? getImageUrl(profil.image.name) : defaultProfil2}
             alt={`${profil.name}'s profil picture`}
           />
         </div>

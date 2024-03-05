@@ -353,7 +353,7 @@ export default function StoryBar({ id, onCommentIconClick }) {
                     handleReport();
                   }}
                 >
-                  Report
+                  Signaler
                 </button>
               </li>
             )}

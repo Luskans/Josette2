@@ -6,7 +6,7 @@ export default function StoryBody() {
     const story = useSelector((state) => state.story.detail);
 
   return (
-    <main>
+    <div>
         <img
             src={story.image ? getImageUrl(story.image.name) : defaultStory}
             alt={`${story.title}'s cover picture`}
@@ -20,6 +20,6 @@ export default function StoryBody() {
         <p className="lead text-gray-900 break-words text-justify leading-loose dark:text-gray-100 mb-10">
             {story.content}
         </p>
-    </main>
+    </div>
   )
 }
