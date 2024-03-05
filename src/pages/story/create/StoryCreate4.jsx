@@ -1,5 +1,5 @@
-import defaultUserImage from '@/assets/user_image.webp';
-import defaultStoryImage from '@/assets/story_image.jpg';
+import defaultProfil2 from '@/assets/defaultProfil2.webp';
+import defaultStory from '@/assets/defaultStory.webp';
 import { useSelector } from 'react-redux';
 import { fullLocalDate } from '@/utils/formatDate';
 import { axiosSecu } from '@/utils/axios';
@@ -66,7 +66,7 @@ export default function StoryCreate4({ handlePrev, blob }) {
           <div className="text-xl font-bold text-gray-900 dark:text-white">
             <img
               className="mr-4 w-16 h-16 rounded-full"
-              src={user.image ? getImageUrl(user.image) : defaultUserImage}
+              src={user.image ? getImageUrl(user.image) : defaultProfil2}
               alt={`${user.name} profil picture`}
             />
           </div>
@@ -92,7 +92,7 @@ export default function StoryCreate4({ handlePrev, blob }) {
           />
           : <img
             className="mb-12 lg:mb-14 w-full"
-            src={defaultStoryImage}
+            src={defaultStory}
             alt={`${storyCreate.title}'s cover picture`}
           />
         }
