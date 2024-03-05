@@ -1,5 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit';
-import axiosBase from '../utils/axios';
+import axiosBase from '@/utils/axios';
 
 export const themeSlice = createSlice({
   name: 'theme',
