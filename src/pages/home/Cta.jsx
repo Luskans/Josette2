@@ -7,7 +7,7 @@ export default function Cta() {
         <div className="flex flex-col sm:flex-row gap-8 items-center py-8 px-4 mx-auto max-w-3xl xl:gap-16 sm:py-6 lg:px-6">
             <img className=" w-3/5 rounded-2xl" src={ctaImage} alt="cta image of a boy writing" />
             <div className="mt-4 md:mt-0">
-                <h2 className="mb-4 text-4xl tracking-tight font-extrabold dark:text-gray-900 text-white">Des petites histoires, sans prétentions.</h2>
+                <h2 className="mb-4 text-4xl tracking-tight font-extrabold dark:text-gray-900 text-white">Des petites histoires, sans prétention.</h2>
                 <p className="mb-6 font-light dark:text-gray-800 md:text-lg text-gray-100">Laisse libre cours à ton imagination en partageant tes textes ou en suivant ceux de la communauté.</p>
                 <Link to="/signup">
                   <button className="animate-bounce inline-flex items-center text-gray-900 dark:text-white bg-white blue-200 dark:bg-blue-700 hover:bg-blue-100 dark:hover:bg-blue-800 focus:ring-4 focus:ring-blue-400 font-semibold rounded-lg text-sm px-5 py-2.5 text-center dark:focus:ring-blue-800">
