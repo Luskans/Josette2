@@ -34,7 +34,7 @@ export const postLike = (data) => (dispatch) => {
   axiosSecu
     .post(`/likes`, data, {
       headers: {
-        'Content-Type': 'application/ld+json',
+        'Content-Type': 'application/json',
       },
     })
     .then((response) => {

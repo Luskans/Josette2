@@ -50,7 +50,6 @@ export default function StoryCreate1({ handleNext }) {
   };
 
   const onSubmit = (data) => {
-    console.log('test data en create', data);
     const newData = {
       title: data.title,
       synopsis: data.synopsis,

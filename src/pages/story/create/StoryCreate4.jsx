@@ -38,7 +38,6 @@ export default function StoryCreate4({ handlePrev, blob }) {
     }
     formData.append('content', storyCreate.content);
     formData.append('userId', user.id)
-    console.log('formdata final', formData);
 
     axiosSecu
     .post(`/stories`, formData, {
